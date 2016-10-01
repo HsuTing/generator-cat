@@ -2,6 +2,8 @@
 
 var path = require('path');
 var generators = require('yeoman-generator');
+var chalk = require('chalk');
+var yosay = require('yosay');
 var _ = require('lodash');
 var extend = _.merge;
 var parseAuthor = require('parse-author');
@@ -10,6 +12,10 @@ var askName = require('inquirer-npm-name');
 module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
+
+    this.log(yosay(
+      'Welcome to the cat\'s pajamas ' + chalk.red('generator-cat') + ' generator!'
+    ));
 
     this.option('license', {
       type: Boolean,
@@ -37,6 +43,13 @@ module.exports = generators.Base.extend({
       required: false,
       default: true,
       desc: 'Use Radium or not(default: true)'
+    });
+
+    this.option('skipInstall', {
+      type: Boolean,
+      require: false,
+      default: false,
+      desc: 'skip install'
     });
   },
 
@@ -196,27 +209,29 @@ module.exports = generators.Base.extend({
 
     this.composeWith('cat:eslint', {
       options: {
-        react: this.props.react
+        react: this.props.react,
+        skipInstall: this.options.skipInstall
       }
     }, {
       local: require.resolve('../eslint')
     });
 
-    this.composeWith('cat:readme', {
-      options: {
-        name: this.props.name,
-        description: this.props.description
-      }
-    }, {
-      local: require.resolve('../readme')
-    });
-
     this.composeWith('cat:babel', {
       options: {
-        react: this.props.react
+        react: this.props.react,
+        skipInstall: this.options.skipInstall
       }
     }, {
       local: require.resolve('../babel')
+    });
+
+    this.composeWith('cat:gulp', {
+      options: {
+        react: this.props.react,
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../gulp')
     });
 
     if(this.options.license && !this.pkg.license) {
@@ -231,12 +246,24 @@ module.exports = generators.Base.extend({
       });
     }
 
+    this.composeWith('cat:readme', {
+      options: {
+        name: this.props.name,
+        description: this.props.description,
+        authorName: this.props.authorName,
+        authorUrl: this.props.authorUrl
+      }
+    }, {
+      local: require.resolve('../readme')
+    });
+
     if(this.props.react) {
       this.composeWith('cat:webpack', {
         options: {
           router: this.options.router,
           redux: this.options.redux,
-          radium: this.options.radium
+          radium: this.options.radium,
+          skipInstall: this.options.skipInstall
         }
       }, {
         local: require.resolve('../webpack')
@@ -246,11 +273,36 @@ module.exports = generators.Base.extend({
         options: {
           router: this.options.router,
           redux: this.options.redux,
-          radium: this.options.radium
+          radium: this.options.radium,
+          skipInstall: this.options.skipInstall
         }
       }, {
         local: require.resolve('../react')
       });
+
+      this.composeWith('cat:pug', {
+        options: {
+          test: true,
+          projectName: 'test-page'
+        }
+      }, {
+        local: require.resolve('../pug')
+      });
+
+      this.composeWith('cat:pug', {
+        options: {
+          test: false,
+          projectName: 'page'
+        }
+      }, {
+        local: require.resolve('../pug')
+      });
     }
+  },
+
+  end: function() {
+    this.log(yosay(
+      'Project start!!!'
+    ));
   }
 });

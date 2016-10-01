@@ -14,6 +14,13 @@ module.exports = generators.Base.extend({
       default: true,
       desc: 'Use React or not(default: true)'
     });
+
+    this.option('skipInstall', {
+      type: Boolean,
+      require: false,
+      default: false,
+      desc: 'skip install'
+    });
   },
 
   writing: function() {
@@ -46,6 +53,9 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
+    if(this.options.skipInstall)
+      return;
+
     if(this.options.react)
       this.npmInstall([
         'eslint',

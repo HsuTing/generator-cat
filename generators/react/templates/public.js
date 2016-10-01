@@ -19,28 +19,28 @@ import <%= componentName %> from './../components/<%= componentName %>';
   ReactDOM.render(
 <% if(radium) { -%>
     <Wrapper>
-  <% if(router) { -%>
-    {router}
-  <% } else if(redux) { -%>
-    <Provider store={store}>
+<% if(router) { -%>
+      {router}
+<% } else if(redux) { -%>
+      <Provider store={store}>
         <<%= componentName %> />
       </Provider>
-  <% } else { -%>
-    <<%= componentName %> />
-  <% } -%>
-  </Wrapper>,
+<% } else { -%>
+      <<%= componentName %> />
+<% } -%>
+    </Wrapper>,
     document.getElementById('root')
 <% } else { -%>
-  <% if(router) { -%>
-  {router},
-  <% } else if(redux) { -%>
-  <Provider store={store}>
+<% if(router) { -%>
+    {router},
+<% } else if(redux) { -%>
+    <Provider store={store}>
       <<%= componentName %> />
     </Provider>,
-  <% } else { -%>
-  <<%= componentName %> />,
-  <% } -%>
-  document.getElementById('root')
+<% } else { -%>
+    <<%= componentName %> />,
+<% } -%>
+    document.getElementById('root')
 <% } -%>
   );
 })();

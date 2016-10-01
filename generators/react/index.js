@@ -1,10 +1,19 @@
 'use strict';
 
 var generators = require('yeoman-generator');
+var _ = require('lodash');
+var extend = _.merge;
 
 module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
+
+    this.option('react', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React or not(default: true)'
+    });
 
     this.option('router', {
       type: Boolean,
@@ -27,46 +36,65 @@ module.exports = generators.Base.extend({
       desc: 'Use Radium or not(default: true)'
     });
 
-    this.option('name', {
-      type: String,
-      required: false,
-      default: 'index',
-      desc: 'Filename'
-    });
-
-    this.option('reducerName', {
-      type: String,
-      required: false,
-      default: 'data',
-      desc: 'reducer name'
+    this.option('skipInstall', {
+      type: Boolean,
+      require: false,
+      default: false,
+      desc: 'skip install'
     });
   },
 
-  writing: function() {
-    var componentName = this.options.name[0].toUpperCase() + this.options.name.slice(1);
+  initializing: function() {
+    this.props = {};
+  },
 
-    this.fs.copyTpl(
-      this.templatePath('components.js'),
-      this.destinationPath('src/components/' + componentName + '.js'), {
-        componentName: componentName
+  prompting: function() {
+    return this.prompt([{
+      type: 'input',
+      name: 'name',
+      message: 'Main controller name',
+      default: 'index'
+    }, {
+      type: 'input',
+      name: 'reducerName',
+      message: 'Reducer names (comma to split)',
+      default: 'data',
+      when: this.options.redux,
+      filter: function(words) {
+        return words.split(/\s*,\s*/g);
       }
-    );
-    this.fs.copyTpl(
-      this.templatePath('public.js'),
-      this.destinationPath('src/public/' + this.options.name + '.js'), {
-        name: this.options.name,
-        componentName: componentName,
-        redux: this.options.redux,
-        router: this.options.router,
-        radium: this.options.radium
-      }
-    );
+    }]).then(function(props) {
+      this.props = extend(this.props, props);
+    }.bind(this));
+  },
+
+  writing: function() {
+    var componentName = this.props.name[0].toUpperCase() + this.props.name.slice(1);
+
+    if(this.options.react) {
+      this.fs.copyTpl(
+        this.templatePath('components.js'),
+        this.destinationPath('src/components/' + componentName + '.js'), {
+          componentName: componentName
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('public.js'),
+        this.destinationPath('src/public/' + this.props.name + '.js'), {
+          name: this.props.name,
+          componentName: componentName,
+          redux: this.options.redux,
+          router: this.options.router,
+          radium: this.options.radium
+        }
+      );
+    }
 
     if(this.options.router) {
       this.fs.copyTpl(
         this.templatePath('routers.js'),
-        this.destinationPath('src/routers/' + this.options.name + '.js'), {
-          name: this.options.name,
+        this.destinationPath('src/routers/' + this.props.name + '.js'), {
+          name: this.props.name,
           componentName: componentName,
           redux: this.options.redux
         }
@@ -74,20 +102,22 @@ module.exports = generators.Base.extend({
     }
 
     if(this.options.redux) {
-      this.fs.copy(
-        this.templatePath('actions.js'),
-        this.destinationPath('src/actions/' + this.options.reducerName + '.js')
-      );
-      this.fs.copyTpl(
-        this.templatePath('reducers.js'),
-        this.destinationPath('src/reducers/' + this.options.reducerName + '.js'), {
-          reducerName: this.options.reducerName
-        }
-      );
+      this.props.reducerName.forEach(function(reducerName) {
+        this.fs.copy(
+          this.templatePath('actions.js'),
+          this.destinationPath('src/actions/' + reducerName + '.js')
+        );
+        this.fs.copyTpl(
+          this.templatePath('reducers.js'),
+          this.destinationPath('src/reducers/' + reducerName + '.js'), {
+            reducerName: reducerName
+          }
+        );
+      }.bind(this));
       this.fs.copyTpl(
         this.templatePath('stores.js'),
-        this.destinationPath('src/stores/' + this.options.name + '.js'), {
-          reducerName: this.options.reducerName
+        this.destinationPath('src/stores/' + this.props.name + '.js'), {
+          reducerName: this.props.reducerName
         }
       );
     }
@@ -107,6 +137,9 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
+    if(this.options.skipInstall)
+      return;
+
     var packages = [
       'react',
       'react-dom'

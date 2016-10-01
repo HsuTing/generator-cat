@@ -1,9 +1,13 @@
 'use strict';
 
 import {combineReducers, createStore} from 'redux';
-import <%= reducerName %>Reducer from './../reducers/<%= reducerName %>';
+<% for(index in reducerName) { -%>
+import <%= reducerName[index] %>Reducer from './../reducers/<%= reducerName[index] %>';
+<% } -%>
 
 const reducers = combineReducers({
-  <%= reducerName %>: <%= reducerName %>Reducer
+<% for(index in reducerName) { -%>
+  <%= reducerName[index] %>: <%= reducerName[index] %>Reducer<% if(index != reducerName.length - 1) { %>,<% } %>
+<% } -%>
 });
 export const store = createStore(reducers);
