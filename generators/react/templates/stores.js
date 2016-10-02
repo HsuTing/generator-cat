@@ -10,4 +10,4 @@ const reducers = combineReducers({
   <%= reducerName[index] %>: <%= reducerName[index] %>Reducer<% if(index != reducerName.length - 1) { %>,<% } %>
 <% } -%>
 });
-export const store = createStore(reducers);
+export default createStore(reducers);

@@ -264,6 +264,7 @@ module.exports = generators.Base.extend({
 
       this.composeWith('cat:react', {
         options: {
+          name: this.props.name,
           router: this.options.router,
           redux: this.options.redux,
           radium: this.options.radium,
@@ -292,6 +293,23 @@ module.exports = generators.Base.extend({
       }, {
         local: require.resolve('../pug')
       });
+    }
+
+    switch(this.props.typeList.indexOf(props.type)) {
+      case 0:
+        this.composeWith('cat:static', {
+          options: {
+            router: this.options.router,
+            redux: this.options.redux,
+            radium: this.options.radium,
+            skipInstall: this.options.skipInstall
+          }
+        }, {
+          local: require.resolve('../static')
+        });
+
+      default:
+        break;
     }
   },
 

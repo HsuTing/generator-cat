@@ -23,6 +23,38 @@ yo cat
  * Yeoman can be too opinionated at times but is easily convinced not to be.
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
+## Options
+
+- `license`(Boolean, default true) include or not a LICENSE file.
+- `router` (Boolean, default true) use react-router or not.
+- `redux` (Boolean, default true) use react-redux or not.
+- `radium` (Boolean, default true) use radium or not.
+
+## Sub generators
+
+Remember you can see the options of each sub generators by running yo node:sub --help.
+
+- `cat:babel`
+- `cat:editorconfig`
+- `cat:eslint`
+- `cat:git`
+- `cat:gulp`
+- `cat:pug`
+- `cat:react`
+- `cat:readme`
+- `cat:static`
+- `cat:webpack`
+
+## Type
+
+#### Static pages
+
+- Add `render.js` in `gulp-tasks`
+
+#### Dynamic pages
+
+- Not yet
+
 ## License
 
 MIT © [HsuTing](hsuting.com)

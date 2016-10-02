@@ -10,7 +10,7 @@ html
     title <%= name %>
 
   body
-    main(id="root") !{content}
+    main(id="root") !{markup}
 
 <% if(test) { -%>
   script(defer, src="http://localhost:8080/webpack-dev-server.js", type="text/javascript")

@@ -8,6 +8,13 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
+    this.option('name', {
+      type: String,
+      required: true,
+      default: true,
+      desc: 'Project name'
+    });
+
     this.option('react', {
       type: Boolean,
       required: false,
@@ -87,6 +94,7 @@ module.exports = generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('routers.js'),
         this.destinationPath('src/routers/' + this.props.name + '.js'), {
+          projectName: this.options.name,
           name: this.props.name,
           componentName: componentName,
           redux: this.options.redux
@@ -149,6 +157,6 @@ module.exports = generators.Base.extend({
       packages.push('radium-normalize');
     }
 
-    this.npmInstall(packages);
+    this.npmInstall(packages, {save: true});
   }
 });
