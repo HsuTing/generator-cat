@@ -21,7 +21,7 @@ gulp.task('render:html', function() {
   [
     {
 <% if(router) { -%>
-      location: '/',
+      location: '<%= name %>',
       router: require('./../lib/routers/<%= name %>').default,
 <% } else { -%>
       component: require('./../lib/omponents/<%= componentName %>').default,
@@ -33,7 +33,7 @@ gulp.task('render:html', function() {
     }
   ].forEach(function(component) {
 <% if(router) { -%>
-      match({routes: component.component, location: component.location}, function(error, redirextLocation, renderProps) {
+      match({routes: component.router, location: component.location}, function(error, redirextLocation, renderProps) {
         if(renderProps)
           gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
             .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
@@ -63,9 +63,11 @@ gulp.task('render:html', function() {
           gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
             .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
             .pipe(pug({
-              markup: renderToStaticMarkup(
-                React.createElement('div', null 'not find')
-              )
+              locals: {
+                markup: renderToStaticMarkup(
+                  React.createElement('div', null 'not find')
+                )
+              }
             }))
             .pipe(gulp.dest(process.cwd()));
       });

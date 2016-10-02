@@ -10,9 +10,17 @@ module.exports = generators.Base.extend({
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js')
     );
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('README.md'),
-      this.destinationPath('gulp-tasks/README.md')
+      this.destinationPath('gulp-tasks/README.md'), {
+        name: 'Gulp tasks'
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('test/README.md'), {
+        name: 'Test'
+      }
     );
 
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});

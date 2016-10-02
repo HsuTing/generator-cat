@@ -35,7 +35,7 @@ module.exports = generators.Base.extend({
     return this.prompt([{
       type: 'input',
       name: 'name',
-      message: 'Main html name(be equal to Main controller name, please)',
+      message: 'Main url(be equal to Main controller name, please)',
       default: 'index'
     }]).then(function(props) {
       this.props = extend(this.props, props);
@@ -72,6 +72,6 @@ module.exports = generators.Base.extend({
   },
 
   end: function() {
-    this.spawnCommand('npm', ['run render']);
+    this.spawnCommand('npm', ['run', 'render']);
   }
 });

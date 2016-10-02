@@ -1,1 +1,1 @@
-# Gulp tasks
+# <%= name %>
