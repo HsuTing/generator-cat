@@ -295,7 +295,7 @@ module.exports = generators.Base.extend({
       });
     }
 
-    switch(this.props.typeList.indexOf(props.type)) {
+    switch(this.props.typeList.indexOf(this.props.type)) {
       case 0:
         this.composeWith('cat:static', {
           options: {
@@ -307,6 +307,7 @@ module.exports = generators.Base.extend({
         }, {
           local: require.resolve('../static')
         });
+        break;
 
       default:
         break;

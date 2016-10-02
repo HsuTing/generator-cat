@@ -1,6 +1,6 @@
 {
   "name": "generator-cat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "cat generator",
   "homepage": "https://github.com/HsuTing/generator-cat",
   "author": "HsuTing <hsuting0106@gmail.com> (hsuting.com)",
@@ -30,7 +30,6 @@
     "eslint-config-google": "^0.6.0",
     "eslint-plugin-react": "^6.3.0",
     "gulp": "^3.9.0",
-    "gulp-eslint": "^2.0.0",
     "gulp-exclude-gitignore": "^1.0.0",
     "gulp-istanbul": "^1.0.0",
     "gulp-line-ending-corrector": "^1.0.1",
