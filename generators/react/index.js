@@ -12,35 +12,28 @@ module.exports = generators.Base.extend({
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React or not(default: true)'
+      desc: 'Use React'
     });
 
     this.option('router', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-router or not(default: true)'
+      desc: 'Use React-router'
     });
 
     this.option('redux', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-redux or not(default: true)'
+      desc: 'Use React-redux'
     });
 
     this.option('radium', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use Radium or not(default: true)'
-    });
-
-    this.option('skipInstall', {
-      type: Boolean,
-      require: false,
-      default: false,
-      desc: 'skip install'
+      desc: 'Use Radium'
     });
   },
 
@@ -137,9 +130,6 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
     var packages = [
       'react',
       'react-dom'

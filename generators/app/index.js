@@ -28,28 +28,21 @@ module.exports = generators.Base.extend({
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-router or not(default: true)'
+      desc: 'Use React-router'
     });
 
     this.option('redux', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-redux or not(default: true)'
+      desc: 'Use React-redux'
     });
 
     this.option('radium', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use Radium or not(default: true)'
-    });
-
-    this.option('skipInstall', {
-      type: Boolean,
-      require: false,
-      default: false,
-      desc: 'skip install'
+      desc: 'Use Radium'
     });
   },
 
@@ -283,7 +276,8 @@ module.exports = generators.Base.extend({
       this.composeWith('cat:pug', {
         options: {
           test: true,
-          projectName: 'test-page'
+          projectName: 'test-page',
+          skipInstall: this.options.skipInstall
         }
       }, {
         local: require.resolve('../pug')
@@ -292,7 +286,8 @@ module.exports = generators.Base.extend({
       this.composeWith('cat:pug', {
         options: {
           test: false,
-          projectName: 'page'
+          projectName: 'page',
+          skipInstall: this.options.skipInstall
         }
       }, {
         local: require.resolve('../pug')

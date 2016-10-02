@@ -10,21 +10,21 @@ module.exports = generators.Base.extend({
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-router or not(default: true)'
+      desc: 'Use React-router'
     });
 
     this.option('redux', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use React-redux or not(default: true)'
+      desc: 'Use React-redux'
     });
 
     this.option('radium', {
       type: Boolean,
       required: false,
       default: true,
-      desc: 'Use Radium or not(default: true)'
+      desc: 'Use Radium'
     });
   },
 

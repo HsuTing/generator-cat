@@ -35,5 +35,11 @@ module.exports = generators.Base.extend({
         name: this.props.name
       }
     );
+  },
+
+  install: function() {
+    this.npmInstall([
+      'pug'
+    ], {saveDev: true});
   }
 });
