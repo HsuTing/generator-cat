@@ -8,6 +8,6 @@ class <%= componentName %> extends React.Component {
       <div>This is <%= componentName %></div>
     );
   }
-};
+}
 
 export default <%= componentName %>;

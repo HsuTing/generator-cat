@@ -3,10 +3,16 @@ var gulp = require('gulp');
 var nsp = require('gulp-nsp');
 var gulpRequireTasks = require('gulp-require-tasks');
 var watch = require('gulp-watch');
+var taskListing = require('gulp-task-listing');
+<% if(static) { -%>
+var staticRender = require('./gulp-tasks/render');
+<% } -%>
 
 gulpRequireTasks({
   path: path.resolve(process.cwd(), './gulp-tasks')
 });
+
+gulp.task('help', taskListing);
 
 gulp.task('nsp', function(cb) {
   nsp({package: path.resolve('package.json')}, cb);
@@ -14,27 +20,28 @@ gulp.task('nsp', function(cb) {
 
 gulp.task('prepublish', ['nsp']);
 <% if(static) { -%>
-gulp.task('render', [
-  'babel',
-  'render-html'
-]);
+gulp.task('build', [
+  'babel:build'
+], staticRender);
 <% } -%>
-gulp.task('watch', function() {
-  gulp.watch('./src', [
 <% if(babel) { -%>
-    'babel',
+gulp.task('watch', ['babel:build'], function() {
+<% } else { -%>
+gulp.task('watch', function() {
+<% } -%>
+  gulp.watch('./src/**', [
+<% if(babel) { -%>
+    'babel:render',
 <% } -%>
 <% if(eslint) { -%>
-    'eslint',
-<% } -%>
-<% if(static) { -%>
-    'render-html'
+    'lint',
 <% } -%>
   ]);
 });
 gulp.task('default', [
 <% if(eslint) { -%>
-  'eslint',
+  'lint',
 <% } -%>
   'test'
 ]);
+

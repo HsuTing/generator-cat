@@ -11,13 +11,14 @@ var RouterContext = require('react-router').RouterContext;
 <% if(redux) { -%>
 var Provider = require('react-redux').Provider;
 <% } -%>
-<% if (radium) { -%>
-var Wrapper = require('./../lib/components/radium/Wrapper').default;
-<% } -%>
 
 var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 
-gulp.task('render-html', function() {
+var staticRender = function() {
+<% if (radium) { -%>
+  var Wrapper = require('./../lib/components/radium/Wrapper').default;
+<% } -%>
+
   [
     {
 <% if(router) { -%>
@@ -100,4 +101,7 @@ gulp.task('render-html', function() {
       }))
       .pipe(gulp.dest(process.cwd()));
   });
-});
+};
+gulp.task('static:render', staticRender);
+
+module.exports = staticRender;

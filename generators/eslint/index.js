@@ -31,7 +31,7 @@ module.exports = generators.Base.extend({
     );
     this.fs.copy(
       this.templatePath('gulpfile.js'),
-      this.destinationPath('gule-tasks/eslint.js')
+      this.destinationPath('gulp-tasks/eslint.js')
     );
 
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});

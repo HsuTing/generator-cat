@@ -55,6 +55,7 @@ module.exports = generators.Base.extend({
         redux: this.options.redux,
         radium: this.options.radium,
         url: this.props.url,
+        name: this.props.name,
         componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
       }
     );
@@ -68,6 +69,6 @@ module.exports = generators.Base.extend({
   },
 
   end: function() {
-    this.spawnCommand('gulp', ['render']);
+    this.spawnCommand('gulp', ['build']);
   }
 });

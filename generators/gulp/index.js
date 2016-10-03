@@ -54,7 +54,8 @@ module.exports = generators.Base.extend({
       'gulp-istanbul',
       'gulp-plumber',
       'gulp-require-tasks',
-      'gulp-watch'
+      'gulp-watch',
+      'gulp-task-listing'
     ], {saveDev: true});
   }
 });
