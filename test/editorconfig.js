@@ -3,10 +3,8 @@
 var path = require('path');
 var assert = require('yeoman-assert');
 
-describe('generator-cat:editorconfig', function () {
-  it('creates files', function () {
-    assert.file([
-      './.editorconfig'
-    ]);
+describe('cat:editorconfig', function () {
+  it('generate .editorconfig', function () {
+    assert.file(['./.editorconfig']);
   });
 });

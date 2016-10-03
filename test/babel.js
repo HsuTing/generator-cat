@@ -3,10 +3,8 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-cat:babel', function () {
-  before(function () {
-    return helpers.run(path.join(__dirname, '../generators/app'))
-      .withPrompts({someAnswer: true})
-      .toPromise();
+describe('cat:babel', function () {
+  it('generate .babelrc, gulp-tasks/babel.js', function() {
+    assert.file(['./.babelrc', './gulp-tasks/babel.js']);
   });
 });

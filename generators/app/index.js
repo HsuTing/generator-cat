@@ -320,7 +320,7 @@ module.exports = generators.Base.extend({
 
   end: function() {
     this.log(yosay(
-      'Project start!!!'
+      'Project start!!!Meoooooooow~~'
     ));
   }
 });

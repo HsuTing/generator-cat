@@ -10,9 +10,11 @@ npm install -g yo
 npm install -g generator-cat
 ```
 
-Then generate your new project:
+Make a folder for project and then generate your new project:
 
 ```bash
+mkdir (porject name)
+cd (project name)
 yo cat
 ```
 

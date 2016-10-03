@@ -23,21 +23,17 @@ module.exports = generators.Base.extend({
         react: this.options.react
       }
     );
-
-    var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    var pkg = extend({
-      scripts: {
-        build: 'rm -rf ./lib && babel src --out-dir lib -w'
-      }
-    }, currentPkg);
-
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    this.fs.copy(
+      this.templatePath('gulpfile.js'),
+      this.destinationPath('gulp-tasks/babel.js')
+    );
   },
 
   install: function() {
     if(this.options.react)
       this.npmInstall([
-        'babel-cli',
+        'gulp-babel',
+        'gulp-clean',
         'babel-plugin-transform-object-assign',
         'babel-preset-latest',
         'babel-preset-stage-0',
@@ -45,7 +41,8 @@ module.exports = generators.Base.extend({
       ], {saveDev: true});
     else
       this.npmInstall([
-        'babel-cli',
+        'gulp-babel',
+        'gulp-clean',
         'babel-plugin-transform-object-assign',
         'babel-preset-latest',
         'babel-preset-stage-0'

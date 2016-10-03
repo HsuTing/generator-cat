@@ -17,7 +17,7 @@ var Wrapper = require('./../lib/components/radium/Wrapper').default;
 
 var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 
-gulp.task('render:html', function() {
+gulp.task('render-html', function() {
   [
     {
 <% if(router) { -%>
@@ -33,6 +33,7 @@ gulp.task('render:html', function() {
     }
   ].forEach(function(component) {
 <% if(router) { -%>
+    if(component.router) {
       match({routes: component.router, location: component.location}, function(error, redirextLocation, renderProps) {
         if(renderProps)
           gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
@@ -71,7 +72,9 @@ gulp.task('render:html', function() {
             }))
             .pipe(gulp.dest(process.cwd()));
       });
-<% } else { -%>
+      return;
+    }
+<% } -%>
     gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
       .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
       .pipe(pug({
@@ -96,6 +99,5 @@ gulp.task('render:html', function() {
         }
       }))
       .pipe(gulp.dest(process.cwd()));
-<% } -%>
   });
 });

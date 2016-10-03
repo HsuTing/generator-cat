@@ -3,10 +3,8 @@
 var path = require('path');
 var assert = require('yeoman-assert');
 
-describe('generator-cat:git', function () {
-  it('creates files', function () {
-    assert.file([
-      './.gitignore'
-    ]);
+describe('cat:git', function () {
+  it('generate .gitignore', function () {
+    assert.file(['./.gitignore']);
   });
 });

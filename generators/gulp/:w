@@ -8,36 +8,18 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
-    this.option('babel', {
+    this.option('license', {
       type: Boolean,
       required: false,
       defaults: true,
-      desc: 'Use babel'
+      desc: 'Include a license'
     });
-
-    this.option('eslint', {
-      type: Boolean,
-      required: false,
-      defaults: true,
-      desc: 'Use eslint'
-    });
-
-    this.option('static', {
-      type: Boolean,
-      required: false,
-      defaults: true,
-      desc: 'Use static render'
-    });
-  },
+  }
 
   writing: function() {
-    this.fs.copyTpl(
+    this.fs.copy(
       this.templatePath('gulpfile.js'),
-      this.destinationPath('gulpfile.js'), {
-        babel: this.options.babel,
-        eslint: this.options.eslint,
-        static: this.options.static
-      }
+      this.destinationPath('gulpfile.js')
     );
     this.fs.copy(
       this.templatePath('test.js'),

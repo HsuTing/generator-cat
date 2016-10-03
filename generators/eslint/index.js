@@ -29,17 +29,21 @@ module.exports = generators.Base.extend({
         react: this.options.react
       }
     );
+    this.fs.copy(
+      this.templatePath('gulpfile.js'),
+      this.destinationPath('gule-tasks/eslint.js')
+    );
 
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        eslint: 'eslint --cache ./ --ext .js'
+        lint: 'eslint --cache ./ --ext .js'
       },
       'pre-commit': []
     }, currentPkg);
 
-    if(pkg['pre-commit'].indexOf('eslint') === -1) {
-      pkg['pre-commit'].push('eslint');
+    if(pkg['pre-commit'].indexOf('lint') === -1) {
+      pkg['pre-commit'].push('lint');
     }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
@@ -52,14 +56,16 @@ module.exports = generators.Base.extend({
         'eslint-config-google',
         'babel-eslint',
         'eslint-plugin-react',
-        'pre-commit'
+        'pre-commit',
+        'gulp-eslint'
       ], {saveDev: true});
     else
       this.npmInstall([
         'eslint',
         'eslint-config-google',
         'babel-eslint',
-        'pre-commit'
+        'pre-commit',
+        'gulp-eslint'
       ], {saveDev: true});
   }
 });
