@@ -21,7 +21,7 @@ gulp.task('render:html', function() {
   [
     {
 <% if(router) { -%>
-      location: '<%= name %>',
+      location: '<%= projectName %>',
       router: require('./../lib/routers/<%= name %>').default,
 <% } else { -%>
       component: require('./../lib/omponents/<%= componentName %>').default,
@@ -65,7 +65,7 @@ gulp.task('render:html', function() {
             .pipe(pug({
               locals: {
                 markup: renderToStaticMarkup(
-                  React.createElement('div', null 'not find')
+                  React.createElement('div', null, 'not find')
                 )
               }
             }))

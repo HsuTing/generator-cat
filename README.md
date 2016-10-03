@@ -38,18 +38,31 @@ Remember you can see the options of each sub generators by running yo node:sub -
 - `cat:editorconfig`
 - `cat:eslint`
 - `cat:git`
-- `cat:gulp`
+- `cat:gulp` (istanbul and mocha will be also included)
 - `cat:pug`
 - `cat:react`
 - `cat:readme`
-- `cat:static`
 - `cat:webpack`
+- `cat:static`
 
 ## Type
+
+- Choose `Default` if you just want to use those.
+- Common default:
+  - `babel`
+  - `editorconfig`
+  - `eslint`
+  - `git`
+  - `gulp`
+  - `readme`
 
 #### Static pages
 
 - Add `render.js` in `gulp-tasks`
+- Default:
+  - `webpack`
+  - `pug`
+  - `react`
 
 #### Dynamic pages
 

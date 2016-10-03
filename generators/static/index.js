@@ -35,8 +35,8 @@ module.exports = generators.Base.extend({
     return this.prompt([{
       type: 'input',
       name: 'name',
-      message: 'Main url(be equal to Main controller name, please)',
-      default: 'index'
+      message: 'Main url',
+      default: this.apppname
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));

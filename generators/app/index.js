@@ -55,7 +55,7 @@ module.exports = generators.Base.extend({
       version: this.pkg.version,
       homepage: this.pkg.homepage,
       type: this.pkg.type,
-      typeList: ['Static pages', 'Dynamic pages'],
+      typeList: ['Static pages', 'Dynamic pages', 'Default'],
       react: true
     };
 
@@ -104,8 +104,13 @@ module.exports = generators.Base.extend({
       }]).then(function(props) {
         this.props = extend(this.props, props);
         switch(this.props.typeList.indexOf(props.type)) {
-          default:
+          case 0:
+          case 1:
             this.props.react = true;
+            break;
+
+          default:
+            this.props.react = false;
             break;
         }
       }.bind(this));
@@ -273,26 +278,6 @@ module.exports = generators.Base.extend({
       }, {
         local: require.resolve('../react')
       });
-
-      this.composeWith('cat:pug', {
-        options: {
-          test: true,
-          projectName: 'test-page',
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../pug')
-      });
-
-      this.composeWith('cat:pug', {
-        options: {
-          test: false,
-          projectName: 'page',
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../pug')
-      });
     }
 
     switch(this.props.typeList.indexOf(this.props.type)) {
@@ -306,6 +291,25 @@ module.exports = generators.Base.extend({
           }
         }, {
           local: require.resolve('../static')
+        });
+        this.composeWith('cat:pug', {
+          options: {
+            test: true,
+            projectName: 'test-page',
+            skipInstall: this.options.skipInstall
+          }
+        }, {
+          local: require.resolve('../pug')
+        });
+
+        this.composeWith('cat:pug', {
+          options: {
+            test: false,
+            projectName: 'page',
+            skipInstall: this.options.skipInstall
+          }
+        }, {
+          local: require.resolve('../pug')
         });
         break;
 
