@@ -21,7 +21,7 @@ gulp.task('render-html', function() {
   [
     {
 <% if(router) { -%>
-      location: '<%= projectName %>',
+      location: '<%= url %>',
       router: require('./../lib/routers/<%= name %>').default,
 <% } else { -%>
       component: require('./../lib/omponents/<%= componentName %>').default,

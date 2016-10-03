@@ -34,9 +34,9 @@ module.exports = generators.Base.extend({
   prompting: function() {
     return this.prompt([{
       type: 'input',
-      name: 'name',
+      name: 'url',
       message: 'Main url',
-      default: this.apppname
+      default: this.appname
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
@@ -49,7 +49,7 @@ module.exports = generators.Base.extend({
         router: this.options.router,
         redux: this.options.redux,
         radium: this.options.radium,
-        name: this.props.name,
+        url: this.props.url,
         componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
       }
     );
