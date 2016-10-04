@@ -41,7 +41,8 @@ module.exports = generators.Base.extend({
       type: 'input',
       name: 'url',
       message: 'Main url',
-      default: this.appname
+      default: this.appname,
+      when: this.option.router
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
@@ -71,6 +72,8 @@ module.exports = generators.Base.extend({
     if(pkg['pre-commit'].indexOf('build') === -1) {
       pkg['pre-commit'].push('build');
     }
+
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   },
 
   install: function() {

@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 <% if(redux && !router) { -%>
 import {Provider} from 'react-redux';
-import store from './../store/<%= name %>';
+import store from './../stores/<%= name %>';
 <% } -%>
 <% if(radium) { -%>
 import Wrapper from './../components/radium/Wrapper';

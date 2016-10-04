@@ -37,7 +37,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        lint: 'eslint --cache ./ --ext .js'
+        lint: 'gulp lint'
       },
       'pre-commit': []
     }, currentPkg);
@@ -52,7 +52,6 @@ module.exports = generators.Base.extend({
   install: function() {
     if(this.options.react)
       this.npmInstall([
-        'eslint',
         'eslint-config-google',
         'babel-eslint',
         'eslint-plugin-react',
@@ -61,7 +60,6 @@ module.exports = generators.Base.extend({
       ], {saveDev: true});
     else
       this.npmInstall([
-        'eslint',
         'eslint-config-google',
         'babel-eslint',
         'pre-commit',

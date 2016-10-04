@@ -10,7 +10,7 @@ var render = function() {
 
 gulp.task('babel:build', ['babel:clean'], render);
 
-gulp.task('babel:clean', function () {
+gulp.task('babel:clean', function() {
   return gulp.src('./lib')
     .pipe(clean({force: true}));
 });

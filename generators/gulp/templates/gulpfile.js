@@ -30,11 +30,13 @@ gulp.task('watch', ['babel:build'], function() {
 gulp.task('watch', function() {
 <% } -%>
   gulp.watch('./src/**', [
-<% if(babel) { -%>
+<% if(babel && eslint) { -%>
     'babel:render',
-<% } -%>
-<% if(eslint) { -%>
-    'lint',
+    'lint'
+<% } esle if(babel) { -%>
+    'babel:render'
+<% } else if(eslint) { -%>
+    'lint'
 <% } -%>
   ]);
 });
@@ -44,4 +46,3 @@ gulp.task('default', [
 <% } -%>
   'test'
 ]);
-

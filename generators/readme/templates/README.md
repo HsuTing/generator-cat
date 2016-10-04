@@ -18,5 +18,5 @@ var <%= projectName %> = require('<%= projectName %>');
 
 <%= license %> © [<%= author.name %>](<%= author.url %>)
 
-[npm-image]: https://badge.fury.io/js/generator-cat.svg
-[npm-url]: https://npmjs.org/package/generator-cat
+[npm-image]: https://badge.fury.io/js/<%= projectName %>.svg
+[npm-url]: https://npmjs.org/package/<%= projectName %>
