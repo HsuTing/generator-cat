@@ -34,7 +34,7 @@ yo cat
 
 ## Sub generators
 
-Remember you can see the options of each sub generators by running yo node:sub --help.
+Remember you can see the options of each sub generators by running `yo node:sub --help`.
 
 - `cat:babel`
 - `cat:editorconfig`
@@ -57,6 +57,7 @@ Remember you can see the options of each sub generators by running yo node:sub -
   - `git`
   - `gulp`
   - `readme`
+- Remember you can see the tasks by running `gulp help`.
 
 #### Static pages
 

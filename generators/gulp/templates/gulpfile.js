@@ -5,7 +5,7 @@ var gulpRequireTasks = require('gulp-require-tasks');
 var watch = require('gulp-watch');
 var taskListing = require('gulp-task-listing');
 <% if(static) { -%>
-var staticRender = require('./gulp-tasks/render');
+var staticRender = require('./gulp-tasks/static');
 <% } -%>
 
 gulpRequireTasks({
