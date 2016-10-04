@@ -50,7 +50,7 @@ module.exports = generators.Base.extend({
   writing: function() {
     this.fs.copyTpl(
       this.templatePath('gulpfile.js'),
-      this.destinationPath('gulp-tasks/render.js'), {
+      this.destinationPath('gulp-tasks/static.js'), {
         router: this.options.router,
         redux: this.options.redux,
         radium: this.options.radium,

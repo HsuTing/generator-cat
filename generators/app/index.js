@@ -103,7 +103,7 @@ module.exports = generators.Base.extend({
         when: !this.props.type || this.props.typeList.indexOf(this.props.type) === -1
       }]).then(function(props) {
         this.props = extend(this.props, props);
-        switch(this.props.typeList.indexOf(props.type)) {
+        switch(this.props.typeList.indexOf(props.type || this.props.type)) {
           case 0:
           case 1:
             this.props.react = true;

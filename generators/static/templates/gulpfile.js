@@ -25,7 +25,7 @@ var staticRender = function() {
       location: '<%= url %>',
       router: require('./../lib/routers/<%= name %>').default,
 <% } else { -%>
-      component: require('./../lib/omponents/<%= componentName %>').default,
+      component: require('./../lib/components/<%= componentName %>').default,
 <% } -%>
 <% if(redux) { -%>
       store: require('./../lib/stores/<%= name %>').default,
@@ -84,14 +84,14 @@ var staticRender = function() {
 <% if(radium) { -%>
             React.createElement(Wrapper, null,
 <% if(redux) { -%>
-              React.createElement(Provider, {store: component.store}, component.component)
+              React.createElement(Provider, {store: component.store}, React.createElement(component.component))
 <% } else { -%>
               component.component
 <% } -%>
             )
 <% } else { -%>
 <% if(redux) { -%>
-            React.createElement(Provider, {store: component.store}, component.component)
+            React.createElement(Provider, {store: component.store}, React.createElement(component.component))
 <% } else { -%>
             component.component
 <% } -%>
