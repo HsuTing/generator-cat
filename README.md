@@ -1,5 +1,4 @@
 # generator-cat [![NPM version][npm-image]][npm-url]
-> generator cat
 
 ## Installation
 
@@ -40,9 +39,9 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 - `cat:editorconfig`
 - `cat:eslint`
 - `cat:git`
-- `cat:gulp` (istanbul and mocha will be also included)
+- `cat:gulp` (`istanbul` and `mocha` will be also included)
 - `cat:pug`
-- `cat:react`
+- `cat:react` (remember you can use this to create all files about `react`)
 - `cat:readme`
 - `cat:webpack`
 - `cat:static`

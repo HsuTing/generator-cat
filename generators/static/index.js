@@ -59,12 +59,25 @@ module.exports = generators.Base.extend({
         componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
       }
     );
+
+    var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    var pkg = extend({
+      scripts: {
+        build: 'gulp build'
+      },
+      'pre-commit': []
+    }, currentPkg);
+
+    if(pkg['pre-commit'].indexOf('build') === -1) {
+      pkg['pre-commit'].push('build');
+    }
   },
 
   install: function() {
     this.npmInstall([
       'gulp-pug',
-      'gulp-rename'
+      'gulp-rename',
+      'pre-commit'
     ], {saveDev: true});
   },
 
