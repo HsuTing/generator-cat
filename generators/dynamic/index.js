@@ -6,11 +6,34 @@ var extend = _.merge;
 
 module.exports = generators.Base.extend({
   constructor: function() {
+    generators.Base.apply(this, arguments);
+
     this.option('email', {
       type: String,
       require: false,
       default: '',
       desc: 'Domain email'
+    });
+
+    this.option('router', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-router'
+    });
+
+    this.option('redux', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-redux'
+    });
+
+    this.option('radium', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use Radium'
     });
   },
 

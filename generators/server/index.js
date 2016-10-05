@@ -5,9 +5,10 @@ var _ = require('lodash');
 var extend = _.merge;
 
 module.exports = generators.Base.extend({
-  initializing: function() {
-    this.props = {};
+  constructor: function() {
+    generators.Base.apply(this, arguments);
 
+    this.props = {};
     this.option('email', {
       type: String,
       require: false,
