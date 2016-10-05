@@ -38,5 +38,23 @@ module.exports = generators.Base.extend({
         email: this.options.email
       }
     });
+    this.composeWith('cat:pug', {
+      options: {
+        test: true,
+        projectName: 'test-page',
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../pug')
+    });
+    this.composeWith('cat:pug', {
+      options: {
+        test: false,
+        projectName: 'page',
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../pug')
+    });
   }
 });

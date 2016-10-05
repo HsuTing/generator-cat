@@ -21,7 +21,7 @@ import <%= middleware[customInde].replace('(custom)', '') %> from './middleware/
 
 const ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 const BASE_DIR = path.resolve(__dirname, './../');
-const ROUTERS = path.join(__dirname, './server-routes');
+const ROUTERS = path.resolve(__dirname, './server-routes');
 const app = express();
 
 app.set('views', path.resolve(BASE_DIR, 'views'));
@@ -49,11 +49,12 @@ app.use(<%= middleware[customInde].replace('(custom)', '') %>);
 <% } -%>
 <% } -%>
 
-fs.readdirSync(ROUTERS).forEach(file => {
-  if(file === 'README.md')
-    return;
-
-  require('./server-routes/' + file).default(app);
+['views', 'api'].foreEach(folder => {
+  fs.readdirSync(path.resolve(ROUTERS, folder)).forEach(files => {
+    const routes = require(files).default;
+    if(typeof routes === 'function')
+      routes(app);
+  });
 });
 
 app.listen(ENV ? 80 : 8000);

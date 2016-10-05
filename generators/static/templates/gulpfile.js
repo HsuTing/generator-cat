@@ -15,7 +15,7 @@ var Provider = require('react-redux').Provider;
 var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 
 var staticRender = function() {
-<% if (radium) { -%>
+<% if(radium) { -%>
   var Wrapper = require('./../lib/components/radium/Wrapper').default;
 <% } -%>
 
@@ -52,7 +52,7 @@ var staticRender = function() {
                   )
 <% } else { -%>
 <% if(redux) { -%>
-                    React.createElement(Provider, {store: component.store}, React.createElement(RouterContext, renderProps))
+                  React.createElement(Provider, {store: component.store}, React.createElement(RouterContext, renderProps))
 <% } else { -%>
                   React.createElement(RouterContext, renderProps)
 <% } -%>

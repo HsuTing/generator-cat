@@ -33,12 +33,10 @@ module.exports = generators.Base.extend({
 
   prompting: function() {
     return this.prompt([{
-      type: 'input',
       name: 'name',
       message: 'Main controller name',
       default: 'index'
     }, {
-      type: 'input',
       name: 'url',
       message: 'Main url',
       default: this.appname,
@@ -86,7 +84,6 @@ module.exports = generators.Base.extend({
     }, {
       local: require.resolve('../pug')
     });
-
     this.composeWith('cat:pug', {
       options: {
         test: false,

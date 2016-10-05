@@ -14,6 +14,26 @@ module.exports = generators.Base.extend({
       default: '',
       desc: 'Domain email'
     });
+    this.option('router', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-router'
+    });
+
+    this.option('redux', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-redux'
+    });
+
+    this.option('radium', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use Radium'
+    });
   },
 
   prompting: {
@@ -48,6 +68,11 @@ module.exports = generators.Base.extend({
         filter: function(words) {
           return words.split(/\s*,\s*/g);
         }
+      }, {
+        name: 'name',
+        message: 'Main controller name',
+        default: 'index',
+        when: this.options.router || this.options.redux || this.options.radium
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
@@ -70,10 +95,32 @@ module.exports = generators.Base.extend({
   },
 
   writing: function() {
-    this.fs.copy(
-      this.templatePath('README.md'),
-      this.destinationPath('src/server-routes/README.md')
-    );
+    if(this.options.router || this.options.redux || this.options.radium) {
+      this.fs.copyTpl(
+        this.templatePath('react.js'),
+        this.destinationPath('src/middleware/react.js'), {
+          router: this.options.router,
+          redux: this.options.redux,
+          radium: this.options.radium
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('views.js'),
+        this.destinationPath('src/server-routes/views/' + this.props.name + '.js'), {
+          name: this.props.name,
+          componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1),
+          router: this.options.router,
+          redux: this.options.redux,
+          radium: this.options.radium
+        }
+      );
+      this.fs.copyTpl(
+        this.templatePath('README.md'),
+        this.destinationPath('src/server-routes/api/README.md'), {
+          name: 'api'
+        }
+      );
+    }
 
     switch(this.props.type) {
       case 'http':
