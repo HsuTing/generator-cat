@@ -23,6 +23,10 @@ gulp.task('prepublish', ['nsp']);
 gulp.task('build', [
   'babel:build'
 ], staticRender);
+<% } else { -%>
+gulp.task('build', [
+  'babel:build'
+]);
 <% } -%>
 <% if(babel) { -%>
 gulp.task('watch', ['babel:build'], function() {
