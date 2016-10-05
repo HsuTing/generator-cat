@@ -61,6 +61,17 @@ module.exports = generators.Base.extend({
         email: this.options.email
       }
     });
+
+    this.composeWith('cat:gulp', {
+      options: {
+        react: this.props.react,
+        static: false,
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../gulp')
+    });
+
     this.composeWith('cat:pug', {
       options: {
         test: true,
@@ -70,6 +81,7 @@ module.exports = generators.Base.extend({
     }, {
       local: require.resolve('../pug')
     });
+
     this.composeWith('cat:pug', {
       options: {
         test: false,
@@ -79,5 +91,9 @@ module.exports = generators.Base.extend({
     }, {
       local: require.resolve('../pug')
     });
+  },
+
+  end: function() {
+    this.spawnCommand('gulp', ['build']);
   }
 });

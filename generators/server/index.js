@@ -65,6 +65,7 @@ module.exports = generators.Base.extend({
       return this.prompt([{
         name: 'cookieIDs',
         message: 'Cookie names (comma to split)',
+        default: 'id',
         when: this.props.middleware.indexOf('cookie parser') !== -1,
         filter: function(words) {
           return words.split(/\s*,\s*/g);

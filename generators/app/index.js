@@ -223,15 +223,6 @@ module.exports = generators.Base.extend({
       local: require.resolve('../babel')
     });
 
-    this.composeWith('cat:gulp', {
-      options: {
-        react: this.props.react,
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../gulp')
-    });
-
     if(this.options.license && !this.pkg.license) {
       this.composeWith('license', {
         options: {

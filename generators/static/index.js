@@ -75,6 +75,15 @@ module.exports = generators.Base.extend({
   },
 
   default: function() {
+    this.composeWith('cat:gulp', {
+      options: {
+        react: this.props.react,
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../gulp')
+    });
+
     this.composeWith('cat:pug', {
       options: {
         test: true,
@@ -84,6 +93,7 @@ module.exports = generators.Base.extend({
     }, {
       local: require.resolve('../pug')
     });
+
     this.composeWith('cat:pug', {
       options: {
         test: false,
