@@ -297,7 +297,10 @@ module.exports = generators.Base.extend({
       case 1:
         this.composeWith('cat:dynamic', {
           options: {
-            email: this.props.email,
+            email: this.props.authorEmail,
+            router: this.options.router,
+            redux: this.options.redux,
+            radium: this.options.radium,
             skipInstall: this.options.skipInstall
           }
         }, {
