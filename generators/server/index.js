@@ -7,6 +7,13 @@ var extend = _.merge;
 module.exports = generators.Base.extend({
   initializing: function() {
     this.props = {};
+
+    this.option('email', {
+      type: String,
+      require: false,
+      default: '',
+      desc: 'Domain email'
+    });
   },
 
   prompting: {
@@ -24,14 +31,16 @@ module.exports = generators.Base.extend({
         choices: [
           'cookie parser',
           'body parser',
-          'connect multiparty'
+          'connect multiparty',
+          '(custom)info',
+          '(custom)blacklist'
         ]
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
     },
 
-    addOtherOptions: function() {
+    addOptions: function() {
       return this.prompt([{
         name: 'cookieIDs',
         message: 'Cookie names (comma to split)',
@@ -42,10 +51,30 @@ module.exports = generators.Base.extend({
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
+    },
+
+    addHttpsOptions: function() {
+      return this.prompt([{
+        name: 'domain',
+        message: 'Domain name',
+        when: this.props.type === 'https'
+      }, {
+        name: 'email',
+        message: 'Domain email',
+        default: this.options.email,
+        when: this.props.type === 'https'
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
     }
   },
 
   writing: function() {
+    this.fs.copy(
+      this.templatePath('README.md'),
+      this.destinationPath('src/server-routes/README.md')
+    );
+
     switch(this.props.type) {
       case 'http':
         this.fs.copyTpl(
@@ -56,6 +85,11 @@ module.exports = generators.Base.extend({
         break;
 
       case 'https':
+        this.fs.copyTpl(
+          this.templatePath('https.js'),
+          this.destinationPath('src/server.js'),
+          this.props
+        );
         break;
 
       default:
@@ -64,16 +98,32 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
-    const modules = ['express'];
+    const modules = ['express', 'compression'];
     this.props.middleware.forEach(function(middleware) {
+      if(middleware.indexOf('custom') !== -1) {
+        this.fs.copy(
+          this.templatePath('middleware/' + middleware.replace('(custom)', '') + '.js'),
+          this.destinationPath('src/middleware/' + middleware.replace('(custom)', '') + '.js')
+        );
+        return;
+      }
+
       modules.push(middleware.replace(/ /g, '-'));
-    });
+    }.bind(this));
 
     switch(this.props.type) {
       case 'http':
         break;
 
       case 'https':
+        [
+          'letsencrypt-express',
+          'le-challenge-fs',
+          'le-store-certbot',
+          'redirect-https'
+        ].forEach(function(module) {
+          modules.push(module);
+        });
         break;
 
       default:

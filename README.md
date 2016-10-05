@@ -64,14 +64,17 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 
 - Add `render.js` in `gulp-tasks`
 - Default:
+  - `react`
   - `webpack`
   - `pug`
-  - `react`
 
 #### Dynamic pages
 
 - Not yet
 - Default:
+  - `react`
+  - `webpack`
+  - `pug`
   - `server`
 
 ## License
