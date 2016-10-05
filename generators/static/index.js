@@ -64,7 +64,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        build: 'gulp build'
+        build: 'NODE_ENV=1 gulp build'
       },
       'pre-commit': []
     }, currentPkg);
@@ -74,6 +74,28 @@ module.exports = generators.Base.extend({
     }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+  },
+
+  default: function() {
+    this.composeWith('cat:pug', {
+      options: {
+        test: true,
+        projectName: 'test-page',
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../pug')
+    });
+
+    this.composeWith('cat:pug', {
+      options: {
+        test: false,
+        projectName: 'page',
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../pug')
+    });
   },
 
   install: function() {

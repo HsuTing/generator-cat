@@ -292,25 +292,6 @@ module.exports = generators.Base.extend({
         }, {
           local: require.resolve('../static')
         });
-        this.composeWith('cat:pug', {
-          options: {
-            test: true,
-            projectName: 'test-page',
-            skipInstall: this.options.skipInstall
-          }
-        }, {
-          local: require.resolve('../pug')
-        });
-
-        this.composeWith('cat:pug', {
-          options: {
-            test: false,
-            projectName: 'page',
-            skipInstall: this.options.skipInstall
-          }
-        }, {
-          local: require.resolve('../pug')
-        });
         break;
 
       default:

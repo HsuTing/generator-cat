@@ -38,7 +38,7 @@ var staticRender = function() {
       match({routes: component.router, location: component.location}, function(error, redirextLocation, renderProps) {
         if(renderProps)
           gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
-            .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
+            .pipe(rename(component.name === 'index' ? 'index.html' : component.name + '/index.html'))
             .pipe(pug({
               locals: {
                 markup: renderToStaticMarkup(
@@ -63,7 +63,7 @@ var staticRender = function() {
             .pipe(gulp.dest(process.cwd()));
         else
           gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
-            .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
+            .pipe(rename(component.name === 'index' ? 'index.html' : component.name + '/index.html'))
             .pipe(pug({
               locals: {
                 markup: renderToStaticMarkup(
@@ -77,7 +77,7 @@ var staticRender = function() {
     }
 <% } -%>
     gulp.src(ENV ? './views/page.pug' : './views/test-page.pug')
-      .pipe(rename(component.name === 'index' ? 'index.html' : name + '/index.html'))
+      .pipe(rename(component.name === 'index' ? 'index.html' : component.name + '/index.html'))
       .pipe(pug({
         locals: {
           markup: renderToStaticMarkup(

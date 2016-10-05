@@ -44,7 +44,9 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 - `cat:react` (remember you can use this to create all files about `react`)
 - `cat:readme`
 - `cat:webpack`
+- `cat:server`
 - `cat:static`
+- `cat:dynamic`
 
 ## Type
 
@@ -69,6 +71,8 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 #### Dynamic pages
 
 - Not yet
+- Default:
+  - `server`
 
 ## License
 
