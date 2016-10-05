@@ -33,7 +33,7 @@ gulp.task('watch', function() {
 <% if(babel && eslint) { -%>
     'babel:render',
     'lint'
-<% } esle if(babel) { -%>
+<% } else if(babel) { -%>
     'babel:render'
 <% } else if(eslint) { -%>
     'lint'
