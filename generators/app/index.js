@@ -201,7 +201,11 @@ module.exports = generators.Base.extend({
       local: require.resolve('../editorconfig')
     });
 
-    this.composeWith('cat:git', {}, {
+    this.composeWith('cat:git', {
+      options: {
+        type: this.props.type
+      }
+    }, {
       local: require.resolve('../git')
     });
 
@@ -221,6 +225,16 @@ module.exports = generators.Base.extend({
       }
     }, {
       local: require.resolve('../babel')
+    });
+
+    this.composeWith('cat:gulp', {
+      options: {
+        react: true,
+        type: this.props.type,
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../gulp')
     });
 
     if(this.options.license && !this.pkg.license) {
@@ -247,17 +261,6 @@ module.exports = generators.Base.extend({
     });
 
     if(this.props.react) {
-      this.composeWith('cat:webpack', {
-        options: {
-          router: this.options.router,
-          redux: this.options.redux,
-          radium: this.options.radium,
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../webpack')
-      });
-
       this.composeWith('cat:react', {
         options: {
           name: this.props.name,
@@ -268,6 +271,17 @@ module.exports = generators.Base.extend({
         }
       }, {
         local: require.resolve('../react')
+      });
+
+      this.composeWith('cat:webpack', {
+        options: {
+          router: this.options.router,
+          redux: this.options.redux,
+          radium: this.options.radium,
+          skipInstall: this.options.skipInstall
+        }
+      }, {
+        local: require.resolve('../webpack')
       });
     }
 

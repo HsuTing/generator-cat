@@ -51,7 +51,7 @@ http.createServer(lex.middleware(redirectHttps())).listen(80);
 app.use(compression());
 <% if(middleware.indexOf('cookie parser') !== -1) { -%>
 <% for(index in cookieIDs) { -%>
-app.use(cookieParser(<%= cookieIDs[index] -%>));
+app.use(cookieParser('<%= cookieIDs[index] -%>'));
 <% } -%>
 <% } -%>
 <% if(middleware.indexOf('body parser') !== -1) { -%>
@@ -66,12 +66,16 @@ app.use(<%= middleware[customInde].replace('(custom)', '') %>);
 <% } -%>
 <% } -%>
 
-['views', 'api'].foreEach(folder => {
-  fs.readdirSync(path.resolve(ROUTERS, folder)).forEach(files => {
-    const routes = require(files).default;
-    if(typeof routes === 'function')
-      routes(app);
-  });
+['views', 'api'].forEach(folder => {
+  try {
+    fs.readdirSync(path.resolve(ROUTERS, folder)).forEach(filename => {
+      const routes = require(path.resolve(ROUTERS, folder, filename)).default;
+      if(typeof routes === 'function')
+        routes(app);
+    });
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 https.createServer(lex.httpsOptions, lex.middleware(app)).listen(ENV ? 443 : 8000);

@@ -1,13 +1,13 @@
 'use strict';
 
-import react from './../middleware/react';
+import react from './../../middleware/react';
 <% if(router) { -%>
-import <%= name %> from './../routers/<%= name %>';
+import <%= name %> from './../../routers/<%= name %>';
 <% } else {-%>
-import <%= componentName %> from './../components/<%= componentName %>';
+import <%= componentName %> from './../../components/<%= componentName %>';
 <% } -%>
 <% if(redux) { -%>
-import store from './../stores/<%= name %>';
+  import store from './../../stores/<%= name %>';
 <% } -%>
 
 const ENV = Boolean(Number(process.env.NODE_ENV) || 0);
@@ -18,11 +18,11 @@ export default app => {
 <% if(redux) { -%>
     store: store,
 <% } -%>
-    type: <%= router ? 'router' : 'normal' %>
+    type: <%= (router ? 'router' : 'normal') %>
   }));
 
   app.use((req, res) => {
-    res.render(env ? 'page' : 'test-page',{
+    res.render(ENV ? 'page' : 'test-page', {
       markup: req.react
     });
   });

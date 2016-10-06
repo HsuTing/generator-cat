@@ -28,6 +28,12 @@ module.exports = generators.Base.extend({
       default: true,
       desc: 'Use Radium'
     });
+
+    this.option('type', {
+      type: String,
+      required: false,
+      desc: 'Type'
+    });
   },
 
   writing: function() {
@@ -49,7 +55,7 @@ module.exports = generators.Base.extend({
       'pre-commit': []
     }, currentPkg);
 
-    if(pkg['pre-commit'].indexOf('webpack') === -1) {
+    if(pkg['pre-commit'].indexOf('webpack') === -1 && this.options.type === 'static') {
       pkg['pre-commit'].push('webpack');
     }
 

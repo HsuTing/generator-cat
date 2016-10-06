@@ -40,8 +40,7 @@ export default options => {
 <% } -%>
           );
           next();
-        }
-        else
+        } else
           res.status(404).send('Not found');
       });
       return;
@@ -51,14 +50,14 @@ export default options => {
 <% if(radium) { -%>
       React.createElement(Wrapper, {radiumConfig: {userAgent: req.headers['user-agent']}},
 <% if(redux) { -%>
-        React.createElement(Provider, {store: options.store}, React.createElement(RouterContext, renderProps))
+        React.createElement(Provider, {store: options.store}, options.component)
 <% } else { -%>
         options.component
 <% } -%>
       )
 <% } else { -%>
 <% if(redux) { -%>
-      React.createElement(Provider, {store: options.store}, React.createElement(RouterContext, renderProps))
+      React.createElement(Provider, {store: options.store}, options.component)
 <% } else { -%>
       options.component
 <% } -%>

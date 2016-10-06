@@ -4,7 +4,10 @@ var nsp = require('gulp-nsp');
 var gulpRequireTasks = require('gulp-require-tasks');
 var watch = require('gulp-watch');
 var taskListing = require('gulp-task-listing');
-<% if(static) { -%>
+<% if(type === 'dynamic') { -%>
+var exec = require('gulp-exec');
+<% } -%>
+<% if(type === 'static') { -%>
 var staticRender = require('./gulp-tasks/static');
 <% } -%>
 
@@ -19,31 +22,44 @@ gulp.task('nsp', function(cb) {
 });
 
 gulp.task('prepublish', ['nsp']);
-<% if(static) { -%>
+
+<% switch(type) { -%>
+<% case 'static': -%>
 gulp.task('build', [
   'babel:build'
 ], staticRender);
-<% } else { -%>
-gulp.task('build', [
-  'babel:build'
-]);
-<% } -%>
-<% if(babel) { -%>
+
 gulp.task('watch', ['babel:build'], function() {
-<% } else { -%>
-gulp.task('watch', function() {
-<% } -%>
   gulp.watch('./src/**', [
-<% if(babel && eslint) { -%>
     'babel:render',
     'lint'
-<% } else if(babel) { -%>
-    'babel:render'
-<% } else if(eslint) { -%>
-    'lint'
-<% } -%>
   ]);
 });
+<% break %>
+<% case 'dynamic': -%>
+gulp.task('server', [
+  'babel:build'
+], function() {
+  gulp.src('./')
+    .pipe(exec('NODE_ENV=1 node ./lib/server'))
+    .pipe(exec.reporter(reportOptions));
+});
+gulp.task('server:dev', [
+  'babel:render'
+], function() {
+  gulp.src('./')
+    .pipe(exec('node ./lib/server'))
+    .pipe(exec.reporter(reportOptions));
+});
+gulp.task('watch', ['babel:build'], function() {
+  gulp.watch('./src/**', [
+    'server:dev',
+    'lint'
+  ]);
+});
+<% break %>
+<% } -%>
+
 gulp.task('default', [
 <% if(eslint) { -%>
   'lint',

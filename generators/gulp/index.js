@@ -22,11 +22,10 @@ module.exports = generators.Base.extend({
       desc: 'Use eslint'
     });
 
-    this.option('static', {
-      type: Boolean,
+    this.option('type', {
+      type: String,
       required: false,
-      defaults: true,
-      desc: 'Use static render'
+      desc: 'Type'
     });
   },
 
@@ -36,7 +35,7 @@ module.exports = generators.Base.extend({
       this.destinationPath('gulpfile.js'), {
         babel: this.options.babel,
         eslint: this.options.eslint,
-        static: this.options.static
+        type: this.options.type
       }
     );
     this.fs.copy(
