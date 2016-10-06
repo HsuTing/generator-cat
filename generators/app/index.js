@@ -229,7 +229,6 @@ module.exports = generators.Base.extend({
 
     this.composeWith('cat:gulp', {
       options: {
-        react: true,
         type: this.props.type,
         skipInstall: this.options.skipInstall
       }
