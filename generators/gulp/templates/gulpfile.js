@@ -22,7 +22,7 @@ gulp.task('nsp', function(cb) {
 });
 
 gulp.task('prepublish', ['nsp']);
-<% if(type === 'static') { -%>
+<% if(type === 'Static pages') { -%>
 
 gulp.task('build', [
   'babel:build'
@@ -35,7 +35,7 @@ gulp.task('watch', ['babel:build'], function() {
   ]);
 });
 <% } -%>
-<% if(type === 'dynamic') { -%>
+<% if(type === 'Dynamic pages') { -%>
 
 gulp.task('server', [
   'babel:build'
