@@ -22,9 +22,8 @@ gulp.task('nsp', function(cb) {
 });
 
 gulp.task('prepublish', ['nsp']);
+<% if(type === 'static') { -%>
 
-<% switch(type) { -%>
-<% case 'static': -%>
 gulp.task('build', [
   'babel:build'
 ], staticRender);
@@ -35,8 +34,8 @@ gulp.task('watch', ['babel:build'], function() {
     'lint'
   ]);
 });
-<% break %>
-<% case 'dynamic': -%>
+<% else if(type === 'dynamic') { -%>
+
 gulp.task('server', [
   'babel:build'
 ], function() {
@@ -44,6 +43,7 @@ gulp.task('server', [
     .pipe(exec('NODE_ENV=1 node ./lib/server'))
     .pipe(exec.reporter(reportOptions));
 });
+
 gulp.task('server:dev', [
   'babel:render'
 ], function() {
@@ -51,13 +51,13 @@ gulp.task('server:dev', [
     .pipe(exec('node ./lib/server'))
     .pipe(exec.reporter(reportOptions));
 });
+
 gulp.task('watch', ['babel:build'], function() {
   gulp.watch('./src/**', [
     'server:dev',
     'lint'
   ]);
 });
-<% break %>
 <% } -%>
 
 gulp.task('default', [
