@@ -55,7 +55,7 @@ module.exports = generators.Base.extend({
       'pre-commit': []
     }, currentPkg);
 
-    if(pkg['pre-commit'].indexOf('webpack') === -1 && this.options.type === 'static') {
+    if(pkg['pre-commit'].indexOf('webpack') === -1 && this.options.type === 'Static pages') {
       pkg['pre-commit'].push('webpack');
     }
 
