@@ -277,6 +277,7 @@ module.exports = generators.Base.extend({
           router: this.options.router,
           redux: this.options.redux,
           radium: this.options.radium,
+          type: this.props.type,
           skipInstall: this.options.skipInstall
         }
       }, {

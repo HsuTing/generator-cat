@@ -38,7 +38,7 @@ module.exports = generators.Base.extend({
       default: 'index'
     }, {
       name: 'url',
-      message: 'Main url',
+      message: 'Base url for rendering router',
       default: this.appname,
       when: this.option.router
     }]).then(function(props) {
