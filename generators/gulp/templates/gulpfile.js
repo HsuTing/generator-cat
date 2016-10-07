@@ -34,7 +34,8 @@ gulp.task('watch', ['babel:build'], function() {
     'lint'
   ]);
 });
-<% else if(type === 'dynamic') { -%>
+<% } -%>
+<% if(type === 'dynamic') { -%>
 
 gulp.task('server', [
   'babel:build'
