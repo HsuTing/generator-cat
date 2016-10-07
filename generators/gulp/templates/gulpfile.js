@@ -4,10 +4,10 @@ var nsp = require('gulp-nsp');
 var gulpRequireTasks = require('gulp-require-tasks');
 var watch = require('gulp-watch');
 var taskListing = require('gulp-task-listing');
-<% if(type === 'dynamic') { -%>
+<% if(type === 'Dynamic pages') { -%>
 var exec = require('gulp-exec');
 <% } -%>
-<% if(type === 'static') { -%>
+<% if(type === 'Static pages') { -%>
 var staticRender = require('./gulp-tasks/static');
 <% } -%>
 
