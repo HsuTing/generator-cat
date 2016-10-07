@@ -18,6 +18,12 @@ module.exports = generators.Base.extend({
       required: true,
       desc: 'Project name'
     });
+
+    this.option('type', {
+      type: String,
+      required: false,
+      desc: 'Type'
+    });
   },
 
   writing: function() {
@@ -26,7 +32,8 @@ module.exports = generators.Base.extend({
       this.templatePath('page.pug'),
       this.destinationPath('views/' + this.options.projectName + '.pug'), {
         test: this.options.test,
-        name: this.pkg.name
+        name: this.pkg.name,
+        type: this.options.type
       }
     );
   },

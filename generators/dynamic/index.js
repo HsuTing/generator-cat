@@ -27,6 +27,7 @@ module.exports = generators.Base.extend({
       options: {
         test: true,
         projectName: 'test-page',
+        type: 'Dynamic pages',
         skipInstall: this.options.skipInstall
       }
     }, {
@@ -37,6 +38,7 @@ module.exports = generators.Base.extend({
       options: {
         test: false,
         projectName: 'page',
+        type: 'Dynamic pages',
         skipInstall: this.options.skipInstall
       }
     }, {

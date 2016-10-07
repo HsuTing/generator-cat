@@ -40,7 +40,7 @@ module.exports = generators.Base.extend({
       name: 'url',
       message: 'Base url for rendering router',
       default: this.appname,
-      when: this.option.router
+      when: this.options.router
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
@@ -79,6 +79,7 @@ module.exports = generators.Base.extend({
       options: {
         test: true,
         projectName: 'test-page',
+        type: 'Static pages',
         skipInstall: this.options.skipInstall
       }
     }, {
@@ -89,6 +90,7 @@ module.exports = generators.Base.extend({
       options: {
         test: false,
         projectName: 'page',
+        type: 'Static pages',
         skipInstall: this.options.skipInstall
       }
     }, {
