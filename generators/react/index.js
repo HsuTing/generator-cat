@@ -75,7 +75,8 @@ module.exports = generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('components.js'),
         this.destinationPath('src/components/' + componentName + '.js'), {
-          componentName: componentName
+          componentName: componentName,
+          radium: this.options.radium
         }
       );
       this.fs.copyTpl(
@@ -133,6 +134,10 @@ module.exports = generators.Base.extend({
       this.fs.copy(
         this.templatePath('radium/Wrapper.js'),
         this.destinationPath('src/components/radium/Wrapper.js')
+      );
+      this.fs.copy(
+        this.templatePath('Style.js'),
+        this.destinationPath('src/components/Style.js')
       );
     }
   },
