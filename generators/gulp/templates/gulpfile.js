@@ -4,6 +4,9 @@ var nsp = require('gulp-nsp');
 var gulpRequireTasks = require('gulp-require-tasks');
 var watch = require('gulp-watch');
 var taskListing = require('gulp-task-listing');
+var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
+var plumber = require('gulp-plumber');
 <% if(type === 'Dynamic pages') { -%>
 var exec = require('gulp-exec');
 <% } -%>
@@ -14,14 +17,6 @@ var staticRender = require('./gulp-tasks/static');
 gulpRequireTasks({
   path: path.resolve(process.cwd(), './gulp-tasks')
 });
-
-gulp.task('help', taskListing);
-
-gulp.task('nsp', function(cb) {
-  nsp({package: path.resolve('package.json')}, cb);
-});
-
-gulp.task('prepublish', ['nsp']);
 <% if(type === 'Static pages') { -%>
 
 gulp.task('build', [
@@ -47,11 +42,42 @@ gulp.task('server:dev', [
 });
 <% } -%>
 
-gulp.task('watch',
+gulp.task('help', taskListing);
+
+gulp.task('nsp', function(cb) {
+  nsp({package: path.resolve('package.json')}, cb);
+});
+
+gulp.task('prepublish', ['nsp']);
+
+gulp.task('pre-test', function() {
+  return gulp.src(['lib/**/*.js'])
+    .pipe(istanbul({
+      includeUntested: true
+    }))
+    .pipe(istanbul.hookRequire());
+});
+
+gulp.task('test', ['pre-test'], function(cb) {
+  var mochaErr;
+
+  gulp.src('test/**/*.js')
+    .pipe(plumber())
+    .pipe(mocha({reporter: 'spec'}))
+    .on('error', function(err) {
+      mochaErr = err;
+    })
+    .pipe(istanbul.writeReports())
+    .on('end', function() {
+      cb(mochaErr);
+    });
+});
+
+gulp.task('watch', [
 <% if(type === 'Dynamic pages') { -%>
-  ['server:dev'],
+  'server:dev'
 <% } -%>
-  function() {
+], function() {
   gulp.watch('./src/**', [
 <% if(type === 'Dynamic pages') { -%>
     'server:dev',

@@ -22,17 +22,12 @@ module.exports = generators.Base.extend({
         type: this.options.type
       }
     );
-    this.fs.copy(
-      this.templatePath('test.js'),
-      this.destinationPath('gulp-tasks/test.js')
-    );
   },
 
   install: function() {
     this.npmInstall([
       'gulp',
       'gulp-nsp',
-      'gulp-exclude-gitignore',
       'gulp-mocha',
       'gulp-istanbul',
       'gulp-plumber',
