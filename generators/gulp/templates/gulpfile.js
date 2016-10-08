@@ -39,7 +39,7 @@ gulp.task('server', [
 });
 
 gulp.task('server:dev', [
-  'babel:render'
+  'babel:build'
 ], function() {
   gulp.src('./')
     .pipe(exec('node ./lib/server'))
@@ -47,15 +47,17 @@ gulp.task('server:dev', [
 });
 <% } -%>
 
-gulp.task('watch', ['babel:build'], function() {
+gulp.task('watch',
+<% if(type === 'Dynamic pages') { -%>
+  ['server:dev'],
+<% } -%>
+  function() {
   gulp.watch('./src/**', [
 <% if(type === 'Dynamic pages') { -%>
     'server:dev',
-    'lint'
 <% } -%>
-<% if(type === 'Static pages') { -%>
+    'test',
     'lint'
-<% } -%>
   ]);
 });
 
