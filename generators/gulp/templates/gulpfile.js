@@ -27,12 +27,6 @@ gulp.task('prepublish', ['nsp']);
 gulp.task('build', [
   'babel:build'
 ], staticRender);
-
-gulp.task('watch', function() {
-  gulp.watch('./src/**', [
-    'lint'
-  ]);
-});
 <% } -%>
 <% if(type === 'Dynamic pages') { -%>
 
@@ -51,18 +45,21 @@ gulp.task('server:dev', [
     .pipe(exec('node ./lib/server'))
     .pipe(exec.reporter(reportOptions));
 });
+<% } -%>
 
 gulp.task('watch', ['babel:build'], function() {
   gulp.watch('./src/**', [
+<% if(type === 'Dynamic pages') { -%>
     'server:dev',
     'lint'
+<% } -%>
+<% if(type === 'Static pages') { -%>
+    'lint'
+<% } -%>
   ]);
 });
-<% } -%>
 
 gulp.task('default', [
-<% if(eslint) { -%>
   'lint',
-<% } -%>
   'test'
 ]);
