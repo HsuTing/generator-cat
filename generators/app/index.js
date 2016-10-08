@@ -250,10 +250,14 @@ module.exports = generators.Base.extend({
 
     this.composeWith('cat:readme', {
       options: {
+        type: this.props.type,
         name: this.props.name,
         description: this.props.description,
         authorName: this.props.authorName,
-        authorUrl: this.props.authorUrl
+        authorUrl: this.props.authorUrl,
+        router: this.options.router,
+        redux: this.options.redux,
+        radium: this.options.radium
       }
     }, {
       local: require.resolve('../readme')

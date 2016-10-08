@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Radium, {Style as StyleRadium} from 'radium';
+import radium, {Style as StyleRadium} from 'radium';
 import normalize from 'radium-normalize';
 
 class Style extends React.Component {
@@ -17,4 +17,4 @@ class Style extends React.Component {
   }
 }
 
-export default Radium(Style);
+export default radium(Style);

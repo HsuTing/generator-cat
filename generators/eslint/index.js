@@ -37,13 +37,13 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        lint: 'gulp lint'
+        test: 'gulp'
       },
       'pre-commit': []
     }, currentPkg);
 
-    if(pkg['pre-commit'].indexOf('lint') === -1) {
-      pkg['pre-commit'].push('lint');
+    if(pkg['pre-commit'].indexOf('test') === -1) {
+      pkg['pre-commit'].push('test');
     }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);

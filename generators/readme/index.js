@@ -29,6 +29,33 @@ module.exports = generators.Base.extend({
       required: true,
       desc: 'Author url'
     });
+
+    this.option('router', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-router'
+    });
+
+    this.option('redux', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use React-redux'
+    });
+
+    this.option('radium', {
+      type: Boolean,
+      required: false,
+      default: true,
+      desc: 'Use Radium'
+    });
+
+    this.option('type', {
+      type: String,
+      required: false,
+      desc: 'Type'
+    });
   },
 
   writing: function() {
@@ -36,6 +63,10 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'), {
+        type: this.options.type,
+        router: this.options.router,
+        redux: this.options.redux,
+        radium: this.options.radium,
         projectName: this.options.name,
         description: this.options.description,
         author: {

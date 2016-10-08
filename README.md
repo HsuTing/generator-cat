@@ -44,9 +44,9 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 - `cat:react` (remember you can use this to create all files about `react`)
 - `cat:readme`
 - `cat:webpack`
-- `cat:server`
-- `cat:static`
-- `cat:dynamic`
+- `cat:server` (`http` or `https` server`)
+- `cat:static` (type)
+- `cat:dynamic` (type)
 
 ## Type
 
@@ -58,11 +58,12 @@ Remember you can see the options of each sub generators by running `yo node:sub 
   - `git`
   - `gulp`
   - `readme`
-- Remember you can see the tasks by running `gulp help`.
+- Remember you can see the task list by running `gulp help`.
+- You can know what can you do with `README.md`.
 
 #### Static pages
 
-- Add `render.js` in `gulp-tasks`
+- Use to make a static page.
 - Default:
   - `react`
   - `webpack`
@@ -70,7 +71,7 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 
 #### Dynamic pages
 
-- Not yet
+- Use to make a web server with `express`.
 - Default:
   - `react`
   - `webpack`

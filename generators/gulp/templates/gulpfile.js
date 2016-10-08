@@ -28,9 +28,8 @@ gulp.task('build', [
   'babel:build'
 ], staticRender);
 
-gulp.task('watch', ['babel:build'], function() {
+gulp.task('watch', function() {
   gulp.watch('./src/**', [
-    'babel:render',
     'lint'
   ]);
 });
