@@ -35,7 +35,8 @@ module.exports = generators.Base.extend({
       scripts: {
         static: 'node tools/static.js',
         build: 'npm run babel && npm run static',
-        'build:production': 'npm run babel && NODE_ENV=1 npm run static'
+        'build:production': 'npm run babel && NODE_ENV=1 npm run static',
+        watch: 'concurrently "npm run babel:watch" "npm run webpack-server"'
       },
       'pre-commit': [
         'build:production',
@@ -91,6 +92,7 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
+      'concurrently',
       'mkdirp',
       'lodash',
       'cli-color',

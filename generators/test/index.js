@@ -11,11 +11,17 @@ module.exports = generators.Base.extend({
 
     var pkg = extend({
       scripts: {
-        test: 'mocha --reporter spec && istanbul cover ./src/**/*.js'
+        test: 'istanbul cover _mocha -- -R spec'
       }
     }, currentPkg);
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    // copy files
+    this.fs.copy(
+      this.templatePath('index.js'),
+      this.destinationPath('test/index.js')
+    );
   },
 
   install: function() {
