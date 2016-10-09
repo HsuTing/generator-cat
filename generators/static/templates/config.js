@@ -15,7 +15,7 @@ module.exports = [
     component: require('./lib/components/<%= componentName %>').default,
 <% } -%>
 <% if(redux) { -%>
-    store: require('./../lib/stores/<%= name %>').default,
+    store: require('./lib/stores/<%= name %>').default,
 <% } -%>
     name: 'index'
   }

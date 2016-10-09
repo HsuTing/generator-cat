@@ -86,6 +86,7 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
+      'mkdirp',
       'lodash',
       'pre-commit'
     ], {saveDev: true});

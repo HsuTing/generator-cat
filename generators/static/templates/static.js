@@ -4,12 +4,13 @@ var path = require('path');
 var pug = require('pug');
 var _ = require('lodash');
 var extend = _.merge;
+var mkdirp = require('mkdirp');
 var React = require('react');
 var renderToStaticMarkup = require('react-dom/server').renderToStaticMarkup;
 var config = require('./../static.config.js');
 
-var render = function(component) {
-  var fn = pug.compileFile('./../views/page.pug');
+var copyFile = function(component) {
+  var fn = pug.compileFile('./views/page.pug');
   fs.writeFile(
     path.resolve(__dirname, './../', component.name === 'index' ? 'index.html' : component.name + '/index.html'),
     fn(component.locals),
@@ -22,6 +23,19 @@ var render = function(component) {
   );
 };
 
+var render = function(component) {
+  if(component.name !== 'index') {
+    mkdirp(component.name, function(err) {
+      if(err)
+        throw err;
+
+      copyFile(component);
+    });
+  }
+  else
+    copyFile(component);
+};
+
 var radium = function(component) {
   var Wrapper = require('./../lib/components/radium/Wrapper').default;
 
@@ -31,7 +45,7 @@ var radium = function(component) {
 var redux = function(component, store) {
   var Provider = require('react-redux').Provider;
 
-  return React.createElement(Provider, {store: store}, component);
+  return React.createElement(Provider, {store: store}, React.createElement(component));
 };
 
 config.forEach(function(component) {

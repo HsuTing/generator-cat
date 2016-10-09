@@ -21,7 +21,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     var pkg = extend({
-      script: {
+      scripts: {
         babel: 'rm -rf ./lib && babel src --out-dir lib',
         'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
       }
