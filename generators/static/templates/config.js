@@ -1,14 +1,8 @@
 module.exports = [
   {
-<% if(router) { -%>
-    router: true,
-<% } -%>
-<% if(redux) { -%>
-    redux: true,
-<% } -%>
-<% if(radium) { -%>
-    radium: true,
-<% } -%>
+  router: <%= router %>,
+  redux: <%= redux %>,
+  radium: <%= radium %>,
 <% if(router) { -%>
     component: require('./lib/routers/<%= componentName %>').default,
 <% } else { -%>

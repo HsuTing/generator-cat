@@ -63,7 +63,7 @@ module.exports = generators.Base.extend({
         name: 'reducerName',
         message: 'Reducer names (comma to split)',
         default: 'data',
-        when: this.props.modules.indexOf('redux'),
+        when: this.props.modules.indexOf('redux') !== -1,
         filter: function(words) {
           return words.split(/\s*,\s*/g);
         }
@@ -76,12 +76,12 @@ module.exports = generators.Base.extend({
   writing: function() {
     var componentName = this.props.name[0].toUpperCase() + this.props.name.slice(1);
 
-    if(this.props.modules.indexOf('default component')) {
+    if(this.props.modules.indexOf('default component') !== -1) {
       this.fs.copyTpl(
         this.templatePath('components.js'),
         this.destinationPath('src/components/' + componentName + '.js'), {
           componentName: componentName,
-          radium: this.props.modules.indexOf('radium')
+          radium: this.props.modules.indexOf('radium') !== -1
         }
       );
       this.fs.copyTpl(
@@ -89,26 +89,26 @@ module.exports = generators.Base.extend({
         this.destinationPath('src/public/' + this.props.name + '.js'), {
           name: this.props.name,
           componentName: componentName,
-          redux: this.props.modules.indexOf('redux'),
-          router: this.props.modules.indexOf('router'),
-          radium: this.props.modules.indexOf('radium')
+          redux: this.props.modules.indexOf('redux') !== -1,
+          router: this.props.modules.indexOf('router') !== -1,
+          radium: this.props.modules.indexOf('radium') !== -1
         }
       );
     }
 
-    if(this.props.modules.indexOf('router')) {
+    if(this.props.modules.indexOf('router') !== -1) {
       this.fs.copyTpl(
         this.templatePath('routers.js'),
         this.destinationPath('src/routers/' + this.props.name + '.js'), {
           hostname: this.props.hostname,
           name: this.props.name,
           componentName: componentName,
-          redux: this.props.modules.indexOf('redux')
+          redux: this.props.modules.indexOf('redux') !== -1
         }
       );
     }
 
-    if(this.props.modules.indexOf('redux')) {
+    if(this.props.modules.indexOf('redux') !== -1) {
       this.props.reducerName.forEach(function(reducerName) {
         this.fs.copy(
           this.templatePath('actions.js'),
@@ -129,8 +129,8 @@ module.exports = generators.Base.extend({
       );
     }
 
-    if(this.props.modules.indexOf('radium')) {
-      if(this.props.modules.indexOf('router')) {
+    if(this.props.modules.indexOf('radium') !== -1) {
+      if(this.props.modules.indexOf('router') !== -1) {
         this.fs.copy(
           this.templatePath('radium/Link.js'),
           this.destinationPath('src/components/radium/Link.js')
@@ -152,9 +152,9 @@ module.exports = generators.Base.extend({
       this.composeWith('cat:webpack', {
         options: {
           name: this.props.name,
-          router: this.props.modules.indexOf('router'),
-          redux: this.props.modules.indexOf('redux'),
-          radium: this.props.modules.indexOf('radium'),
+          router: this.props.modules.indexOf('router') !== -1,
+          redux: this.props.modules.indexOf('redux') !== -1,
+          radium: this.props.modules.indexOf('radium') !== -1,
           skipInstall: this.options.skipInstall
         }
       }, {
@@ -169,16 +169,16 @@ module.exports = generators.Base.extend({
       'react-dom'
     ];
 
-    if(this.props.modules.indexOf('router')) {
+    if(this.props.modules.indexOf('router') !== -1) {
       packages.push('react-router');
     }
 
-    if(this.props.modules.indexOf('redux')) {
+    if(this.props.modules.indexOf('redux') !== -1) {
       packages.push('redux');
       packages.push('react-redux');
     }
 
-    if(this.props.modules.indexOf('radium')) {
+    if(this.props.modules.indexOf('radium') !== -1) {
       packages.push('radium');
       packages.push('radium-normalize');
     }
