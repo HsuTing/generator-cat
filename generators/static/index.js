@@ -5,90 +5,59 @@ var _ = require('lodash');
 var extend = _.merge;
 
 module.exports = generators.Base.extend({
-  constructor: function() {
-    generators.Base.apply(this, arguments);
+  initializing: function() {
+    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
-    this.props = {};
-    this.option('router', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-router'
-    });
-
-    this.option('redux', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-redux'
-    });
-
-    this.option('radium', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use Radium'
-    });
+    this.props = {
+      hostname: pkg.name
+    };
   },
 
   prompting: function() {
     return this.prompt([{
       name: 'name',
-      message: 'Main controller name',
+      message: 'Main component name',
       default: 'index'
-    }, {
-      name: 'url',
-      message: 'Base url for rendering router',
-      default: this.appname,
-      when: this.options.router
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
   },
 
   writing: function() {
-    this.fs.copyTpl(
-      this.templatePath('gulpfile.js'),
-      this.destinationPath('gulp-tasks/static.js'), {
-        router: this.options.router,
-        redux: this.options.redux,
-        radium: this.options.radium,
-        url: this.props.url,
-        name: this.props.name,
-        componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
-      }
-    );
-
+    // write package.json
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        build: 'NODE_ENV=1 gulp build'
+        build: 'npm run babel && npm run static'
       },
-      'pre-commit': []
+      'pre-commit': [
+        'webpack',
+        'lint'
+      ]
     }, currentPkg);
 
-    if(pkg['pre-commit'].indexOf('build') === -1) {
-      pkg['pre-commit'].push('build');
-    }
-
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    // copy files
+    this.fs.copy(
+      this.templatePath('static.js'),
+      this.destinationPath('tools/static.js')
+    );
   },
 
   default: function() {
-    this.composeWith('cat:pug', {
+    this.composeWith('cat:react', {
       options: {
-        test: true,
-        projectName: 'test-page',
-        type: 'Static pages',
+        name: this.props.name,
+        webpack: true,
         skipInstall: this.options.skipInstall
       }
     }, {
-      local: require.resolve('../pug')
+      local: require.resolve('../react')
     });
 
     this.composeWith('cat:pug', {
       options: {
-        test: false,
         projectName: 'page',
         type: 'Static pages',
         skipInstall: this.options.skipInstall
@@ -100,13 +69,7 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
-      'gulp-pug',
-      'gulp-rename',
       'pre-commit'
     ], {saveDev: true});
-  },
-
-  end: function() {
-    this.spawnCommand('gulp', ['build']);
   }
 });

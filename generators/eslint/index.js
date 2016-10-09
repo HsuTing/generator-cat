@@ -29,41 +29,29 @@ module.exports = generators.Base.extend({
         react: this.options.react
       }
     );
-    this.fs.copy(
-      this.templatePath('gulpfile.js'),
-      this.destinationPath('gulp-tasks/eslint.js')
-    );
 
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        test: 'gulp'
-      },
-      'pre-commit': []
+        lint: 'eslint --cache ./ --ext .js',
+        'lint:wacth': 'esw --cache ./ --ext .js'
+      }
     }, currentPkg);
-
-    if(pkg['pre-commit'].indexOf('test') === -1) {
-      pkg['pre-commit'].push('test');
-    }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   },
 
   install: function() {
+    var modules = [
+      'eslint',
+      'eslint-watch',
+      'eslint-config-google',
+      'babel-eslint'
+    ];
+
     if(this.options.react)
-      this.npmInstall([
-        'eslint-config-google',
-        'babel-eslint',
-        'eslint-plugin-react',
-        'pre-commit',
-        'gulp-eslint'
-      ], {saveDev: true});
-    else
-      this.npmInstall([
-        'eslint-config-google',
-        'babel-eslint',
-        'pre-commit',
-        'gulp-eslint'
-      ], {saveDev: true});
+      modules.push('eslint-plugin-react');
+
+    this.npmInstall(modules, {saveDev: true});
   }
 });

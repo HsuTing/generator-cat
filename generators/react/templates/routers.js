@@ -12,12 +12,12 @@ export default (
 <% if(redux) { -%>
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/<%= projectName %>" component={<%= componentName %>} />
+      <Route path="/<%= hostname %>/" component={<%= componentName %>} />
     </Router>
   </Provider>
 <% } else { -%>
   <Router history={browserHistory}>
-    <Route path="/<%= projectName %>" component={<%= componentName %>} />
+    <Route path="/<%= hostname %>/" component={<%= componentName %>} />
   </Router>
 <% } -%>
 );

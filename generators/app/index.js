@@ -23,27 +23,6 @@ module.exports = generators.Base.extend({
       defaults: true,
       desc: 'Include a license'
     });
-
-    this.option('router', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-router'
-    });
-
-    this.option('redux', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-redux'
-    });
-
-    this.option('radium', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use Radium'
-    });
   },
 
   initializing: function() {
@@ -56,7 +35,7 @@ module.exports = generators.Base.extend({
       homepage: this.pkg.homepage,
       type: this.pkg.type,
       typeList: ['Static pages', 'Dynamic pages', 'Default'],
-      react: true
+      react: false
     };
 
     if(_.isObject(this.pkg.author)) {
@@ -117,7 +96,7 @@ module.exports = generators.Base.extend({
     },
 
     askFor: function() {
-      var prompts = [{
+      return this.prompt([{
         name: 'description',
         message: 'Description',
         when: !this.props.description
@@ -149,17 +128,15 @@ module.exports = generators.Base.extend({
         filter: function(words) {
           return words.split(/\s*,\s*/g);
         }
-      }];
-
-      return this.prompt(prompts).then(function(props) {
+      }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
     }
   },
 
   writing: function() {
+    // write package.json
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-
     var pkg = extend({
       name: _.kebabCase(this.props.name),
       version: '0.0.0',
@@ -194,19 +171,29 @@ module.exports = generators.Base.extend({
     }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    // copy files
+    this.fs.copy(
+      this.templatePath('editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore'), {
+        type: this.options.type
+      }
+    );
   },
 
   default: function() {
-    this.composeWith('cat:editorconfig', {}, {
-      local: require.resolve('../editorconfig')
-    });
-
-    this.composeWith('cat:git', {
+    this.composeWith('cat:babel', {
       options: {
-        type: this.props.type
+        react: this.props.react,
+        skipInstall: this.options.skipInstall
       }
     }, {
-      local: require.resolve('../git')
+      local: require.resolve('../babel')
     });
 
     this.composeWith('cat:eslint', {
@@ -218,102 +205,14 @@ module.exports = generators.Base.extend({
       local: require.resolve('../eslint')
     });
 
-    this.composeWith('cat:babel', {
-      options: {
-        react: this.props.react,
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../babel')
-    });
-
-    this.composeWith('cat:gulp', {
-      options: {
-        type: this.props.type,
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../gulp')
-    });
-
-    if(this.options.license && !this.pkg.license) {
-      this.composeWith('license', {
-        options: {
-          name: this.props.authorName,
-          email: this.props.authorEmail,
-          website: this.props.authorUrl
-        }
-      }, {
-        local: require.resolve('generator-license/app')
-      });
-    }
-
-    this.composeWith('cat:readme', {
-      options: {
-        type: this.props.type,
-        name: this.props.name,
-        description: this.props.description,
-        authorName: this.props.authorName,
-        authorUrl: this.props.authorUrl,
-        router: this.options.router,
-        redux: this.options.redux,
-        radium: this.options.radium
-      }
-    }, {
-      local: require.resolve('../readme')
-    });
-
-    if(this.props.react) {
-      this.composeWith('cat:react', {
-        options: {
-          name: this.props.name,
-          router: this.options.router,
-          redux: this.options.redux,
-          radium: this.options.radium,
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../react')
-      });
-
-      this.composeWith('cat:webpack', {
-        options: {
-          router: this.options.router,
-          redux: this.options.redux,
-          radium: this.options.radium,
-          type: this.props.type,
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../webpack')
-      });
-    }
-
     switch(this.props.typeList.indexOf(this.props.type)) {
       case 0:
         this.composeWith('cat:static', {
           options: {
-            router: this.options.router,
-            redux: this.options.redux,
-            radium: this.options.radium,
             skipInstall: this.options.skipInstall
           }
         }, {
           local: require.resolve('../static')
-        });
-        break;
-
-      case 1:
-        this.composeWith('cat:dynamic', {
-          options: {
-            email: this.props.authorEmail,
-            router: this.options.router,
-            redux: this.options.redux,
-            radium: this.options.radium,
-            skipInstall: this.options.skipInstall
-          }
-        }, {
-          local: require.resolve('../dynamic')
         });
         break;
 

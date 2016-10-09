@@ -8,11 +8,11 @@
       "objectLiteralDuplicateProperties": true
     }
   },
-<% if(react) { -%>
   "env": {
     "browser": true,
     "node": true
   },
+<% if(react) { -%>
   "plugins": [
     "react"
   ],

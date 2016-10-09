@@ -28,12 +28,6 @@ module.exports = generators.Base.extend({
       default: true,
       desc: 'Use Radium'
     });
-
-    this.option('type', {
-      type: String,
-      required: false,
-      desc: 'Type'
-    });
   },
 
   writing: function() {
@@ -51,13 +45,8 @@ module.exports = generators.Base.extend({
       scripts: {
         'webpack-server': 'webpack-dev-server --content-base src --hot --progress --inline',
         webpack: 'NODE_ENV=1 webpack'
-      },
-      'pre-commit': []
+      }
     }, currentPkg);
-
-    if(pkg['pre-commit'].indexOf('webpack') === -1 && this.options.type === 'Static pages') {
-      pkg['pre-commit'].push('webpack');
-    }
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   },
@@ -66,8 +55,7 @@ module.exports = generators.Base.extend({
     this.npmInstall([
       'webpack',
       'webpack-dev-server',
-      'babel-loader',
-      'pre-commit'
+      'babel-loader'
     ], {saveDev: true});
   }
 });

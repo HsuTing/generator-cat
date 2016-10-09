@@ -8,7 +8,7 @@ var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 
 module.exports = {
   entry: {
-    index: path.resolve(src, './index.js'),
+    <%= name %>: path.resolve(src, './<%= componentName %>.js'),
     common: [
 <% if(router) { -%>
       'react-router',

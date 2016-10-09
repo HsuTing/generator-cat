@@ -5,6 +5,6 @@ lib
 .eslintcache
 *.log
 coverage
-<% if(type === 'dynamic') { -%>
+<% if(type === 'Dynamic pages') { -%>
 public/js/
 <% } -%>

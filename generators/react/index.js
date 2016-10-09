@@ -8,75 +8,71 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
+    this.option('webpack', {
+      type: Boolean,
+      required: false,
+      defaults: false,
+      desc: 'Include webpack'
+    });
+
     this.option('name', {
       type: String,
-      required: true,
-      default: true,
-      desc: 'Project name'
-    });
-
-    this.option('react', {
-      type: Boolean,
       required: false,
-      default: true,
-      desc: 'Use React'
-    });
-
-    this.option('router', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-router'
-    });
-
-    this.option('redux', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use React-redux'
-    });
-
-    this.option('radium', {
-      type: Boolean,
-      required: false,
-      default: true,
-      desc: 'Use Radium'
+      default: '',
+      desc: 'Main component name'
     });
   },
 
   initializing: function() {
-    this.props = {};
+    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+
+    this.props = {
+      hostname: pkg.name,
+      name: this.options.name
+    };
   },
 
-  prompting: function() {
-    return this.prompt([{
-      type: 'input',
-      name: 'name',
-      message: 'Main controller name',
-      default: 'index'
-    }, {
-      type: 'input',
-      name: 'reducerName',
-      message: 'Reducer names (comma to split)',
-      default: 'data',
-      when: this.options.redux,
-      filter: function(words) {
-        return words.split(/\s*,\s*/g);
-      }
-    }]).then(function(props) {
-      this.props = extend(this.props, props);
-    }.bind(this));
+  prompting: {
+    chooseModules: function() {
+      return this.prompt([{
+        type: 'checkbox',
+        name: 'modules',
+        message: 'Choose modules',
+        choices: ['router', 'redux', 'radium', 'default component']
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
+    getName: function() {
+      return this.prompt([{
+        name: 'name',
+        message: 'Main component name',
+        default: 'index',
+        when: this.options.name === ''
+      }, {
+        name: 'reducerName',
+        message: 'Reducer names (comma to split)',
+        default: 'data',
+        when: this.props.modules.indexOf('redux'),
+        filter: function(words) {
+          return words.split(/\s*,\s*/g);
+        }
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    }
   },
 
   writing: function() {
     var componentName = this.props.name[0].toUpperCase() + this.props.name.slice(1);
 
-    if(this.options.react) {
+    if(this.props.modules.indexOf('default component')) {
       this.fs.copyTpl(
         this.templatePath('components.js'),
         this.destinationPath('src/components/' + componentName + '.js'), {
           componentName: componentName,
-          radium: this.options.radium
+          radium: this.props.modules.indexOf('radium')
         }
       );
       this.fs.copyTpl(
@@ -84,26 +80,26 @@ module.exports = generators.Base.extend({
         this.destinationPath('src/public/' + this.props.name + '.js'), {
           name: this.props.name,
           componentName: componentName,
-          redux: this.options.redux,
-          router: this.options.router,
-          radium: this.options.radium
+          redux: this.props.modules.indexOf('redux'),
+          router: this.props.modules.indexOf('router'),
+          radium: this.props.modules.indexOf('radium')
         }
       );
     }
 
-    if(this.options.router) {
+    if(this.props.modules.indexOf('router')) {
       this.fs.copyTpl(
         this.templatePath('routers.js'),
         this.destinationPath('src/routers/' + this.props.name + '.js'), {
-          projectName: this.options.name,
+          hostname: this.props.hostname,
           name: this.props.name,
           componentName: componentName,
-          redux: this.options.redux
+          redux: this.props.modules.indexOf('redux')
         }
       );
     }
 
-    if(this.options.redux) {
+    if(this.props.modules.indexOf('redux')) {
       this.props.reducerName.forEach(function(reducerName) {
         this.fs.copy(
           this.templatePath('actions.js'),
@@ -124,8 +120,8 @@ module.exports = generators.Base.extend({
       );
     }
 
-    if(this.options.radium) {
-      if(this.options.router) {
+    if(this.props.modules.indexOf('radium')) {
+      if(this.props.modules.indexOf('router')) {
         this.fs.copy(
           this.templatePath('radium/Link.js'),
           this.destinationPath('src/components/radium/Link.js')
@@ -142,22 +138,37 @@ module.exports = generators.Base.extend({
     }
   },
 
+  default: function() {
+    if(this.options.webpack) {
+      this.composeWith('cat:webpack', {
+        options: {
+          router: this.props.modules.indexOf('router'),
+          redux: this.props.modules.indexOf('redux'),
+          radium: this.props.modules.indexOf('radium'),
+          skipInstall: this.options.skipInstall
+        }
+      }, {
+        local: require.resolve('../webpack')
+      });
+    }
+  },
+
   install: function() {
     var packages = [
       'react',
       'react-dom'
     ];
 
-    if(this.options.router) {
+    if(this.props.modules.indexOf('router')) {
       packages.push('react-router');
     }
 
-    if(this.options.redux) {
+    if(this.props.modules.indexOf('redux')) {
       packages.push('redux');
       packages.push('react-redux');
     }
 
-    if(this.options.radium) {
+    if(this.props.modules.indexOf('radium')) {
       packages.push('radium');
       packages.push('radium-normalize');
     }
