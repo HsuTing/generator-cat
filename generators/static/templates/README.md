@@ -8,7 +8,7 @@
 npm install -i
 ```
 
-Then you can open your [browser](/<%= projectName %>/).
+Then you can open your [browser](localhost/<%= projectName %>/).
 
 ## Usage
 

@@ -44,12 +44,11 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 
 ## Type
 
-- Choose `Default` if you just want to use those.
+- You can know more information in `README.md`.
 - Common default:
   - `babel`
   - `eslint`
   - `test`
-- You can know what can you do with `README.md`.
 
 #### Static pages
 
