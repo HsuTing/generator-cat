@@ -217,6 +217,14 @@ module.exports = generators.Base.extend({
       });
     }
 
+    this.composeWith('cat:test', {
+      options: {
+        skipInstall: this.options.skipInstall
+      }
+    }, {
+      local: require.resolve('../test')
+    });
+
     switch(this.props.typeList.indexOf(this.props.type)) {
       case 0:
         this.composeWith('cat:static', {

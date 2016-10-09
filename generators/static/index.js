@@ -40,7 +40,8 @@ module.exports = generators.Base.extend({
       'pre-commit': [
         'build:production',
         'webpack',
-        'lint'
+        'lint',
+        'test'
       ]
     }, currentPkg);
 
@@ -90,7 +91,6 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
-      'node-watch',
       'mkdirp',
       'lodash',
       'cli-color',
