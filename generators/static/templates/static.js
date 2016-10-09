@@ -78,6 +78,15 @@ config.forEach(function(component) {
           }
         }));
       }
+      else {
+        render(extend({}, component, {
+          locals: {
+            markup: renderToStaticMarkup(
+              React.createElement('div', null, 'not find')
+            )
+          }
+        }));
+      }
     });
     return;
   }
@@ -88,16 +97,16 @@ config.forEach(function(component) {
         component.radium ? (
           radium(
             component.redux ? (
-              redux(component.component, component.store)
+              redux(React.createElement(component.component), component.store)
             ) : (
-              component.component
+              React.createElement(component.component)
             )
           )
         ) : (
           component.redux ? (
-            redux(component.component, component.store)
+            redux(React.createElement(component.component), component.store)
           ) : (
-            component.component
+            React.createElement(component.component)
           )
         )
       )

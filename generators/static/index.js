@@ -55,6 +55,7 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('config.js'),
       this.destinationPath('static.config.js'), {
+        hostname: this.props.hostname,
         router: this.props.modules.indexOf('router') !== -1,
         redux: this.props.modules.indexOf('redux') !== -1,
         radium: this.props.modules.indexOf('radium') !== -1,
