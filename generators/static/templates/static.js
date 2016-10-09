@@ -5,6 +5,7 @@ var pug = require('pug');
 var _ = require('lodash');
 var extend = _.merge;
 var mkdirp = require('mkdirp');
+var colors = require('colors');
 var React = require('react');
 var renderToStaticMarkup = require('react-dom/server').renderToStaticMarkup;
 var config = require('./../static.config.js');
@@ -18,7 +19,7 @@ var copyFile = function(component) {
       if(err)
         throw err;
 
-      console.log('rendered ' + component.name + '.html');
+      console.log('rendered '.green + ((component.name === 'index' ? '' : component.name + '/') + 'index.html').cyan);
     }
   );
 };

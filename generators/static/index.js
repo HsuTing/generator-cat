@@ -33,9 +33,12 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        build: 'npm run babel && npm run static'
+        static: 'node tools/static.js',
+        build: 'npm run babel && npm run static',
+        'build:production': 'npm run babel && NODE_ENV=1 npm run static'
       },
       'pre-commit': [
+        'build:production',
         'webpack',
         'lint'
       ]
@@ -88,7 +91,12 @@ module.exports = generators.Base.extend({
     this.npmInstall([
       'mkdirp',
       'lodash',
+      'colors',
       'pre-commit'
     ], {saveDev: true});
+  },
+
+  end: function() {
+    this.spawnCommand('npm', ['run', 'build']);
   }
 });
