@@ -87,5 +87,5 @@ config.forEach(function(component) {
         )
       )
     }
-  });
+  }));
 });

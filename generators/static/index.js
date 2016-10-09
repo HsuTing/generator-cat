@@ -51,7 +51,13 @@ module.exports = generators.Base.extend({
 
     this.fs.copyTpl(
       this.templatePath('config.js'),
-      this.destinationPath('static.config.js')
+      this.destinationPath('static.config.js'), {
+        router: this.props.modules.indexOf('router'),
+        redux: this.props.modules.indexOf('redux'),
+        radium: this.props.modules.indexOf('radium'),
+        name: this.props.name,
+        componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
+      }
     );
   },
 
@@ -59,6 +65,7 @@ module.exports = generators.Base.extend({
     this.composeWith('cat:react', {
       options: {
         name: this.props.name,
+        modules: this.props.modules,
         webpack: true,
         skipInstall: this.options.skipInstall
       }
