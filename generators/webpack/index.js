@@ -51,7 +51,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        'webpack-server': 'webpack-dev-server --content-base src --hot --progress --inline',
+        'webpack-server': 'webpack-dev-server --content-base src --hot --inline',
         webpack: 'NODE_ENV=1 webpack'
       }
     }, currentPkg);

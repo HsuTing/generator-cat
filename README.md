@@ -27,22 +27,16 @@ yo cat
 ## Options
 
 - `license`(Boolean, default true) include or not a LICENSE file.
-- `router` (Boolean, default true) use react-router or not.
-- `redux` (Boolean, default true) use react-redux or not.
-- `radium` (Boolean, default true) use radium or not.
 
 ## Sub generators
 
 Remember you can see the options of each sub generators by running `yo node:sub --help`.
 
 - `cat:babel`
-- `cat:editorconfig`
 - `cat:eslint`
-- `cat:git`
-- `cat:gulp` (`istanbul` and `mocha` will be also included)
 - `cat:pug`
 - `cat:react` (remember you can use this to create all files about `react`)
-- `cat:readme`
+- `cat:test`
 - `cat:webpack`
 - `cat:server` (`http` or `https` server`)
 - `cat:static` (type)
@@ -53,29 +47,25 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 - Choose `Default` if you just want to use those.
 - Common default:
   - `babel`
-  - `editorconfig`
   - `eslint`
-  - `git`
-  - `gulp`
-  - `readme`
-- Remember you can see the task list by running `gulp help`.
+  - `test`
 - You can know what can you do with `README.md`.
 
 #### Static pages
 
 - Use to make a static page.
 - Default:
+  - `pug`
   - `react`
   - `webpack`
-  - `pug`
 
 #### Dynamic pages
 
 - Use to make a web server with `express`.
 - Default:
+  - `pug`
   - `react`
   - `webpack`
-  - `pug`
   - `server`
 
 ## License
