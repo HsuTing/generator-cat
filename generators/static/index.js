@@ -34,6 +34,7 @@ module.exports = generators.Base.extend({
     var pkg = extend({
       scripts: {
         static: 'node tools/static.js',
+        'static:watch': 'node tools/static-watch.js',
         build: 'npm run babel && npm run static',
         'build:production': 'npm run babel && NODE_ENV=1 npm run static'
       },
@@ -90,6 +91,7 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
+      'node-watch',
       'mkdirp',
       'lodash',
       'colors',

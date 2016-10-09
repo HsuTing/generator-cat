@@ -46,7 +46,7 @@ var radium = function(component) {
 var redux = function(component, store) {
   var Provider = require('react-redux').Provider;
 
-  return React.createElement(Provider, {store: store}, React.createElement(component));
+  return React.createElement(Provider, {store: store}, component);
 };
 
 config.forEach(function(component) {
