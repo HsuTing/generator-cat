@@ -8,6 +8,13 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
+    this.option('name', {
+      type: String,
+      required: false,
+      default: 'index',
+      desc: 'Name of component'
+    });
+
     this.option('router', {
       type: Boolean,
       required: false,
@@ -34,6 +41,8 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'), {
+        name: this.options.name,
+        componentName: this.options.name[0].toUpperCase() + this.options.name.slice(1),
         router: this.options.router,
         redux: this.options.redux,
         radium: this.options.radium

@@ -15,6 +15,11 @@ module.exports = generators.Base.extend({
 
   prompting: function() {
     return this.prompt([{
+      type: 'checkbox',
+      name: 'modules',
+      message: 'Choose modules',
+      choices: ['router', 'redux', 'radium', {name: 'default component', checked: true}]
+    }, {
       name: 'name',
       message: 'Main component name',
       default: 'index'
@@ -43,6 +48,11 @@ module.exports = generators.Base.extend({
       this.templatePath('static.js'),
       this.destinationPath('tools/static.js')
     );
+
+    this.fs.copyTpl(
+      this.templatePath('config.js'),
+      this.destinationPath('static.config.js')
+    );
   },
 
   default: function() {
@@ -69,6 +79,7 @@ module.exports = generators.Base.extend({
 
   install: function() {
     this.npmInstall([
+      'lodash',
       'pre-commit'
     ], {saveDev: true});
   }

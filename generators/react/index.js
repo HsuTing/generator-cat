@@ -21,6 +21,13 @@ module.exports = generators.Base.extend({
       default: '',
       desc: 'Main component name'
     });
+
+    this.option('modules', {
+      type: Array,
+      required: false,
+      default: [],
+      desc: 'Modules'
+    });
   },
 
   initializing: function() {
@@ -28,6 +35,7 @@ module.exports = generators.Base.extend({
 
     this.props = {
       hostname: pkg.name,
+      modules: this.options.modules,
       name: this.options.name
     };
   },
@@ -38,7 +46,8 @@ module.exports = generators.Base.extend({
         type: 'checkbox',
         name: 'modules',
         message: 'Choose modules',
-        choices: ['router', 'redux', 'radium', 'default component']
+        choices: ['router', 'redux', 'radium', {name: 'default component', checked: true}],
+        when: this.options.modules.length === 0
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
@@ -142,6 +151,7 @@ module.exports = generators.Base.extend({
     if(this.options.webpack) {
       this.composeWith('cat:webpack', {
         options: {
+          name: this.props.name,
           router: this.props.modules.indexOf('router'),
           redux: this.props.modules.indexOf('redux'),
           radium: this.props.modules.indexOf('radium'),
