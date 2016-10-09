@@ -205,6 +205,18 @@ module.exports = generators.Base.extend({
       local: require.resolve('../eslint')
     });
 
+    if(this.options.license && !this.pkg.license) {
+      this.composeWith('license', {
+        options: {
+          name: this.props.authorName,
+          email: this.props.authorEmail,
+          website: this.props.authorUrl
+        }
+      }, {
+        local: require.resolve('generator-license/app')
+      });
+    }
+
     switch(this.props.typeList.indexOf(this.props.type)) {
       case 0:
         this.composeWith('cat:static', {
