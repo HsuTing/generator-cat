@@ -53,6 +53,11 @@ module.exports = generators.Base.extend({
       this.destinationPath('tools/static.js')
     );
 
+    this.fs.copy(
+      this.templatePath('static-watch.js'),
+      this.destinationPath('tools/static-watch.js')
+    );
+
     this.fs.copyTpl(
       this.templatePath('config.js'),
       this.destinationPath('static.config.js'), {
