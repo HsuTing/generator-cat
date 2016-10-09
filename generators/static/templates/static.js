@@ -5,7 +5,7 @@ var pug = require('pug');
 var _ = require('lodash');
 var extend = _.merge;
 var mkdirp = require('mkdirp');
-var colors = require('colors');
+var clc = require('cli-color');
 var React = require('react');
 var renderToStaticMarkup = require('react-dom/server').renderToStaticMarkup;
 var config = require('./../static.config.js');
@@ -19,7 +19,7 @@ var copyFile = function(component) {
       if(err)
         throw err;
 
-      console.log('rendered '.green + ((component.name === 'index' ? '' : component.name + '/') + 'index.html').cyan);
+      console.log(clc.greenBright('rendered ') + clc.cyanBright((component.name === 'index' ? '' : component.name + '/') + 'index.html'));
     }
   );
 };
@@ -32,8 +32,7 @@ var render = function(component) {
 
       copyFile(component);
     });
-  }
-  else
+  } else
     copyFile(component);
 };
 
@@ -77,8 +76,7 @@ config.forEach(function(component) {
             )
           }
         }));
-      }
-      else {
+      } else {
         render(extend({}, component, {
           locals: {
             markup: renderToStaticMarkup(
