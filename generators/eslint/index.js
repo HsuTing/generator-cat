@@ -34,7 +34,7 @@ module.exports = generators.Base.extend({
     var pkg = extend({
       scripts: {
         lint: 'eslint --cache ./ --ext .js',
-        'lint:wacth': 'esw --cache ./ --ext .js'
+        'lint:watch': 'esw --cache ./ --ext .js -w'
       }
     }, currentPkg);
 
