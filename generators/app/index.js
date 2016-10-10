@@ -236,6 +236,17 @@ module.exports = generators.Base.extend({
         });
         break;
 
+      case 1:
+        this.composeWith('cat:dynamic', {
+          options: {
+            email: this.props.authorEmail,
+            skipInstall: this.options.skipInstall
+          }
+        }, {
+          local: require.resolve('../dynamic')
+        });
+        break;
+
       default:
         break;
     }
