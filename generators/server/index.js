@@ -35,10 +35,46 @@ module.exports = generators.Base.extend({
         choices: [
           'cookie parser',
           'body parser',
-          'connect multiparty',
-          '(custom)info',
-          '(custom)blacklist'
+          'connect multiparty'
         ]
+      }, {
+        type: 'checkbox',
+        name: 'custom',
+        message: 'Choose custom middleware',
+        choices: [
+          'info',
+          'blacklist',
+          'react'
+        ]
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
+    addOptions: function() {
+      return this.prompt([{
+        name: 'cookieIDs',
+        message: 'Cookie names (comma to split)',
+        default: 'id',
+        when: this.props.middleware.indexOf('cookie parser') !== -1,
+        filter: function(words) {
+          return words.split(/\s*,\s*/g);
+        }
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
+    addHttpsOptions: function() {
+      return this.prompt([{
+        name: 'domain',
+        message: 'Domain name',
+        when: this.props.type === 'https'
+      }, {
+        name: 'email',
+        message: 'Domain email',
+        default: this.options.email,
+        when: this.props.type === 'https'
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
@@ -46,10 +82,25 @@ module.exports = generators.Base.extend({
   },
 
   writing: function() {
+    this.props.custom.forEach(function(middleware) {
+      this.fs.copy(
+        this.templatePath('middleware/' + middleware + '.js'),
+        this.destinationPath('src/middleware/' + middleware + '.js')
+      );
+    }.bind(this));
+
     switch(this.props.type) {
       case 'http':
         this.fs.copyTpl(
           this.templatePath('http.js'),
+          this.destinationPath('src/server.js'),
+          this.props
+        );
+        break;
+
+      case 'https':
+        this.fs.copyTpl(
+          this.templatePath('https.js'),
           this.destinationPath('src/server.js'),
           this.props
         );
@@ -62,6 +113,29 @@ module.exports = generators.Base.extend({
 
   install: function() {
     const modules = ['express', 'compression'];
+
+    this.props.middleware.forEach(function(middleware) {
+      modules.push(middleware.replace(/ /g, '-'));
+    });
+
+    switch(this.props.type) {
+      case 'http':
+        break;
+
+      case 'https':
+        [
+          'letsencrypt-express',
+          'le-challenge-fs',
+          'le-store-certbot',
+          'redirect-https'
+        ].forEach(function(module) {
+          modules.push(module);
+        });
+        break;
+
+      default:
+        break;
+    }
 
     this.npmInstall(modules, {saveDev: true});
   }

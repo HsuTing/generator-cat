@@ -13,7 +13,7 @@ import multipart from 'connect-multiparty';
 <% } -%>
 <% for(customIndex in middleware) { -%>
 <% if(middleware[customIndex].indexOf('custom') !== -1) { -%>
-import <%= middleware[customIndex].replace('(custom)', '') %> from './middleware/<%= middleware[customInde].replace('(custom)', '') %>';
+import <%= middleware[customIndex].replace('(custom)', '') %> from './middleware/<%= middleware[customIndex].replace('(custom)', '') %>';
 <% } -%>
 <% } -%>
 
