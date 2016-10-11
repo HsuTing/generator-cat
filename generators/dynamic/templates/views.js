@@ -2,6 +2,8 @@
 
 import react from './../../middleware/react';
 
+const ENV = Boolean(Number(process.env.NODE_ENV) || 0);
+
 export default app => {
   app.use(react({
     router: <%= router %>,
@@ -15,5 +17,9 @@ export default app => {
 <% } else { -%>
     component: require('./../../components/<%= componentName %>').default
 <% } -%>
-  }));
+  }), (req, res) => {
+    res.render('page', {
+      markup: req.react
+    });
+  });
 };

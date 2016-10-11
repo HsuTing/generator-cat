@@ -41,7 +41,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        watch: 'concurrently -c green "npm run lint:watch" "npm run webpack-server" "npm run babel"',
+        watch: 'concurrently -c green "npm run lint:watch" "npm run webpack-server" "npm run babel:watch"',
         production: 'npm run babel && npm run webpack'
       },
       'pre-commit': [

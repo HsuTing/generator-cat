@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 import multipart from 'connect-multiparty';
 <% } -%>
 <% for(customIndex in custom) { -%>
-import <%= custom[customIndex] %> from './custom/<%= custom[customIndex] %>';
+import <%= custom[customIndex] %> from './middleware/<%= custom[customIndex] %>';
 <% } -%>
 
 const ENV = Boolean(Number(process.env.NODE_ENV) || 0);
@@ -49,7 +49,7 @@ app.use(<%= custom[customIndex] %>);
       const routes = require(path.resolve(ROUTERS, folder, filename)).default;
 
       if(typeof routes === 'function')
-          routes(app);
+        routes(app);
     });
   } catch(e) {
     console.log(e);
