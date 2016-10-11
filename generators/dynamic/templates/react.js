@@ -31,16 +31,16 @@ export default options => {
             options.radium ? (
               radium(
                 options.redux ? (
-                  redux(React.createElement(routercontext, renderprops), options.store)
+                  redux(React.createElement(RouterContext, renderProps), options.store)
                 ) : (
-                  React.createElement(routercontext, renderprops)
+                  React.createElement(RouterContext, renderProps)
                 )
               )
             ) : (
-              component.redux ? (
-                redux(React.createElement(routercontext, renderprops), component.store)
+              options.redux ? (
+                redux(React.createElement(RouterContext, renderProps), options.store)
               ) : (
-                React.createElement(routercontext, renderprops)
+                React.createElement(RouterContext, renderProps)
               )
             )
           );
