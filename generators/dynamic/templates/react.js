@@ -31,16 +31,16 @@ export default options => {
             options.radium ? (
               radium(
                 options.redux ? (
-                  redux(react.createelement(routercontext, renderprops), options.store)
+                  redux(React.createElement(routercontext, renderprops), options.store)
                 ) : (
-                  react.createelement(routercontext, renderprops)
+                  React.createElement(routercontext, renderprops)
                 )
               )
             ) : (
               component.redux ? (
-                redux(react.createelement(routercontext, renderprops), component.store)
+                redux(React.createElement(routercontext, renderprops), component.store)
               ) : (
-                react.createelement(routercontext, renderprops)
+                React.createElement(routercontext, renderprops)
               )
             )
           );
@@ -55,16 +55,16 @@ export default options => {
       options.radium ? (
         radium(
           options.redux ? (
-            redux(react.createelement(routercontext, renderprops), options.store)
+            redux(React.createElement(options.component), options.store)
           ) : (
-            react.createelement(routercontext, renderprops)
+            React.createElement(options.component)
           )
         )
       ) : (
-        component.redux ? (
-          redux(react.createelement(routercontext, renderprops), component.store)
+        options.redux ? (
+          redux(React.createElement(options.component), options.store)
         ) : (
-          react.createelement(routercontext, renderprops)
+          React.createElement(options.component)
         )
       )
     );
