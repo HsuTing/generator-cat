@@ -43,8 +43,7 @@ module.exports = generators.Base.extend({
         message: 'Choose custom middleware',
         choices: [
           'info',
-          'blacklist',
-          'react'
+          'blacklist'
         ]
       }]).then(function(props) {
         this.props = extend(this.props, props);
@@ -82,6 +81,19 @@ module.exports = generators.Base.extend({
   },
 
   writing: function() {
+    // write package.json
+    var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+
+    var pkg = extend({
+      scripts: {
+        'test-server': 'nodemon ./lib/server.js',
+        start: 'NODE_ENV=1 node ./lib/server.js'
+      }
+    }, currentPkg);
+
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
+    // copy files
     this.props.custom.forEach(function(middleware) {
       this.fs.copy(
         this.templatePath('middleware/' + middleware + '.js'),
@@ -112,7 +124,7 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
-    const modules = ['express', 'compression'];
+    const modules = ['express', 'nodemon', 'compression'];
 
     this.props.middleware.forEach(function(middleware) {
       modules.push(middleware.replace(/ /g, '-'));
