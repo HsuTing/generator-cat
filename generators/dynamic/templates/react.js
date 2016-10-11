@@ -3,10 +3,10 @@
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 
-const radium = component => {
+const radium = (component, req) => {
   const Wrapper = require('./../components/radium/Wrapper').default;
 
-  return React.createElement(Wrapper, null, component);
+  return React.createElement(Wrapper, {radiumConfig: {userAgent: req.headers['user-agent']}}, component);
 };
 
 const redux = (component, store) => {
@@ -34,7 +34,8 @@ export default options => {
                   redux(React.createElement(RouterContext, renderProps), options.store)
                 ) : (
                   React.createElement(RouterContext, renderProps)
-                )
+                ),
+                req
               )
             ) : (
               options.redux ? (
@@ -58,7 +59,8 @@ export default options => {
             redux(React.createElement(options.component), options.store)
           ) : (
             React.createElement(options.component)
-          )
+          ),
+          req
         )
       ) : (
         options.redux ? (
