@@ -42,8 +42,7 @@ module.exports = generators.Base.extend({
       this.props.authorName = this.pkg.author.name;
       this.props.authorEmail = this.pkg.author.email;
       this.props.authorUrl = this.pkg.author.url;
-    }
-    if(_.isString(this.pkg.author)) {
+    } else if(_.isString(this.pkg.author)) {
       var info = parseAuthor(this.pkg.author);
 
       this.props.authorName = info.name;
@@ -239,7 +238,6 @@ module.exports = generators.Base.extend({
       case 1:
         this.composeWith('cat:dynamic', {
           options: {
-            email: this.props.authorEmail,
             skipInstall: this.options.skipInstall
           }
         }, {
