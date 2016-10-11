@@ -12,10 +12,10 @@ module.exports = generators.Base.extend({
     this.props = {
     };
 
-    if(_.isObject(this.pkg.author)) {
-      this.props.authorEmail = this.pkg.author.email;
-    } else if(_.isString(this.pkg.author)) {
-      var info = parseAuthor(this.pkg.author);
+    if(_.isObject(pkg.author)) {
+      this.props.authorEmail = pkg.author.email;
+    } else if(_.isString(pkg.author)) {
+      var info = parseAuthor(pkg.author);
 
       this.props.authorEmail = info.email;
     }
