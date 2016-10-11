@@ -13,7 +13,7 @@ export default app => {
     store: require('./../../stores/<%= name %>').default,
 <% } -%>
 <% if(router) { -%>
-    component: require('./../../routers/<%= componentName %>').default
+    component: require('./../../routers/<%= name %>').default
 <% } else { -%>
     component: require('./../../components/<%= componentName %>').default
 <% } -%>

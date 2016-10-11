@@ -5,7 +5,7 @@ module.exports = [
     radium: <%= radium %>,
 <% if(router) { -%>
     location: <%= hostname %>,
-    component: require('./lib/routers/<%= componentName %>').default,
+    component: require('./lib/routers/<%= name %>').default,
 <% } else { -%>
     component: require('./lib/components/<%= componentName %>').default,
 <% } -%>

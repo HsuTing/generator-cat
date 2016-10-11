@@ -34,7 +34,6 @@ module.exports = generators.Base.extend({
     var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     this.props = {
-      hostname: pkg.name,
       modules: this.options.modules,
       name: this.options.name
     };
@@ -100,7 +99,6 @@ module.exports = generators.Base.extend({
       this.fs.copyTpl(
         this.templatePath('routers.js'),
         this.destinationPath('src/routers/' + this.props.name + '.js'), {
-          hostname: this.props.hostname,
           name: this.props.name,
           componentName: componentName,
           redux: this.props.modules.indexOf('redux') !== -1

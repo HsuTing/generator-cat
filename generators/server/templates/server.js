@@ -52,6 +52,5 @@ app.use(<%= custom[customIndex] %>);
         routes(app);
     });
   } catch(e) {
-    console.log(e);
   }
 });
