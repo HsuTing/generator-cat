@@ -34,7 +34,7 @@ module.exports = generators.Base.extend({
       version: this.pkg.version,
       homepage: this.pkg.homepage,
       type: this.pkg.type,
-      typeList: ['Static pages', 'Dynamic pages', 'Default'],
+      typeList: ['Static pages', 'Dynamic pages', 'Bot', 'Default'],
       react: false
     };
 
@@ -242,6 +242,16 @@ module.exports = generators.Base.extend({
           }
         }, {
           local: require.resolve('../dynamic')
+        });
+        break;
+
+      case 2:
+        this.composeWith('cat:bot', {
+          options: {
+            skipInstall: this.options.skipInstall
+          }
+        }, {
+          local: require.resolve('../bot')
         });
         break;
 
