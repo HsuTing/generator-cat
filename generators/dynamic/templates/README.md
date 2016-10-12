@@ -14,31 +14,14 @@ npm install -i
 npm run watch
 ```
 
-Then you can open your [browser](localhost/<%= projectName %>/).
-
-## Usage
-
-#### `static.config.js`
-
-```js
-module.exports = [
-  {
-    router: false,
-    redux: true,
-    radium: true,
-    component: require('./lib/components/Index').default,
-    store: require('./lib/stores/index').default,
-    name: 'index'
-  }
-];
+#### Run test server
+```sh
+npm run test-server
 ```
 
-- If you use `router`, `redux` or `radium`, you set their value to `true`.
-- `component` is your main component which you also use in `ReactDOM.render`.
-- `name` is name of output `html`. If it is not equal to `index`, it will make a folder with name and a `index.html` in that folder.
-- Use `store` when you use `redux` and it will be your `store` to `Provider`.
-- Use `location` when you use `react-router` and it will use to find `router` component which should be rendered.
-- If you get page which is `not find`, check path of `react-router`.
+Then you can open your [browser](localhost:8000).
+
+## Usage
 
 #### script
 
@@ -47,10 +30,10 @@ module.exports = [
   "scripts": {
     "webpack-server": "webpack-dev-server --content-base src --hot --inline",
     "webpack": "NODE_ENV=1 webpack",
-    "static": "node tools/static.js",
-    "build": "npm run babel && npm run static",
-    "build:production": "npm run babel && NODE_ENV=1 npm run static",
-    "watch": "concurrently \"npm run lint:watch\" \"npm run webpack-server\"",
+    "test-server": "nodemon ./lib/server.js",
+    "start": "NODE_ENV=1 node ./lib/server.js",
+    "watch": "concurrently -c green \"npm run lint:watch\" \"npm run webpack-server\" \"npm run babel:watch\"",
+    "production": "npm run babel && npm run webpack",
     "test": "istanbul cover _mocha -- -R spec",
     "lint": "eslint --cache ./ --ext .js",
     "lint:watch": "esw --cache ./ --ext .js -w --color",
@@ -58,8 +41,6 @@ module.exports = [
     "babel:watch": "rm -rf ./lib && babel -w src --out-dir lib"
   },
   "pre-commit": [
-    "build:production",
-    "webpack",
     "lint",
     "test"
   ]
@@ -68,13 +49,13 @@ module.exports = [
 - webpack
   - development: webpack-server
   - production: webpack
-- static
-  - use `static.config.js` to render html.
-- build
-  - development: build
-  - production: build:production
+- server
+  - development: test-server
+  - production: start
 - watch
   - run all watch
+- production
+  - run it before you use `npm run start`.
 - test
   - run test code and code coverage
 - lint
@@ -118,7 +99,12 @@ module.exports = [
 │       └── (main js files)
 ├── views
 │   └── page.pug
-├── static.config.js
+├── middleware
+│   └── (middleware name)
+├── routes
+│   └── views
+│       └── index.js
+├── server.js
 └── webpack.config.js
 ```
 

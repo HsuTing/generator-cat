@@ -35,10 +35,15 @@ Remember you can see the options of each sub generators by running `yo node:sub 
 - `cat:babel`
 - `cat:eslint`
 - `cat:pug`
-- `cat:react` (remember you can use this to create all files about `react`)
+- `cat:react`
+  - remember you can use this to create all files about `react`
+  - Include `react-router`, `redux`, `radium`.
 - `cat:test`
+  - Include `istanbul`, `mocha`
 - `cat:webpack`
-- `cat:server` (`http` or `https` server`)
+- `cat:server`
+  - `http` or `https` server
+  - Use `letsencrypt-express` to build `https` server.
 - `cat:static` (type)
 - `cat:dynamic` (type)
 

@@ -68,6 +68,20 @@ module.exports = generators.Base.extend({
         componentName: this.props.name[0].toUpperCase() + this.props.name.slice(1)
       }
     );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'), {
+        projectName: pkg.name,
+        description: pkg.description,
+        router: this.props.modules.indexOf('router') !== -1,
+        redux: this.props.modules.indexOf('redux') !== -1,
+        radium: this.props.modules.indexOf('radium') !== -1,
+        license: pkg.license,
+        name: pkg.author.name,
+        url: pkg.author.url
+      }
+    );
   },
 
   default: function() {
