@@ -4,7 +4,8 @@ import React from 'react';
 import radium, {Style as StyleRadium} from 'radium';
 import normalize from 'radium-normalize';
 
-class Style extends React.Component {
+@radium
+export default class Style extends React.Component {
   render() {
     return (
       <div>
@@ -16,5 +17,3 @@ class Style extends React.Component {
     );
   }
 }
-
-export default radium(Style);

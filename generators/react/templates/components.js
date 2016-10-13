@@ -5,7 +5,7 @@ import React from 'react';
 import Style from './Style';
 <% } -%>
 
-class <%= componentName %> extends React.Component {
+export default class <%= componentName %> extends React.Component {
   render() {
     return (
       <div>
@@ -17,5 +17,3 @@ class <%= componentName %> extends React.Component {
     );
   }
 }
-
-export default <%= componentName %>;

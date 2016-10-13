@@ -2,4 +2,4 @@
 
 <% include server.js -%>
 
-app.listen(ENV ? 80 : 8000);
+app.listen(process.env.PORT || (ENV ? 80 : 8000));

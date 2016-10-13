@@ -56,7 +56,7 @@ module.exports = generators.Base.extend({
     // copy files
     this.fs.copy(
       this.templatePath('api.js'),
-      this.destinationPath('src/api/bot.js')
+      this.destinationPath('src/routes/api/bot.js')
     );
   },
 

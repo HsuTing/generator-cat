@@ -124,7 +124,7 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
-    const modules = ['express', 'nodemon', 'compression'];
+    const modules = ['express', 'nodemon', 'pug', 'compression'];
 
     this.props.middleware.forEach(function(middleware) {
       modules.push(middleware.replace(/ /g, '-'));

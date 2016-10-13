@@ -16,7 +16,7 @@ const lex = letsencrypt.create({
 
   approveDomains: (opts, certs, callback) => {
     if(certs)
-        opts.domains = certs.altnames;
+      opts.domains = certs.altnames;
     else {
       opts.domains = ['<%= domain %>'];
       opts.email = '<%= email %>';
@@ -28,4 +28,4 @@ const lex = letsencrypt.create({
 });
 
 http.createServer(lex.middleware(redirectHttps())).listen(80);
-https.createServer(lex.httpsOptions, lex.middleware(app)).listen(ENV ? 443 : 8000);
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.PORT || (ENV ? 443 : 8000));

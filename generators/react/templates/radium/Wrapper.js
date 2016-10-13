@@ -3,6 +3,7 @@
 import React from 'react';
 import radium from 'radium';
 
+@radium
 class Wrapper extends React.Component {
   render() {
     return (
@@ -11,4 +12,4 @@ class Wrapper extends React.Component {
   }
 }
 
-export default radium(Wrapper);
+export default Wrapper;

@@ -1,8 +1,13 @@
 {
+  "presets": [
 <% if(react) { -%>
-  "presets": ["latest", "stage-0", "react"],
-<% } else { -%>
-  "presets": ["latest", "stage-0"],
+    "react",
 <% } -%>
-  "plugins": ["transform-object-assign"]
+    "latest",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-object-assign",
+    "transform-decorators-legacy"
+  ]
 }
