@@ -43,8 +43,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        watch: 'concurrently -c green "npm run lint:watch" "npm run babel:watch"',
-        postinstall: 'npm run babel'
+        watch: 'concurrently -c green "npm run lint:watch" "npm run babel:watch"'
       },
       'pre-commit': [
         'lint',
@@ -77,5 +76,9 @@ module.exports = generators.Base.extend({
       'concurrently',
       'pre-commit'
     ], {saveDev: true});
+  },
+
+  end: function() {
+    this.spawnCommand('npm', ['run', 'babel']);
   }
 });
