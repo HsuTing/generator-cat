@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var alias = requre('./alias');
 
 var src = './src/public';
 var dist = './public/js';
@@ -36,7 +37,9 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js'],
+    root: './src',
+    alias: alias
   },
   plugins: ENV ? [
     new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),

@@ -47,7 +47,7 @@ module.exports = [
   "scripts": {
     "webpack-server": "webpack-dev-server --content-base src --hot --inline",
     "webpack": "NODE_ENV=1 webpack",
-    "static": "node tools/static.js",
+    "static": "node bin/static.js",
     "build": "npm run babel && npm run static",
     "build:production": "npm run babel && NODE_ENV=1 npm run static",
     "watch": "concurrently \"npm run lint:watch\" \"npm run webpack-server\"",
@@ -86,6 +86,11 @@ module.exports = [
 
 ```
 .<%= projectName %>
+├── .babelrc
+├── .editorconfig
+├── .eslintignore
+├── .eslintrc
+├── .gitignore
 ├── LICENSE
 ├── README.md
 ├── package.json
@@ -118,6 +123,9 @@ module.exports = [
 │       └── (main js files)
 ├── views
 │   └── page.pug
+├── bin
+│   └── static.js
+├── alias.js
 ├── static.config.js
 └── webpack.config.js
 ```

@@ -4,15 +4,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 <% if(redux && !router) { -%>
 import {Provider} from 'react-redux';
-import store from './../stores/<%= name %>';
+import store from 'stores/<%= name %>';
 <% } -%>
 <% if(radium) { -%>
-import Wrapper from './../components/radium/Wrapper';
+import Wrapper from 'componentsRadium/Wrapper';
 <% } -%>
 <% if(router) { -%>
-import router from './../routers/<%= name %>';
+import router from 'routers/<%= name %>';
 <% } else { -%>
-import <%= componentName %> from './../components/<%= componentName %>';
+import <%= componentName %> from 'components<%= componentName %>/<%= componentName %>';
 <% } -%>
 
 (() => {
@@ -32,7 +32,7 @@ import <%= componentName %> from './../components/<%= componentName %>';
     document.getElementById('root')
 <% } else { -%>
 <% if(router) { -%>
-    {router},
+    router,
 <% } else if(redux) { -%>
     <Provider store={store}>
       <<%= componentName %> />

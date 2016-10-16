@@ -24,8 +24,8 @@ module.exports = generators.Base.extend({
       }
     );
     this.fs.copyTpl(
-      this.templatePath('eslintrc'),
-      this.destinationPath('.eslintrc'), {
+      this.templatePath('eslintrc.js'),
+      this.destinationPath('.eslintrc.js'), {
         react: this.options.react
       }
     );
@@ -46,6 +46,8 @@ module.exports = generators.Base.extend({
       'eslint',
       'eslint-watch',
       'eslint-config-google',
+      'eslint-plugin-import',
+      'eslint-import-resolver-babel-module',
       'babel-eslint'
     ];
 

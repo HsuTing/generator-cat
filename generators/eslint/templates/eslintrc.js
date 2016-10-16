@@ -1,5 +1,11 @@
-{
-  "extends": "google",
+var alias = require('./alias');
+
+module.exports = {
+  "extends": [
+    "google",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 7,
@@ -12,14 +18,24 @@
     "browser": true,
     "node": true
   },
-<% if(react) { -%>
   "plugins": [
-    "react"
+<% if(react) { -%>
+    "react",
+<% } -%>
+    "import"
   ],
   "settings": {
+<% if(react) { -%>
     "react": {
       "pragma": "React",
       "version": "15.3"
+    },
+<% } -%>
+    "import/resolver": {
+      "babel-module": {
+        "root": ["./src"],
+        "alias": alias
+      }
     }
   },
 <% } -%>
@@ -28,8 +44,6 @@
     "max-len": 0,
     "quote-props": ["error", "as-needed"],
     "no-alert": "warn",
-    "no-unused-vars": 0,
-    "no-negated-condition": 0,
     "object-curly-spacing": [1, "never"],
     "keyword-spacing": [2, {"overrides": {
       "if": {"after": false},

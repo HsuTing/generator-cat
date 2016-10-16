@@ -35,6 +35,7 @@ app.use(cookieParser('<%= cookieIDs[index] -%>'));
 <% } -%>
 <% if(middleware.indexOf('body parser') !== -1) { -%>
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 <% } -%>
 <% if(middleware.indexOf('connect multiparty') !== -1) { -%>
 app.use(multipart());
@@ -43,14 +44,20 @@ app.use(multipart());
 app.use(<%= custom[customIndex] %>);
 <% } -%>
 
-['views', 'api'].forEach(folder => {
+['api', 'views'].forEach(folder => {
   try {
     fs.readdirSync(path.resolve(ROUTERS, folder)).forEach(filename => {
-      const routes = require(path.resolve(ROUTERS, folder, filename)).default;
+      const filePath = path.resolve(ROUTERS, folder, filename);
+      const stats = fs.lstatSync(filePath);
 
-      if(typeof routes === 'function')
-        routes(app);
+      if(!stats.isDirectory()) {
+        const routes = require(filePath).default;
+
+        if(typeof routes === 'function')
+          routes(app);
+      }
     });
   } catch(e) {
+    console.log(e);
   }
 });

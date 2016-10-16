@@ -2,7 +2,7 @@
 
 import {combineReducers, createStore} from 'redux';
 <% for(index in reducerName) { -%>
-import <%= reducerName[index] %>Reducer from './../reducers/<%= reducerName[index] %>';
+import <%= reducerName[index] %>Reducer from 'reducers/<%= reducerName[index] %>';
 <% } -%>
 
 const reducers = combineReducers({

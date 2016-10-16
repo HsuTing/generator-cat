@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Action from './../actions/<%= reducerName %>';
+import * as Action from 'actions/<%= reducerName %>';
 
 const initialState = {
 };

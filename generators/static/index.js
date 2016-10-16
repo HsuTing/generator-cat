@@ -33,7 +33,7 @@ module.exports = generators.Base.extend({
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
       scripts: {
-        static: 'node tools/static.js',
+        static: 'node bin/static.js',
         build: 'npm run babel && npm run static',
         'build:production': 'npm run babel && NODE_ENV=1 npm run static',
         watch: 'concurrently -c green "npm run lint:watch" "npm run webpack-server"'
@@ -49,9 +49,18 @@ module.exports = generators.Base.extend({
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
     // copy files
+    this.fs.copyTpl(
+      this.templatePath('alias.js'),
+      this.destinationPath('alias.js'), {
+        router: this.props.modules.indexOf('router') !== -1,
+        redux: this.props.modules.indexOf('redux') !== -1,
+        radium: this.props.modules.indexOf('radium') !== -1
+      }
+    );
+
     this.fs.copy(
       this.templatePath('static.js'),
-      this.destinationPath('tools/static.js')
+      this.destinationPath('bin/static.js')
     );
 
     this.fs.copyTpl(

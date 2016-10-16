@@ -78,7 +78,7 @@ module.exports = generators.Base.extend({
     if(this.props.modules.indexOf('default component') !== -1) {
       this.fs.copyTpl(
         this.templatePath('components.js'),
-        this.destinationPath('src/components/' + componentName + '.js'), {
+        this.destinationPath('src/components/' + this.props.name + '/' + componentName + '.js'), {
           componentName: componentName,
           radium: this.props.modules.indexOf('radium') !== -1
         }
@@ -140,7 +140,7 @@ module.exports = generators.Base.extend({
       );
       this.fs.copy(
         this.templatePath('Style.js'),
-        this.destinationPath('src/components/Style.js')
+        this.destinationPath('src/components/share/Style.js')
       );
     }
   },
