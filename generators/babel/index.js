@@ -43,6 +43,7 @@ module.exports = generators.Base.extend({
       'babel-cli',
       'babel-plugin-transform-object-assign',
       'babel-plugin-transform-decorators-legacy',
+      'babel-plugin-module-resolver',
       'babel-preset-latest',
       'babel-preset-stage-0'
     ];

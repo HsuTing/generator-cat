@@ -7,7 +7,7 @@ module.exports = [
     location: <%= hostname %>,
     component: require('./lib/routers/<%= name %>').default,
 <% } else { -%>
-    component: require('./lib/components/<%= componentName %>').default,
+    component: require('./lib/components/<%= name %>/<%= componentName %>').default,
 <% } -%>
 <% if(redux) { -%>
     store: require('./lib/stores/<%= name %>').default,

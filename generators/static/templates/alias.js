@@ -10,5 +10,5 @@ module.exports = {
 <% if(radium) { -%>
   componentsRadium: './components/radium',
 <% } -%>
-  components: './components'
+  components<%= componentName %>: './components/<%= componentName %>'
 };
