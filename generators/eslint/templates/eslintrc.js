@@ -1,10 +1,10 @@
-var alias = require('./alias');
-
 module.exports = {
   "extends": [
     "google",
-    "eslint:recommended",
-    "plugin:react/recommended"
+<% if(react) { -%>
+    "plugin:react/recommended",
+<% } -%>
+    "eslint:recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -33,8 +33,9 @@ module.exports = {
 <% } -%>
     "import/resolver": {
       "babel-module": {
-        "root": ["./src"],
-        "alias": alias
+<% alias.forEach(function(item, index) { -%>
+        "<%= item.key %>": "<%= item.value %>"<% if(index !== alias.length - 1) { %>,<% } %>
+<% }) -%>
       }
     }
   },
@@ -42,7 +43,8 @@ module.exports = {
     "indent": [2, 2, {"SwitchCase": 1}],
     "max-len": 0,
     "quote-props": ["error", "as-needed"],
-    "no-alert": "warn",
+    "no-alert": "off",
+    "no-console": "off",
     "object-curly-spacing": [1, "never"],
     "keyword-spacing": [2, {"overrides": {
       "if": {"after": false},

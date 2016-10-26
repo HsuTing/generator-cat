@@ -13,7 +13,7 @@
     "yeoman-generator"
   ],
   "pre-commit": [
-    "eslint"
+    "lint"
   ],
   "dependencies": {
     "chalk": "^1.0.0",
@@ -47,13 +47,10 @@
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp",
-    "eslint": "eslint --cache ./generators --ext .js"
+    "lint": "eslint --cache ./generators --ext .js"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hsuting/generator-cat/issues"
-  },
-  "directories": {
-    "test": "test"
   }
 }

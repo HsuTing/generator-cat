@@ -1,0 +1,3 @@
+# Actions
+
+All Redux actions.

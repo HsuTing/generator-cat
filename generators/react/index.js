@@ -3,184 +3,159 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
+var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
-    this.option('webpack', {
-      type: Boolean,
-      required: false,
-      defaults: false,
-      desc: 'Include webpack'
-    });
-
-    this.option('name', {
+    this.option('names', {
       type: String,
       required: false,
-      default: '',
-      desc: 'Main component name'
+      default: 'index',
+      desc: 'Main js names (comma to split)'
     });
 
-    this.option('modules', {
-      type: Array,
+    this.option('router', {
+      type: Boolean,
       required: false,
-      default: [],
-      desc: 'Modules'
+      default: false,
+      desc: 'Use react-router'
     });
+
+    this.option('redux', {
+      type: Boolean,
+      required: false,
+      default: false,
+      desc: 'Use redux and react-redux'
+    });
+
+    this.config.set('react', true);
   },
 
   initializing: function() {
-    var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-
     this.props = {
-      modules: this.options.modules,
-      name: this.options.name
+      names: this.options.names === '' ? [] : this.options.names.split(/\s*,\s*/g),
+      router: this.options.router,
+      redux: this.options.redux
     };
+
+    if(this.config.get('js'))
+      this.props.names = this.config.get('js');
+
+    if(this.config.get('router'))
+      this.props.router = this.config.get('router');
+
+    if(this.config.get('redux'))
+      this.props.redux = this.config.get('redux');
   },
 
   prompting: {
-    chooseModules: function() {
+    askForNames: function() {
       return this.prompt([{
-        type: 'checkbox',
-        name: 'modules',
-        message: 'Choose modules',
-        choices: ['router', 'redux', 'radium', {name: 'default component', checked: true}],
-        when: this.options.modules.length === 0
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-      }.bind(this));
-    },
-
-    getName: function() {
-      return this.prompt([{
-        name: 'name',
-        message: 'Main component name',
+        name: 'names',
+        message: 'Main js names (comma to split)',
         default: 'index',
-        when: this.options.name === ''
-      }, {
-        name: 'reducerName',
-        message: 'Reducer names (comma to split)',
-        default: 'data',
-        when: this.props.modules.indexOf('redux') !== -1,
+        when: this.props.names.length === 0,
         filter: function(words) {
+          if(words === '')
+            return [];
+
           return words.split(/\s*,\s*/g);
         }
       }]).then(function(props) {
         this.props = extend(this.props, props);
+
+        this.config.set('js', this.props.names);
+      }.bind(this));
+    },
+
+    askForModules: function() {
+      return this.prompt([{
+        type: 'confirm',
+        name: 'router',
+        message: 'Use react-router',
+        default: true,
+        when: !this.props.router
+      }, {
+        type: 'confirm',
+        name: 'redux',
+        message: 'Use redux and react-redux',
+        default: true,
+        when: !this.props.redux
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+
+        this.config.set('router', this.props.router);
+        this.config.set('redux', this.props.redux);
       }.bind(this));
     }
   },
 
   writing: function() {
-    var componentName = this.props.name[0].toUpperCase() + this.props.name.slice(1);
+    this.props.names.forEach(function(name) {
+      var componentName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 
-    if(this.props.modules.indexOf('default component') !== -1) {
       this.fs.copyTpl(
-        this.templatePath('components.js'),
-        this.destinationPath('src/components/' + this.props.name + '/' + componentName + '.js'), {
-          componentName: componentName,
-          radium: this.props.modules.indexOf('radium') !== -1
+        this.templatePath('component.js'),
+        this.destinationPath('src/components/' + name + '/' + componentName + '.js'), {
+          name: name,
+          componentName: componentName
         }
       );
+
       this.fs.copyTpl(
         this.templatePath('public.js'),
-        this.destinationPath('src/public/' + this.props.name + '.js'), {
-          name: this.props.name,
-          componentName: componentName,
-          redux: this.props.modules.indexOf('redux') !== -1,
-          router: this.props.modules.indexOf('router') !== -1,
-          radium: this.props.modules.indexOf('radium') !== -1
+        this.destinationPath('src/public/' + name + '.js'), {
+          name: name,
+          componentName: componentName
         }
       );
-    }
+    }.bind(this));
 
-    if(this.props.modules.indexOf('router') !== -1) {
-      this.fs.copyTpl(
-        this.templatePath('routers.js'),
-        this.destinationPath('src/routers/' + this.props.name + '.js'), {
-          name: this.props.name,
-          componentName: componentName,
-          redux: this.props.modules.indexOf('redux') !== -1
-        }
-      );
-    }
+    this.fs.copy(
+      this.templatePath('radium/Wrapper.js'),
+      this.destinationPath('src/components/share/radium/Wrapper.js')
+    );
 
-    if(this.props.modules.indexOf('redux') !== -1) {
-      this.props.reducerName.forEach(function(reducerName) {
-        this.fs.copy(
-          this.templatePath('actions.js'),
-          this.destinationPath('src/actions/' + reducerName + '.js')
-        );
-        this.fs.copyTpl(
-          this.templatePath('reducers.js'),
-          this.destinationPath('src/reducers/' + reducerName + '.js'), {
-            reducerName: reducerName
-          }
-        );
-      }.bind(this));
-      this.fs.copyTpl(
-        this.templatePath('stores.js'),
-        this.destinationPath('src/stores/' + this.props.name + '.js'), {
-          reducerName: this.props.reducerName
-        }
-      );
-    }
-
-    if(this.props.modules.indexOf('radium') !== -1) {
-      if(this.props.modules.indexOf('router') !== -1) {
-        this.fs.copy(
-          this.templatePath('radium/Link.js'),
-          this.destinationPath('src/components/radium/Link.js')
-        );
-      }
+    if(this.props.router) {
       this.fs.copy(
-        this.templatePath('radium/Wrapper.js'),
-        this.destinationPath('src/components/radium/Wrapper.js')
-      );
-      this.fs.copy(
-        this.templatePath('Style.js'),
-        this.destinationPath('src/components/share/Style.js')
+        this.templatePath('radium/Link.js'),
+        this.destinationPath('src/components/share/radium/Link.js')
       );
     }
+
+    this.fs.copy(
+      this.templatePath('Style.js'),
+      this.destinationPath('src/components/share/Style.js')
+    );
   },
 
   default: function() {
-    if(this.options.webpack) {
-      this.composeWith('cat:webpack', {
-        options: {
-          name: this.props.name,
-          router: this.props.modules.indexOf('router') !== -1,
-          redux: this.props.modules.indexOf('redux') !== -1,
-          radium: this.props.modules.indexOf('radium') !== -1,
-          skipInstall: this.options.skipInstall
-        }
-      }, {
-        local: require.resolve('../webpack')
-      });
-    }
-  },
-
-  install: function() {
-    var packages = [
+    var modules = [
       'react',
-      'react-dom'
+      'react-dom',
+      'radium',
+      'radium-normalize'
     ];
 
-    if(this.props.modules.indexOf('router') !== -1) {
-      packages.push('react-router');
+    if(this.props.router) {
+      modules.push('react-router');
     }
 
-    if(this.props.modules.indexOf('redux') !== -1) {
-      packages.push('redux');
-      packages.push('react-redux');
+    if(this.props.redux !== -1) {
+      modules.push(
+        'redux',
+        'react-redux'
+      );
     }
 
-    if(this.props.modules.indexOf('radium') !== -1) {
-      packages.push('radium');
-      packages.push('radium-normalize');
-    }
-
-    this.npmInstall(packages, {save: true});
+    this.config.set(
+      'modules',
+      addModules(
+        this.config.get('modules'),
+        modules
+      )
+    );
   }
 });

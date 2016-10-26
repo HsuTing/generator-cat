@@ -5,9 +5,15 @@ import radium from 'radium';
 
 @radium
 class Wrapper extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.element.isRequired
+  }
+
   render() {
+    const children = this.props.children;
+
     return (
-      <div>{this.props.children}</div>
+      <div>{children}</div>
     );
   }
 }

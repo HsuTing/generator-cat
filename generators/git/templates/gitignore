@@ -5,6 +5,6 @@ lib
 .eslintcache
 *.log
 coverage
-<% if(type === 'Dynamic pages') { -%>
-public/js/
-<% } -%>
+<% extra.forEach(function(item) { -%>
+<%= item %>
+<% }) -%>

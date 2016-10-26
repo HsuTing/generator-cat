@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var alias = requre('./alias');
 
 var src = './src/public';
 var dist = './public/js';
@@ -9,7 +8,9 @@ var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
 
 module.exports = {
   entry: {
-    index: path.resolve(src, './<%= componentName %>.js'),
+<% names.forEach(function(name, index) { -%>
+    <%= name %>: path.resolve(src, './<%= name %>.js'),
+<% }) -%>
     common: [
 <% if(router) { -%>
       'react-router',
@@ -18,10 +19,8 @@ module.exports = {
       'redux',
       'react-redux',
 <% } -%>
-<% if(radium) { -%>
       'radium',
       'radium-normalize',
-<% } -%>
       'react',
       'react-dom'
     ]
@@ -37,9 +36,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js'],
-    root: './src',
-    alias: alias
+    extensions: ['', '.js']
   },
   plugins: ENV ? [
     new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),

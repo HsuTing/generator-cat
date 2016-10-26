@@ -16,13 +16,6 @@ module.exports = generators.Base.extend({
     this.log(yosay(
       'Welcome to the cat\'s pajamas ' + chalk.red('generator-cat') + ' generator!'
     ));
-
-    this.option('license', {
-      type: Boolean,
-      required: false,
-      defaults: true,
-      desc: 'Include a license'
-    });
   },
 
   initializing: function() {
@@ -32,10 +25,8 @@ module.exports = generators.Base.extend({
       name: this.pkg.name,
       description: this.pkg.description,
       version: this.pkg.version,
-      homepage: this.pkg.homepage,
-      type: this.pkg.type,
       typeList: ['Static pages', 'Dynamic pages', 'Bot', 'Default'],
-      react: false
+      homepage: this.pkg.homepage
     };
 
     if(_.isObject(this.pkg.author)) {
@@ -68,29 +59,6 @@ module.exports = generators.Base.extend({
         }
       }, this).then(function(answer) {
         this.props.name = answer.name;
-      }.bind(this));
-    },
-
-    askForType: function() {
-      return this.prompt([{
-        type: 'list',
-        name: 'type',
-        message: 'Choose type',
-        choices: this.props.typeList,
-        default: this.props.typeList[0],
-        when: !this.props.type || this.props.typeList.indexOf(this.props.type) === -1
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-        switch(this.props.typeList.indexOf(props.type || this.props.type)) {
-          case 0:
-          case 1:
-            this.props.react = true;
-            break;
-
-          default:
-            this.props.react = false;
-            break;
-        }
       }.bind(this));
     },
 
@@ -130,6 +98,18 @@ module.exports = generators.Base.extend({
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
+    },
+
+    askForType: function() {
+      return this.prompt([{
+        type: 'list',
+        name: 'type',
+        message: 'Choose type',
+        choices: this.props.typeList,
+        default: this.props.typeList[this.props.typeList.length - 1]
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
     }
   },
 
@@ -145,9 +125,8 @@ module.exports = generators.Base.extend({
         email: this.props.authorEmail,
         url: this.props.authorUrl
       },
-      main: 'lib/index.js',
-      keywords: [],
-      type: this.props.type
+      main: './lib/index.js',
+      keywords: []
     }, currentPkg);
 
     if(this.props.homepage) {
@@ -161,10 +140,6 @@ module.exports = generators.Base.extend({
       };
     }
 
-    if(this.props.typeList.indexOf(pkg.type) === -1) {
-      pkg.type = this.props.type;
-    }
-
     if(this.props.keywords) {
       pkg.keywords = _.uniq(this.props.keywords.concat(pkg.keywords));
     }
@@ -176,35 +151,10 @@ module.exports = generators.Base.extend({
       this.templatePath('editorconfig'),
       this.destinationPath('.editorconfig')
     );
-
-    this.fs.copyTpl(
-      this.templatePath('gitignore'),
-      this.destinationPath('.gitignore'), {
-        type: this.props.type
-      }
-    );
   },
 
-  default: function() {
-    this.composeWith('cat:babel', {
-      options: {
-        react: this.props.react,
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../babel')
-    });
-
-    this.composeWith('cat:eslint', {
-      options: {
-        react: this.props.react,
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../eslint')
-    });
-
-    if(this.options.license && !this.pkg.license) {
+  defualt: function() {
+    if(!this.pkg.license) {
       this.composeWith('license', {
         options: {
           name: this.props.authorName,
@@ -215,14 +165,6 @@ module.exports = generators.Base.extend({
         local: require.resolve('generator-license/app')
       });
     }
-
-    this.composeWith('cat:test', {
-      options: {
-        skipInstall: this.options.skipInstall
-      }
-    }, {
-      local: require.resolve('../test')
-    });
 
     switch(this.props.typeList.indexOf(this.props.type)) {
       case 0:
@@ -235,26 +177,6 @@ module.exports = generators.Base.extend({
         });
         break;
 
-      case 1:
-        this.composeWith('cat:dynamic', {
-          options: {
-            skipInstall: this.options.skipInstall
-          }
-        }, {
-          local: require.resolve('../dynamic')
-        });
-        break;
-
-      case 2:
-        this.composeWith('cat:bot', {
-          options: {
-            skipInstall: this.options.skipInstall
-          }
-        }, {
-          local: require.resolve('../bot')
-        });
-        break;
-
       default:
         break;
     }
@@ -264,5 +186,16 @@ module.exports = generators.Base.extend({
     this.log(yosay(
       'Meooooooow~~'
     ));
+
+    if(this.options.skipInstall)
+      return;
+
+    this.spawnCommand('yarn',
+      ['add'].concat(this.config.get('modules') || [])
+    );
+
+    this.spawnCommand('yarn',
+      ['add'].concat(this.config.get('modules:dev') || []).concat(['--dev'])
+    );
   }
 });

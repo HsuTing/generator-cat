@@ -1,5 +1,0 @@
-'use strict';
-
-/*
- * add actions
-*/

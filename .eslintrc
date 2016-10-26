@@ -16,8 +16,6 @@
     "max-len": 0,
     "quote-props": ["error", "as-needed"],
     "no-alert": "warn",
-    "no-unused-vars": 0,
-    "no-negated-condition": 0,
     "object-curly-spacing": [1, "never"],
     "keyword-spacing": [2, {"overrides": {
       "if": {"after": false},

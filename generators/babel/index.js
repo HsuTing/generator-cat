@@ -3,21 +3,59 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
+var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
+    this.option('alias', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Alias in babel (comma to split)'
+    });
+
     this.option('react', {
       type: Boolean,
       required: false,
-      default: true,
-      desc: 'Use React'
+      default: false,
+      desc: 'Use react'
     });
   },
 
-  writing: function() {
-    // write package.json
+  initializing: function() {
+    this.props = {
+      alias: this.options.alias === '' ? [] : this.options.alias.split(/\s*,\s*/g),
+      react: this.options.react
+    };
+
+    if(this.config.get('alias'))
+      this.props.alias = this.config.get('alias');
+
+    if(this.config.get('react'))
+      this.props.react = this.config.get('react');
+  },
+
+  prompting: function() {
+    return this.prompt([{
+      name: 'alias',
+      message: 'Alias in babel (comma to split and write like `key: value`)',
+      when: this.props.alias.length === 0,
+      filter: function(words) {
+        if(words === '')
+          return [];
+
+        return words.split(/\s*,\s*/g);
+      }
+    }]).then(function(props) {
+      this.props = extend(this.props, props);
+
+      this.config.set('alias', this.props.alias);
+    }.bind(this));
+  },
+
+  write: function() {
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     var pkg = extend({
@@ -29,28 +67,45 @@ module.exports = generators.Base.extend({
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    // copy files
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
-        react: this.options.react
+        react: this.props.react,
+        alias: this.props.alias.map(function(item) {
+          var split = item.split(/\s*:\s*/g);
+
+          return {
+            key: split[0],
+            value: split[1]
+          };
+        })
       }
     );
   },
 
-  install: function() {
+  default: function() {
     var modules = [
       'babel-cli',
+      'babel-core',
       'babel-plugin-transform-object-assign',
-      'babel-plugin-transform-decorators-legacy',
       'babel-plugin-module-resolver',
       'babel-preset-latest',
       'babel-preset-stage-0'
     ];
 
-    if(this.options.react)
-      modules.push('babel-preset-react');
+    if(this.props.react) {
+      modules.push(
+        'babel-preset-react',
+        'babel-plugin-transform-decorators-legacy'
+      );
+    }
 
-    this.npmInstall(modules, {saveDev: true});
+    this.config.set(
+      'modules:dev',
+      addModules(
+        this.config.get('modules:dev'),
+        modules
+      )
+    );
   }
 });
