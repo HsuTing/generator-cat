@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var src = './src/public';
 var dist = './public/js';
 
-var ENV = Boolean(Number(process.env.NODE_ENV) || 0);
+var ENV = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: {

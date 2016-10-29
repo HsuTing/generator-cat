@@ -111,7 +111,7 @@ module.exports = generators.Base.extend({
     var pkg = extend({
       scripts: {
         build: 'npm run babel && npm run static',
-        'build:production': 'npm run babel && NODE_ENV=1 npm run static',
+        'build:production': 'npm run babel && NODE_ENV=production npm run static',
         watch: 'concurrently -c green "npm run lint:watch" "npm run webpack-server"'
       },
       'pre-commit': [

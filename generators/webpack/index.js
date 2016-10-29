@@ -105,7 +105,7 @@ module.exports = generators.Base.extend({
     var pkg = extend({
       scripts: {
         'webpack-server': 'webpack-dev-server --content-base src --hot --inline',
-        webpack: 'NODE_ENV=1 webpack'
+        webpack: 'NODE_ENV=production webpack'
       }
     }, currentPkg);
 

@@ -16,6 +16,13 @@ module.exports = generators.Base.extend({
     this.log(yosay(
       'Welcome to the cat\'s pajamas ' + chalk.red('generator-cat') + ' generator!'
     ));
+
+    this.option('type', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Choose type'
+    });
   },
 
   initializing: function() {
@@ -25,7 +32,7 @@ module.exports = generators.Base.extend({
       name: this.pkg.name,
       description: this.pkg.description,
       version: this.pkg.version,
-      typeList: ['Static pages', 'Dynamic pages', 'Bot', 'Default'],
+      type: this.options.type.toLowerCase(),
       homepage: this.pkg.homepage
     };
 
@@ -105,8 +112,9 @@ module.exports = generators.Base.extend({
         type: 'list',
         name: 'type',
         message: 'Choose type',
-        choices: this.props.typeList,
-        default: this.props.typeList[this.props.typeList.length - 1]
+        choices: ['static', 'dynamic', 'bot', 'install', 'default'],
+        default: 'default',
+        when: this.props.type === ''
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
@@ -166,18 +174,22 @@ module.exports = generators.Base.extend({
       });
     }
 
-    switch(this.props.typeList.indexOf(this.props.type)) {
-      case 0:
+    switch(this.props.type) {
+      case 'static':
         this.composeWith('cat:static', {
-          options: {
-            skipInstall: this.options.skipInstall
-          }
         }, {
           local: require.resolve('../static')
         });
         break;
 
+      case 'install':
+        break;
+
       default:
+        this.composeWith('cat:default', {
+        }, {
+          local: require.resolve('../default')
+        });
         break;
     }
   },
@@ -190,12 +202,14 @@ module.exports = generators.Base.extend({
     if(this.options.skipInstall)
       return;
 
-    this.spawnCommand('yarn',
-      ['add'].concat(this.config.get('modules') || [])
-    );
+    if(this.config.get('modules') && this.config.get('modules').length !== 0)
+      this.spawnCommand('yarn',
+        ['add'].concat(this.config.get('modules') || [])
+      );
 
-    this.spawnCommand('yarn',
-      ['add'].concat(this.config.get('modules:dev') || []).concat(['--dev'])
-    );
+    if(this.config.get('modules:dev') && this.config.get('modules:dev').length !== 0)
+      this.spawnCommand('yarn',
+        ['add'].concat(this.config.get('modules:dev') || []).concat(['--dev'])
+      );
   }
 });
