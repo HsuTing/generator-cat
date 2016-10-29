@@ -1,0 +1,7 @@
+src
+views
+public
+*.html
+*.config.js
+!package.json
+!lib

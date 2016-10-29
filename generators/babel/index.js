@@ -56,6 +56,7 @@ module.exports = generators.Base.extend({
   },
 
   write: function() {
+    // write package.json
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     var pkg = extend({
@@ -67,6 +68,7 @@ module.exports = generators.Base.extend({
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
+    // copy files
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
