@@ -1,3 +1,0 @@
-# Stores
-
-All redux stores.

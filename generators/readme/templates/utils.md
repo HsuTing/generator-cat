@@ -1,3 +1,0 @@
-# Utils
-
-All util functions.
