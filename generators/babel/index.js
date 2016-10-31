@@ -9,13 +9,6 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
-    this.option('alias', {
-      type: String,
-      required: false,
-      default: '',
-      desc: 'Alias in babel (comma to split)'
-    });
-
     this.option('react', {
       type: Boolean,
       required: false,
@@ -26,33 +19,9 @@ module.exports = generators.Base.extend({
 
   initializing: function() {
     this.props = {
-      alias: this.options.alias === '' ? [] : this.options.alias.split(/\s*,\s*/g),
+      alias: this.config.get('alias') || [],
       react: this.options.react
     };
-
-    if(this.config.get('alias'))
-      this.props.alias = this.config.get('alias');
-
-    if(this.config.get('react'))
-      this.props.react = this.config.get('react');
-  },
-
-  prompting: function() {
-    return this.prompt([{
-      name: 'alias',
-      message: 'Alias in babel (comma to split and write like `key: value`)',
-      when: this.props.alias.length === 0,
-      filter: function(words) {
-        if(words === '')
-          return [];
-
-        return words.split(/\s*,\s*/g);
-      }
-    }]).then(function(props) {
-      this.props = extend(this.props, props);
-
-      this.config.set('alias', this.props.alias);
-    }.bind(this));
   },
 
   write: function() {
@@ -73,14 +42,7 @@ module.exports = generators.Base.extend({
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
         react: this.props.react,
-        alias: this.props.alias.map(function(item) {
-          var split = item.split(/\s*:\s*/g);
-
-          return {
-            key: split[0],
-            value: split[1]
-          };
-        })
+        alias: this.props.alias
       }
     );
   },

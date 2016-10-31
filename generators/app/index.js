@@ -8,6 +8,7 @@ var _ = require('lodash');
 var extend = _.merge;
 var parseAuthor = require('parse-author');
 var askName = require('inquirer-npm-name');
+var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -16,13 +17,6 @@ module.exports = generators.Base.extend({
     this.log(yosay(
       'Welcome to the cat\'s pajamas ' + chalk.red('generator-cat') + ' generator!'
     ));
-
-    this.option('type', {
-      type: String,
-      required: false,
-      default: '',
-      desc: 'Choose type'
-    });
   },
 
   initializing: function() {
@@ -32,8 +26,8 @@ module.exports = generators.Base.extend({
       name: this.pkg.name,
       description: this.pkg.description,
       version: this.pkg.version,
-      type: this.options.type.toLowerCase(),
-      homepage: this.pkg.homepage
+      homepage: this.pkg.homepage,
+      names: this.config.get('names') || []
     };
 
     if(_.isObject(this.pkg.author)) {
@@ -107,21 +101,136 @@ module.exports = generators.Base.extend({
       }.bind(this));
     },
 
-    askForType: function() {
+    askForNpm: function() {
       return this.prompt([{
-        type: 'list',
-        name: 'type',
-        message: 'Choose type',
-        choices: ['static', 'dynamic', 'bot', 'install', 'default'],
-        default: 'default',
-        when: this.props.type === ''
+        type: 'confirm',
+        name: 'isNeeded',
+        message: '".npmignore" is needed',
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'publichToNpm',
+        message: 'This package will pulish to npm',
+        store: true
+      }]).then(function(props) {
+        this.props.npm = extend(this.props.npm, props);
+      }.bind(this));
+    },
+
+    askForWebsite: function() {
+      return this.prompt([{
+        type: 'confirm',
+        name: 'website',
+        message: 'Use for website',
+        store: true
       }]).then(function(props) {
         this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
+    askForReact: function() {
+      return this.prompt([{
+        type: 'confirm',
+        name: 'router',
+        message: 'Use react-router',
+        when: this.props.website,
+        store: true
+      }, {
+        type: 'confirm',
+        name: 'redux',
+        message: 'Use react-redux',
+        when: this.props.website,
+        store: true
+      }]).then(function(props) {
+        this.props.reactPlugin = extend(this.props.reactPlugin, props);
+      }.bind(this));
+    },
+
+    askForNames: function() {
+      return this.prompt([{
+        name: 'names',
+        message: 'Main js file names (comma to split)',
+        when: this.props.website && this.props.names.length === 0,
+        filter: function(words) {
+          if(words === '')
+            return [];
+
+          return words.split(/\s*,\s*/g);
+        }
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+        if(props.names)
+          this.config.set('names', props.names);
       }.bind(this));
     }
   },
 
+  configuring: function() {
+    // write .yo_rc.json
+    var alias = [
+      {key: 'utils', value: 'utils'},
+      {key: 'constants', value: 'constants'}
+    ];
+
+    if(this.props.website) {
+      alias.push(
+        {key: 'public', value: 'public'},
+        {key: 'components', value: 'components'},
+        {key: 'componentsShare', value: 'components/share'},
+        {key: 'componentsShareRadium', value: 'components/share/radium'}
+      );
+
+      this.props.names.forEach(function(name) {
+        var componentName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+
+        alias.push(
+          {
+            key: 'components' + componentName,
+            value: 'components/' + name
+          }
+        );
+      });
+
+      if(this.props.reactPlugin.router || this.props.reactPlugin.redux) {
+        alias.push(
+          {key: 'containers', value: 'containers'}
+        );
+      }
+
+      if(this.props.reactPlugin.redux) {
+        alias.push(
+          {key: 'reducers', value: 'reducers'},
+          {key: 'actions', value: 'actions'},
+          {key: 'stores', value: 'stores'}
+        );
+      }
+    }
+
+    this.config.set('alias', alias);
+  },
+
   writing: function() {
+    var scripts = {};
+
+    if(this.props.website) {
+      if(this.props.server) {
+      } else {
+        scripts.build = 'npm run babel && npm run static';
+        scripts['build:production'] = 'npm run babel && NODE_ENV=production npm run static && npm run webpack';
+        scripts.watch = 'concurrently -c green "npm run lint:watch" "npm run webpack-server"';
+      }
+    }
+
+    this.config.set(
+      'modules:dev',
+      addModules(
+        this.config.get('modules:dev'), [
+          'pre-commit',
+          'concurrently'
+        ]
+      )
+    );
+
     // write package.json
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     var pkg = extend({
@@ -133,8 +242,12 @@ module.exports = generators.Base.extend({
         email: this.props.authorEmail,
         url: this.props.authorUrl
       },
+      scripts: scripts,
       main: './lib/index.js',
-      keywords: []
+      keywords: [],
+      'pre-commit': [
+        'lint'
+      ]
     }, currentPkg);
 
     if(this.props.homepage) {
@@ -162,6 +275,7 @@ module.exports = generators.Base.extend({
   },
 
   defualt: function() {
+    // default subgenerator
     if(!this.pkg.license) {
       this.composeWith('license', {
         options: {
@@ -174,23 +288,58 @@ module.exports = generators.Base.extend({
       });
     }
 
-    switch(this.props.type) {
-      case 'static':
-        this.composeWith('cat:static', {
-        }, {
-          local: require.resolve('../static')
-        });
-        break;
+    this.composeWith('git', {
+      options: {
+        isNeeded: this.props.npm.isNeeded,
+        publichToNpm: this.props.npm.publichToNpm
+      }
+    }, {
+      local: require.resolve('./../git')
+    });
 
-      case 'install':
-        break;
+    this.composeWith('babel', {
+      options: {
+        react: this.props.website
+      }
+    }, {
+      local: require.resolve('./../babel')
+    });
 
-      default:
-        this.composeWith('cat:default', {
-        }, {
-          local: require.resolve('../default')
-        });
-        break;
+    this.composeWith('eslint', {
+      options: {
+        react: this.props.website
+      }
+    }, {
+      local: require.resolve('./../eslint')
+    });
+
+    this.composeWith('bin', {}, {
+      local: require.resolve('./../bin')
+    });
+
+    // custom subgenerator
+    if(this.props.website) {
+      this.composeWith('pug', {}, {
+        local: require.resolve('./../pug')
+      });
+
+      this.composeWith('react', {
+        options: {
+          router: this.props.reactPlugin.router,
+          redux: this.props.reactPlugin.redux
+        }
+      }, {
+        local: require.resolve('./../react')
+      });
+
+      this.composeWith('webpack', {
+        options: {
+          router: this.props.reactPlugin.router,
+          redux: this.props.reactPlugin.redux
+        }
+      }, {
+        local: require.resolve('./../webpack')
+      });
     }
   },
 

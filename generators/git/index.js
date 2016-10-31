@@ -8,29 +8,29 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
-    this.option('extra', {
-      type: String,
+    this.option('isNeeded', {
+      type: Boolean,
       required: false,
-      defaults: '',
-      desc: 'Extra (comma to split)'
+      defaults: false,
+      desc: '".npmignore" is needed'
+    });
+
+    this.option('publichToNpm', {
+      type: Boolean,
+      required: false,
+      defaults: false,
+      desc: 'This package will pulish to npm'
     });
   },
 
   initializing: function() {
     this.props = {
-      extra: this.options.extra === '' ? [] : this.options.extra.split(/\s*,\s*/g),
-      npmignore: '',
-      publishToNpm: ''
+      extra: this.config.get('gitignore') || [],
+      npm: {
+        isNeeded: this.options.isNeeded,
+        publichToNpm: this.options.publichToNpm
+      }
     };
-
-    if(this.config.get('gitignore'))
-      this.props.extra = this.config.get('gitignore');
-
-    if(this.config.get('npmignore') !== undefined)
-      this.props.npmignore = this.config.get('npmignore');
-
-    if(this.config.get('publishToNpm') !== undefined)
-      this.props.publishToNpm = this.config.get('publishToNpm');
   },
 
   prompting: {
@@ -50,32 +50,6 @@ module.exports = generators.Base.extend({
 
         this.config.set('gitignore', this.props.extra);
       }.bind(this));
-    },
-
-    npm: function() {
-      return this.prompt([{
-        type: 'confirm',
-        name: 'npmignore',
-        message: 'Add npmignore',
-        when: this.props.npmignore === ''
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-
-        this.config.set('npmignore', this.props.npmignore);
-      }.bind(this));
-    },
-
-    publishToNpm: function() {
-      return this.prompt([{
-        type: 'confirm',
-        name: 'publishToNpm',
-        message: 'Will publish to npm',
-        when: this.props.npmignore && this.props.publishToNpm === ''
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-
-        this.config.set('publishToNpm', this.props.publishToNpm);
-      }.bind(this));
     }
   },
 
@@ -84,15 +58,20 @@ module.exports = generators.Base.extend({
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'), {
         extra: this.props.extra,
-        npmignore: this.props.npmignore,
-        publishToNpm: this.props.publishToNpm
+        npm: this.props.npm
       }
     );
 
-    if(this.props.npmignore)
+    if(this.props.npm.isNeeded) {
       this.fs.copy(
         this.templatePath('npmignore'),
         this.destinationPath('.npmignore')
       );
+
+      this.fs.copy(
+        this.templatePath('index.js'),
+        this.destinationPath('src/index.js')
+      );
+    }
   }
 });

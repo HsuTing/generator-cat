@@ -1,7 +1,7 @@
 node_modules
 .DS_Store
 *.swp
-<% if(!(npmignore && !publishToNpm)) { -%>
+<% if(!(npm.isNeeded && !npm.publishToNpm)) { -%>
 lib
 <% } -%>
 .eslintcache

@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Wrapper from 'componentsShareRadium/Wrapper';
-import <%= componentName %> from 'components/<%= name %>/<%= componentName %>';
+import <%= componentName %> from 'components<%= componentName %>/<%= componentName %>';
 
 (() => {
   ReactDOM.render(
