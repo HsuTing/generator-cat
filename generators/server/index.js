@@ -5,8 +5,21 @@ var _ = require('lodash');
 var extend = _.merge;
 
 module.exports = generators.Base.extend({
+  constructor: function() {
+    generators.Base.apply(this, arguments);
+
+    this.option('react', {
+      type: Boolean,
+      required: false,
+      default: false,
+      desc: 'Use react middleware'
+    });
+  },
+
   initializing: function() {
-    this.props = {};
+    this.props = {
+      react: this.options.react
+    };
   },
 
   prompting: {
@@ -22,19 +35,10 @@ module.exports = generators.Base.extend({
         name: 'middleware',
         message: 'Choose middleware',
         choices: [
-          'compression',
-          'body-parser',
           'cookie-parser',
           'cookie-session',
-          'errorhandler',
-          'morgan',
-          'multer',
-          'response-time',
-          'serve-favicon',
-          'express-uncapitalize',
-          'helmet',
-          'passport',
-          'static-expiry'
+          'body-parser',
+          'passport'
         ],
         store: true
       }]).then(function(props) {
@@ -72,12 +76,14 @@ module.exports = generators.Base.extend({
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
     // copy files
-    this.fs.copyTpl(
-      this.templatePath('middleware.js'),
-      this.destinationPath('src/middleware.js'), {
-        middleware: this.props.middleware
-      }
-    );
+    if(this.props.middleware.length !== 0) {
+      this.fs.copyTpl(
+        this.templatePath('middleware/middleware.js'),
+        this.destinationPath('src/middleware/middleware.js'), {
+          middleware: this.props.middleware
+        }
+      );
+    }
 
     switch(this.props.type) {
       case 'http':
@@ -100,13 +106,39 @@ module.exports = generators.Base.extend({
       default:
         break;
     }
+
+    if(this.props.react) {
+      this.fs.copy(
+        this.templatePath('middleware/react.js'),
+        this.destinationPath('src/middleware/react.js')
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('views.js'),
+        this.destinationPath('src/routes/views.js'), {
+          names: this.config.get('names') || []
+        }
+      );
+    }
   },
 
   install: function() {
     if(this.options.skipInstall)
       return;
 
-    var modules = ['add', 'express', 'nodemon', 'pug'];
+    var modules = [
+      'add',
+      'express',
+      'nodemon',
+      'pug',
+      'compression',
+      'errorhandler',
+      'morgan',
+      'response-time',
+      'serve-favicon',
+      'express-uncapitalize',
+      'helmet'
+    ];
 
     this.props.middleware.forEach(function(middleware) {
       modules.push(middleware.replace(/ /g, '-'));

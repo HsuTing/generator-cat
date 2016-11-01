@@ -11,7 +11,7 @@
 *     location: '/',(if `router` is true, you need to give a location to render)
 *
 *     redux: true,
-*     reducers: Reducers, (if `redux` is true, you need to give a reducers)
+*     reducer: Reducer, (if `redux` is true, you need to give a reducer)
 *     data: data, (if `redux` is true, you can give a inital data or not)
 *
 *     component: Component, (your main component)
@@ -72,12 +72,12 @@ var radium = function(component) {
   return React.createElement(Wrapper, null, component);
 };
 
-var redux = function(component, reducers, data) {
+var redux = function(component, reducer, data) {
   var Provider = require('react-redux').Provider;
   var createStore = require('redux').createStore;
 
   return React.createElement(Provider, {
-    store: data === undefined ? createStore(reducers) : createStore(reducers, data)
+    store: data === undefined ? createStore(reducer) : createStore(reducer, data)
   }, component);
 };
 
@@ -90,15 +90,13 @@ config.forEach(function(component) {
     match({routes: component.component, location: component.location}, function(error, redirextLocation, renderProps) {
       if(renderProps) {
         if(component.redux)
-          markup = redux(React.createElement(RouterContext, renderProps), component.reducers, component.data);
+          markup = redux(React.createElement(RouterContext, renderProps), component.reducer, component.data);
         else
           markup = React.createElement(RouterContext, renderProps);
 
-        markup = radium(markup);
-
         render(extend({}, component, {
           locals: {
-            markup: renderToStaticMarkup(markup)
+            markup: renderToStaticMarkup(radium(markup))
           }
         }));
       } else {
@@ -113,15 +111,13 @@ config.forEach(function(component) {
   }
 
   if(component.redux)
-    markup = redux(React.createElement(component.component), component.reducers, component.data);
+    markup = redux(React.createElement(component.component), component.reducer, component.data);
   else
     markup = React.createElement(component.component);
 
-  markup = radium(markup);
-
   render(extend({}, component, {
     locals: {
-      markup: renderToStaticMarkup(markup)
+      markup: renderToStaticMarkup(radium(markup))
     }
   }));
 });

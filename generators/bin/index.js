@@ -27,7 +27,7 @@ module.exports = generators.Base.extend({
       type: 'checkbox',
       name: 'modules',
       message: 'Choose modules of bin',
-      choices: ['test'],
+      choices: ['slack'],
       store: true
     }]).then(function(props) {
       this.props = extend(this.props, props);

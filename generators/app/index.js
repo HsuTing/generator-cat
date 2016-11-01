@@ -186,6 +186,7 @@ module.exports = generators.Base.extend({
       {key: 'constants', value: 'constants'}
     ];
 
+    // if just website
     if(this.props.website) {
       alias.push(
         {key: 'public', value: 'public'},
@@ -220,6 +221,14 @@ module.exports = generators.Base.extend({
       }
     }
 
+    // if just server
+    if(this.props.server) {
+      alias.push(
+        {key: 'routes', value: 'routes'},
+        {key: 'middleware', value: 'middleware'}
+      );
+    }
+
     this.config.set('alias', alias);
   },
 
@@ -228,11 +237,11 @@ module.exports = generators.Base.extend({
 
     if(this.props.website) {
       if(this.props.server) {
+        scripts.production = 'yarn babel && yarn webpack && yarn start';
         scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn babel:watch" "yarn webpack-server"';
-        scripts.production = 'yarn babel && yarn webpack';
       } else {
         scripts.build = 'yarn babel && yarn static';
-        scripts['build:production'] = 'yarn babel && NODE_ENV=production yarn static && yarn webpack';
+        scripts.production = 'yarn babel && NODE_ENV=production yarn static && yarn webpack';
         scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn webpack-server"';
       }
     }
@@ -365,6 +374,7 @@ module.exports = generators.Base.extend({
     if(this.props.server) {
       this.composeWith('server', {
         options: {
+          react: this.props.website,
           skipInstall: this.options.skipInstall
         }
       }, {
