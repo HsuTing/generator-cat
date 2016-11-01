@@ -3,7 +3,6 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   initializing: function() {
@@ -65,17 +64,10 @@ module.exports = generators.Base.extend({
     }.bind(this));
   },
 
-  default: function() {
-    var modules = [
-      'pug'
-    ];
+  install: function() {
+    if(this.options.skipInstall)
+      return;
 
-    this.config.set(
-      'modules:dev',
-      addModules(
-        this.config.get('modules:dev'),
-        modules
-      )
-    );
+    this.spawnCommandSync('yarn', ['add', 'pug', '--dev']);
   }
 });

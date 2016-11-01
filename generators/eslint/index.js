@@ -3,7 +3,6 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -46,8 +45,12 @@ module.exports = generators.Base.extend({
     );
   },
 
-  default: function() {
+  install: function() {
+    if(this.options.skipInstall)
+      return;
+
     var modules = [
+      'add',
       'eslint',
       'eslint-watch',
       'eslint-config-google',
@@ -59,12 +62,7 @@ module.exports = generators.Base.extend({
     if(this.props.react)
       modules.push('eslint-plugin-react');
 
-    this.config.set(
-      'modules:dev',
-      addModules(
-        this.config.get('modules:dev'),
-        modules
-      )
-    );
+    modules.push('--dev');
+    this.spawnCommandSync('yarn', modules);
   }
 });

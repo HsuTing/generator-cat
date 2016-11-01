@@ -3,62 +3,10 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
-  constructor: function() {
-    generators.Base.apply(this, arguments);
-
-    this.option('type', {
-      type: String,
-      require: false,
-      default: '',
-      desc: 'Server type'
-    });
-
-    this.option('middleware', {
-      type: String,
-      require: false,
-      default: '',
-      desc: 'Server middleware (comma to split)'
-    });
-
-    this.option('domain', {
-      type: String,
-      require: false,
-      default: '',
-      desc: 'Https domain name'
-    });
-
-    this.option('email', {
-      type: String,
-      require: false,
-      default: '',
-      desc: 'Https domain email'
-    });
-  },
-
   initializing: function() {
-    this.props = {
-      type: this.options.type,
-      middleware: this.options.middleware === '' ? [] : this.options.middleware.split(/\s*,\s*/g),
-      https: {
-        domain: this.options.domain,
-        email: this.options.email
-      }
-    };
-
-    if(this.config.get('server:type'))
-      this.props.type = this.config.get('server:type');
-
-    if(this.config.get('server:middleware'))
-      this.props.middleware = this.config.get('server:middleware');
-
-    if(this.config.get('server:https:domain'))
-      this.props.https.email = this.config.get('server:https:domain');
-
-    if(this.config.get('server:https:email'))
-      this.props.https.email = this.config.get('server:https:email');
+    this.props = {};
   },
 
   prompting: {
@@ -68,8 +16,7 @@ module.exports = generators.Base.extend({
         name: 'type',
         message: 'Choose server type',
         choices: ['http', 'https'],
-        default: 'http',
-        when: this.props.type === ''
+        store: true
       }, {
         type: 'checkbox',
         name: 'middleware',
@@ -89,12 +36,9 @@ module.exports = generators.Base.extend({
           'passport',
           'static-expiry'
         ],
-        when: this.props.middleware.length === 0
+        store: true
       }]).then(function(props) {
         this.props = extend(this.props, props);
-
-        this.config.set('server:type', this.props.type);
-        this.config.set('server:middleware', this.props.middleware);
       }.bind(this));
     },
 
@@ -102,17 +46,15 @@ module.exports = generators.Base.extend({
       return this.prompt([{
         name: 'domain',
         message: 'Domain name',
-        when: this.props.type === 'https' && this.props.https.domain === ''
+        when: this.props.type === 'https',
+        store: true
       }, {
         name: 'email',
         message: 'Domain email',
-        default: this.options.email,
-        when: this.props.type === 'https' && this.props.https.type === ''
+        when: this.props.type === 'https',
+        store: true
       }]).then(function(props) {
         this.props.https = extend(this.props.https, props);
-
-        this.config.set('server:https:domain', this.props.https.domain);
-        this.config.set('server:https:email', this.props.https.email);
       }.bind(this));
     }
   },
@@ -129,6 +71,7 @@ module.exports = generators.Base.extend({
 
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
+    // copy files
     this.fs.copyTpl(
       this.templatePath('middleware.js'),
       this.destinationPath('src/middleware.js'), {
@@ -136,7 +79,6 @@ module.exports = generators.Base.extend({
       }
     );
 
-    // copy files
     switch(this.props.type) {
       case 'http':
         this.fs.copyTpl(
@@ -161,7 +103,10 @@ module.exports = generators.Base.extend({
   },
 
   install: function() {
-    const modules = ['express', 'nodemon', 'pug'];
+    if(this.options.skipInstall)
+      return;
+
+    var modules = ['add', 'express', 'nodemon', 'pug'];
 
     this.props.middleware.forEach(function(middleware) {
       modules.push(middleware.replace(/ /g, '-'));
@@ -178,12 +123,7 @@ module.exports = generators.Base.extend({
       });
     }
 
-    this.config.set(
-      'modules',
-      addModules(
-        this.config.get('modules'),
-        modules
-      )
-    );
+    modules.push('--dev');
+    this.spawnCommandSync('yarn', modules);
   }
 });

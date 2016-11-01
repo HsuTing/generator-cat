@@ -8,6 +8,13 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
 
+    this.option('server', {
+      type: Boolean,
+      required: false,
+      defaults: false,
+      desc: 'Have a server'
+    });
+
     this.option('isNeeded', {
       type: Boolean,
       required: false,
@@ -25,6 +32,7 @@ module.exports = generators.Base.extend({
 
   initializing: function() {
     this.props = {
+      server: this.options.server,
       extra: this.config.get('gitignore') || [],
       npm: {
         isNeeded: this.options.isNeeded,
@@ -54,6 +62,9 @@ module.exports = generators.Base.extend({
   },
 
   writing: function() {
+    if(this.props.server)
+      this.props.extra.push('public/js');
+
     this.fs.copyTpl(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'), {

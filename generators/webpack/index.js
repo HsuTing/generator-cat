@@ -3,7 +3,6 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -55,19 +54,18 @@ module.exports = generators.Base.extend({
     );
   },
 
-  default: function() {
+  install: function() {
+    if(this.options.skipInstall)
+      return;
+
     var modules = [
+      'add',
       'webpack',
       'webpack-dev-server',
       'babel-loader'
     ];
 
-    this.config.set(
-      'modules:dev',
-      addModules(
-        this.config.get('modules:dev'),
-        modules
-      )
-    );
+    modules.push('--dev');
+    this.spawnCommandSync('yarn', modules);
   }
 });

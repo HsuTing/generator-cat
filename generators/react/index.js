@@ -1,7 +1,6 @@
 'use strict';
 
 var generators = require('yeoman-generator');
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -70,8 +69,12 @@ module.exports = generators.Base.extend({
     }
   },
 
-  default: function() {
+  install: function() {
+    if(this.options.skipInstall)
+      return;
+
     var modules = [
+      'add',
       'react',
       'react-dom',
       'radium',
@@ -89,12 +92,6 @@ module.exports = generators.Base.extend({
       );
     }
 
-    this.config.set(
-      'modules',
-      addModules(
-        this.config.get('modules'),
-        modules
-      )
-    );
+    this.spawnCommandSync('yarn', modules);
   }
 });

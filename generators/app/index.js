@@ -8,7 +8,6 @@ var _ = require('lodash');
 var extend = _.merge;
 var parseAuthor = require('parse-author');
 var askName = require('inquirer-npm-name');
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -146,6 +145,17 @@ module.exports = generators.Base.extend({
       }.bind(this));
     },
 
+    askForServer: function() {
+      return this.prompt([{
+        type: 'confirm',
+        name: 'server',
+        message: 'Need server',
+        store: true
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
     askForNames: function() {
       return this.prompt([{
         name: 'names',
@@ -158,7 +168,11 @@ module.exports = generators.Base.extend({
           return words.split(/\s*,\s*/g);
         }
       }]).then(function(props) {
+        if(props.names && props.names.length === 0)
+          props.names = ['index'];
+
         this.props = extend(this.props, props);
+
         if(props.names)
           this.config.set('names', props.names);
       }.bind(this));
@@ -214,22 +228,14 @@ module.exports = generators.Base.extend({
 
     if(this.props.website) {
       if(this.props.server) {
+        scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn babel:watch" "yarn webpack-server"';
+        scripts.production = 'yarn babel && yarn webpack';
       } else {
-        scripts.build = 'npm run babel && npm run static';
-        scripts['build:production'] = 'npm run babel && NODE_ENV=production npm run static && npm run webpack';
-        scripts.watch = 'concurrently -c green "npm run lint:watch" "npm run webpack-server"';
+        scripts.build = 'yarn babel && yarn static';
+        scripts['build:production'] = 'yarn babel && NODE_ENV=production yarn static && yarn webpack';
+        scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn webpack-server"';
       }
     }
-
-    this.config.set(
-      'modules:dev',
-      addModules(
-        this.config.get('modules:dev'), [
-          'pre-commit',
-          'concurrently'
-        ]
-      )
-    );
 
     // write package.json
     var currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
@@ -290,6 +296,7 @@ module.exports = generators.Base.extend({
 
     this.composeWith('git', {
       options: {
+        server: this.props.server,
         isNeeded: this.props.npm.isNeeded,
         publichToNpm: this.props.npm.publichToNpm
       }
@@ -299,6 +306,7 @@ module.exports = generators.Base.extend({
 
     this.composeWith('babel', {
       options: {
+        skipInstall: this.options.skipInstall,
         react: this.props.website
       }
     }, {
@@ -307,24 +315,35 @@ module.exports = generators.Base.extend({
 
     this.composeWith('eslint', {
       options: {
+        skipInstall: this.options.skipInstall,
         react: this.props.website
       }
     }, {
       local: require.resolve('./../eslint')
     });
 
-    this.composeWith('bin', {}, {
+    this.composeWith('bin', {
+      options: {
+        skipInstall: this.options.skipInstall,
+        needStatic: this.props.website && !this.props.server
+      }
+    }, {
       local: require.resolve('./../bin')
     });
 
     // custom subgenerator
     if(this.props.website) {
-      this.composeWith('pug', {}, {
+      this.composeWith('pug', {
+        options: {
+          skipInstall: this.options.skipInstall
+        }
+      }, {
         local: require.resolve('./../pug')
       });
 
       this.composeWith('react', {
         options: {
+          skipInstall: this.options.skipInstall,
           router: this.props.reactPlugin.router,
           redux: this.props.reactPlugin.redux
         }
@@ -334,6 +353,7 @@ module.exports = generators.Base.extend({
 
       this.composeWith('webpack', {
         options: {
+          skipInstall: this.options.skipInstall,
           router: this.props.reactPlugin.router,
           redux: this.props.reactPlugin.redux
         }
@@ -341,24 +361,38 @@ module.exports = generators.Base.extend({
         local: require.resolve('./../webpack')
       });
     }
+
+    if(this.props.server) {
+      this.composeWith('server', {
+        options: {
+          skipInstall: this.options.skipInstall
+        }
+      }, {
+        local: require.resolve('./../server')
+      });
+    }
   },
 
-  end: function() {
-    this.log(yosay(
-      'Meooooooow~~'
-    ));
-
+  install: function() {
     if(this.options.skipInstall)
       return;
 
-    if(this.config.get('modules') && this.config.get('modules').length !== 0)
-      this.spawnCommand('yarn',
-        ['add'].concat(this.config.get('modules') || [])
-      );
+    this.spawnCommandSync('yarn', [
+      'add',
+      'pre-commit',
+      'concurrently',
+      '--dev'
+    ]);
+  },
 
-    if(this.config.get('modules:dev') && this.config.get('modules:dev').length !== 0)
-      this.spawnCommand('yarn',
-        ['add'].concat(this.config.get('modules:dev') || []).concat(['--dev'])
-      );
+  end: function() {
+    if(this.props.website && !this.props.server)
+      this.spawnCommand('yarn', ['build']);
+    else
+      this.spawnCommand('yarn', ['babel']);
+
+    this.log(yosay(
+      'Meooooooow~~'
+    ));
   }
 });

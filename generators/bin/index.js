@@ -3,11 +3,23 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
 var extend = _.merge;
-var addModules = require('./../addModules');
 
 module.exports = generators.Base.extend({
+  constructor: function() {
+    generators.Base.apply(this, arguments);
+
+    this.option('needStatic', {
+      type: Boolean,
+      required: false,
+      default: false,
+      desc: 'Need static'
+    });
+  },
+
   initializing: function() {
-    this.props = {};
+    this.props = {
+      needStatic: this.options.needStatic
+    };
   },
 
   prompting: function() {
@@ -15,7 +27,7 @@ module.exports = generators.Base.extend({
       type: 'checkbox',
       name: 'modules',
       message: 'Choose modules of bin',
-      choices: ['static'],
+      choices: ['test'],
       store: true
     }]).then(function(props) {
       this.props = extend(this.props, props);
@@ -24,6 +36,9 @@ module.exports = generators.Base.extend({
 
   writing: function() {
     var scripts = {};
+
+    if(this.props.needStatic)
+      this.props.modules.push('static');
 
     // copy files
     this.props.modules.forEach(function(module) {
@@ -58,8 +73,11 @@ module.exports = generators.Base.extend({
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
   },
 
-  default: function() {
-    var modules = [];
+  install: function() {
+    if(this.options.skipInstall)
+      return;
+
+    var modules = ['add'];
 
     this.props.modules.forEach(function(module) {
       switch(module) {
@@ -77,12 +95,10 @@ module.exports = generators.Base.extend({
       }
     });
 
-    this.config.set(
-      'modules:dev',
-      addModules(
-        this.config.get('modules:dev'),
-        modules
-      )
-    );
+    if(modules.length === 1)
+      return;
+
+    modules.push('--dev');
+    this.spawnCommandSync('yarn', modules);
   }
 });
