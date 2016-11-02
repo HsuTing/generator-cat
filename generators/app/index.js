@@ -432,10 +432,12 @@ module.exports = generators.Base.extend({
   },
 
   end: function() {
-    if(this.props.website && !this.props.server)
-      this.spawnCommand('yarn', ['build']);
-    else
-      this.spawnCommand('yarn', ['babel']);
+    if(this.props.website) {
+      if(this.props.server)
+        this.spawnCommand('yarn', ['babel']);
+      else
+        this.spawnCommand('yarn', ['build']);
+    }
 
     this.log(yosay(
       'Meooooooow~~'
