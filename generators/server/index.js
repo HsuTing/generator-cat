@@ -14,11 +14,21 @@ module.exports = generators.Base.extend({
       default: false,
       desc: 'Use react middleware'
     });
+
+    this.option('domain', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Domain name'
+    });
   },
 
   initializing: function() {
     this.props = {
-      react: this.options.react
+      react: this.options.react,
+      https: {
+        domain: this.options.domain
+      }
     };
   },
 
@@ -48,11 +58,6 @@ module.exports = generators.Base.extend({
 
     addHttpsOptions: function() {
       return this.prompt([{
-        name: 'domain',
-        message: 'Domain name',
-        when: this.props.type === 'https',
-        store: true
-      }, {
         name: 'email',
         message: 'Domain email',
         when: this.props.type === 'https',

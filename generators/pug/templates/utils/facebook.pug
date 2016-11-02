@@ -2,9 +2,9 @@ div(id='fb-root')
   script.
     window.fbAsyncInit = function() {
       FB.init({
-        appId: '<%= appId %>',
+        appId: '<%= facebook.appId %>',
         xfbml: true,
-        version: '<%= version %>'
+        version: '<%= facebook.version %>'
       });
     };
     (function(d, s, id){

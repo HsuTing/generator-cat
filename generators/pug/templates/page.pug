@@ -1,14 +1,40 @@
+include head/meta.pug
+include head/favicon.pug
+include head/ios.pug
+include head/safari.pug
+include head/android.pug
+<% socials.forEach(function(social) { -%>
+include head/social/<%= social %>.pug
+<% }) -%>
+
+- var ENV = process.env.NODE_ENV === 'production'
+- var domain = ENV ? '<%= domain %>' : '<%= testDomain %>'
+
 doctype html
 html
   head
-    include utils/head.pug
+    //- Reference: https://github.com/joshbuchea/HEAD
+    +setMeta(domain)
 
     title <%= name %>
+
+    link(rel="canonical" href=domain+"<%= name === 'index' ? '' : '/' + name + '/' %>")
+    link(rel="author" href="<%= authorUrl %>")
+    link(rel="copyright" href="<%= homepage %>/blob/master/LICENSE")
+
+    +favicon(domain)
+
+    +ios(domain)
+    +safari(domain)
+    +android(domain)
+
+<% socials.forEach(function(social) { -%>
+    +<%= social %>(domain)
+<% }) -%>
 
   body
     main(id="root") !{markup}
 
-- var ENV = process.env.NODE_ENV === 'production'
 - if(ENV)
   script(defer, src="/public/js/common.min.js", type="text/javascript")
   script(defer, src="/public/js/<%= name %>.min.js", type="text/javascript")

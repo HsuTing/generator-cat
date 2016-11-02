@@ -23,7 +23,7 @@ app.use(compression());
 app.use(helmet());
 app.use(responseTime());
 app.use(uncapitalize());
-app.use(favicon(__dirname + './../public/favicon.ico'));
+app.use(favicon(__dirname + './../public/favicon/favicon.ico'));
 app.use('/public', express.static(
   path.resolve(BASE_DIR, './public'), {
     setHeaders: res => {

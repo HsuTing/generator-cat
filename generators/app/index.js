@@ -116,6 +116,19 @@ module.exports = generators.Base.extend({
       }.bind(this));
     },
 
+    askForDomain: function() {
+      return this.prompt([{
+        name: 'domain',
+        message: 'Domain name(need to add "http" or "https")',
+        filter: function(words) {
+          return words === '' ? 'http://localhost' : words;
+        },
+        store: true
+      }]).then(function(props) {
+        this.props = extend(this.props, props);
+      }.bind(this));
+    },
+
     askForWebsite: function() {
       return this.prompt([{
         type: 'confirm',
@@ -344,6 +357,8 @@ module.exports = generators.Base.extend({
     if(this.props.website) {
       this.composeWith('pug', {
         options: {
+          server: this.props.server,
+          domain: this.props.domain,
           skipInstall: this.options.skipInstall
         }
       }, {
@@ -375,6 +390,7 @@ module.exports = generators.Base.extend({
       this.composeWith('server', {
         options: {
           react: this.props.website,
+          domain: this.props.domain,
           skipInstall: this.options.skipInstall
         }
       }, {
