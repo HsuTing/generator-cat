@@ -1,8 +1,4 @@
 include head/meta.pug
-include head/favicon.pug
-include head/ios.pug
-include head/safari.pug
-include head/android.pug
 <% socials.forEach(function(social) { -%>
 include head/social/<%= social %>.pug
 <% }) -%>
@@ -22,11 +18,7 @@ html
     link(rel="author" href="<%= authorUrl %>")
     link(rel="copyright" href="<%= homepage %>/blob/master/LICENSE")
 
-    +favicon(domain)
-
-    +ios(domain)
-    +safari(domain)
-    +android(domain)
+    include head/favicon.pug
 
 <% socials.forEach(function(social) { -%>
     +<%= social %>(domain)

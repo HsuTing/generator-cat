@@ -54,7 +54,7 @@ module.exports = generators.Base.extend({
       return this.prompt([{
         type: 'checkbox',
         name: 'utils',
-        message: 'Choose utils',
+        message: 'Choose pug utils',
         choices: ['facebook', 'google'],
         store: true
       }]).then(function(props) {
@@ -122,19 +122,12 @@ module.exports = generators.Base.extend({
     }.bind(this));
 
     ['meta',
-      'favicon',
-      'ios',
-      'safari',
-      'android'
+      'favicon'
     ].forEach(function(util) {
       this.fs.copyTpl(
         this.templatePath('head/' + util + '.pug'),
-        this.destinationPath('views/head/' + util + '.pug'), {
-          name: this.props.name,
-          description: this.props.description,
-          domain: this.props.domain,
-          google: this.props.google || ''
-        }
+        this.destinationPath('views/head/' + util + '.pug'),
+        this.props
       );
     }.bind(this));
 

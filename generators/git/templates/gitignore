@@ -7,6 +7,7 @@ lib
 .eslintcache
 *.log
 coverage
+.faviconData.json
 <% extra.forEach(function(item) { -%>
 <%= item %>
 <% }) -%>

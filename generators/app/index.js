@@ -257,6 +257,7 @@ module.exports = generators.Base.extend({
         scripts.production = 'yarn babel && NODE_ENV=production yarn static && yarn webpack';
         scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn webpack-server"';
       }
+      scripts.favicon = 'rm -rf ./public/favicon && mkdir ./public/favicon && real-favicon generate .faviconDescription.json .faviconData.json ./public/favicon';
     }
 
     // write package.json
@@ -300,6 +301,20 @@ module.exports = generators.Base.extend({
       this.templatePath('editorconfig'),
       this.destinationPath('.editorconfig')
     );
+
+    if(this.props.website) {
+      this.fs.copyTpl(
+        this.templatePath('faviconDescription.json'),
+        this.destinationPath('.faviconDescription.json'), {
+          name: currentPkg.name
+        }
+      );
+
+      this.fs.copy(
+        this.templatePath('input.jpg'),
+        this.destinationPath('public/input.jpg')
+      );
+    }
   },
 
   defualt: function() {
@@ -403,12 +418,17 @@ module.exports = generators.Base.extend({
     if(this.options.skipInstall)
       return;
 
-    this.spawnCommandSync('yarn', [
+    var modules = [
       'add',
       'pre-commit',
-      'concurrently',
-      '--dev'
-    ]);
+      'concurrently'
+    ];
+
+    if(this.props.website)
+      modules.push('cli-real-favicon');
+
+    modules.push('--dev');
+    this.spawnCommandSync('yarn', modules);
   },
 
   end: function() {
