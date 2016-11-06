@@ -250,7 +250,7 @@ module.exports = generators.Base.extend({
 
     if(this.props.website) {
       if(this.props.server) {
-        scripts.production = 'yarn babel && yarn webpack && yarn start';
+        scripts.production = 'yarn babel && yarn webpack';
         scripts.watch = 'concurrently -c green "yarn lint:watch" "yarn babel:watch" "yarn webpack-server"';
       } else {
         scripts.build = 'yarn babel && yarn static';
@@ -302,11 +302,24 @@ module.exports = generators.Base.extend({
       this.destinationPath('.editorconfig')
     );
 
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'), {
+        server: this.props.server,
+        website: this.props.website,
+        reactPlugin: this.props.reactPlugin,
+        name: pkg.name,
+        description: pkg.description,
+        license: pkg.license,
+        authorName: pkg.author.name
+      }
+    );
+
     if(this.props.website) {
       this.fs.copyTpl(
         this.templatePath('faviconDescription.json'),
         this.destinationPath('.faviconDescription.json'), {
-          name: currentPkg.name
+          name: pkg.name
         }
       );
 
