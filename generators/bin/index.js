@@ -18,9 +18,20 @@ module.exports = generators.Base.extend({
 
   initializing: function() {
     this.props = {
-      modules: [],
       needStatic: this.options.needStatic
     };
+  },
+
+  prompting: function() {
+    return this.prompt([{
+      type: 'checkbox',
+      name: 'modules',
+      message: 'Choose modules of bin',
+      choices: ['ftp', 'aws'],
+      store: true
+    }]).then(function(props) {
+      this.props = extend(this.props, props);
+    }.bind(this));
   },
 
   writing: function() {

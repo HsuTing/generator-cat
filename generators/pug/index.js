@@ -78,7 +78,8 @@ module.exports = generators.Base.extend({
       return this.prompt([{
         name: 'appId',
         message: 'Facebook appId',
-        store: true
+        store: true,
+        when: this.props.utils.indexOf('facebook') !== -1 && this.props.socials.indexOf('facebook') !== -1
       }, {
         name: 'version',
         message: 'Facebook api version',

@@ -5,3 +5,4 @@ public
 *.config.js
 !package.json
 !lib
+yarn.lock
