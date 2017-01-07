@@ -1,4 +1,5 @@
 # generator-cat [![NPM version][npm-image]][npm-url]
+> generator cat
 
 ## Installation
 
@@ -9,11 +10,9 @@ npm install -g yo
 npm install -g generator-cat
 ```
 
-Make a folder for project and then generate your new project:
+Then generate your new project:
 
 ```bash
-mkdir (porject name)
-cd (project name)
 yo cat
 ```
 
@@ -24,57 +23,9 @@ yo cat
  * Yeoman can be too opinionated at times but is easily convinced not to be.
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
-## Options
-
-- `license`(Boolean, default true) include or not a LICENSE file.
-
-## Sub generators
-
-Remember you can see the options of each sub generators by running `yo node:sub --help`.
-
-- `cat:babel`
-- `cat:eslint`
-- `cat:pug`
-- `cat:react`
-  - remember you can use this to create all files about `react`
-  - Include `react-router`, `redux`, `radium`.
-- `cat:test`
-  - Include `istanbul`, `mocha`
-- `cat:webpack`
-- `cat:server`
-  - `http` or `https` server
-  - Use `letsencrypt-express` to build `https` server.
-- `cat:static` (type)
-- `cat:dynamic` (type)
-
-## Type
-
-- You can know more information in `README.md`.
-- Common default:
-  - `babel`
-  - `eslint`
-  - `test`
-
-#### Static pages
-
-- Use to make a static page.
-- Default:
-  - `pug`
-  - `react`
-  - `webpack`
-
-#### Dynamic pages
-
-- Use to make a web server with `express`.
-- Default:
-  - `pug`
-  - `react`
-  - `webpack`
-  - `server`
-
 ## License
 
-MIT © [HsuTing](hsuting.com)
+MIT © [hsuting](hsuting.com)
 
 
 [npm-image]: https://badge.fury.io/js/generator-cat.svg
