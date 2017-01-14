@@ -17,16 +17,16 @@ module.exports = generator.extend({
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        babel: 'rm -rf ./lib && babel src --out-dir lib',
-        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+        lint: 'eslint --cache ./src ./bin --ext .js',
+        'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    // write file
+    // copy files
     this.fs.copyTpl(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc'), {
+      this.templatePath('eslintrc.js'),
+      this.destinationPath('.eslintrc.js'), {
         react: this.props.plugins.indexOf('react') !== -1,
         alias: this.props.alias
       }
@@ -39,19 +39,16 @@ module.exports = generator.extend({
 
     const modules = [
       'add',
-      'babel-cli',
-      'babel-core',
-      'babel-plugin-transform-object-assign',
-      'babel-plugin-module-resolver',
-      'babel-preset-latest',
-      'babel-preset-stage-0'
+      'eslint',
+      'eslint-watch',
+      'eslint-config-google',
+      'eslint-plugin-import',
+      'eslint-import-resolver-babel-module',
+      'babel-eslint'
     ];
 
     if(this.props.plugins.indexOf('react') !== -1)
-      modules.push(
-        'babel-preset-react',
-        'babel-plugin-transform-decorators-legacy'
-      );
+      modules.push('eslint-plugin-react');
 
     modules.push('--dev');
     this.spawnCommandSync('yarn', modules);
