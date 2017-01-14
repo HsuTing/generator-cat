@@ -5,10 +5,6 @@ const _ = require('lodash');
 const extend = _.merge;
 
 module.exports = generator.extend({
-  constructor: function() {
-    generator.apply(this, arguments);
-  },
-
   initializing: function() {
     this.props = {
       plugins: this.config.get('plugins') || [],
