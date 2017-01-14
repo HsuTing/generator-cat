@@ -1,4 +1,7 @@
 module.exports = {
+  "globals": {
+    "Promise": true
+  },
   "extends": [
     "google",
 <% if(react) { -%>
