@@ -7,8 +7,7 @@ const extend = _.merge;
 module.exports = generator.extend({
   initializing: function() {
     this.props = {
-      plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || []
+      plugins: this.config.get('plugins') || []
     };
   },
 
@@ -27,8 +26,7 @@ module.exports = generator.extend({
     this.fs.copyTpl(
       this.templatePath('eslintrc.js'),
       this.destinationPath('.eslintrc.js'), {
-        react: this.props.plugins.indexOf('react') !== -1,
-        alias: this.props.alias
+        react: this.props.plugins.indexOf('react') !== -1
       }
     );
   },

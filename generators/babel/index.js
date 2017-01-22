@@ -4,6 +4,16 @@ const generator = require('yeoman-generator');
 const _ = require('lodash');
 const extend = _.merge;
 
+const convertAlias = function(alias) {
+  return Object.keys(alias)
+    .map(function(key) {
+      return {
+        key: key,
+        value: alias[key]
+      };
+    });
+};
+
 module.exports = generator.extend({
   initializing: function() {
     this.props = {
@@ -28,7 +38,9 @@ module.exports = generator.extend({
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
         react: this.props.plugins.indexOf('react') !== -1,
-        alias: this.props.alias
+        alias: convertAlias(
+          this.props.alias
+        )
       }
     );
   },

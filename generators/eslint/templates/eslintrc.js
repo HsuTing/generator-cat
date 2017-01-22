@@ -1,3 +1,17 @@
+'use strict';
+
+const fs = require('fs');
+
+// set alias
+const babelrc = JSON.parse(
+  fs.readFileSync('./.babelrc', 'utf8')
+);
+const plugins = babelrc.plugins;
+const resolver = plugins[
+  plugins.length - 1
+];
+const alias = resolver[1].alias;
+
 module.exports = {
   "globals": {
     "Promise": true
@@ -35,11 +49,7 @@ module.exports = {
     },
 <% } -%>
     "import/resolver": {
-      "babel-module": {
-<% alias.forEach(function(item, index) { -%>
-        "<%= item.key %>": "<%= item.value %>"<% if(index !== alias.length - 1) { %>,<% } %>
-<% }) -%>
-      }
+      "babel-module": alias
     }
   },
   "rules": {
