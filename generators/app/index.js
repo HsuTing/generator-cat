@@ -11,11 +11,5 @@ module.exports = generator.extend({
     this.log(yosay(
       `Welcome to the cat\'s pajamas ${chalk.red('generator-cat')} generator!`
     ));
-  },
-
-  default: function() {
-    this.config.set('alias', {
-      key: "value"
-    });
   }
 });
