@@ -11,7 +11,7 @@ module.exports = generator.extend({
     };
   },
 
-  write: function() {
+  writing: function() {
     // write package.json
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({

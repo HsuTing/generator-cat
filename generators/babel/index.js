@@ -22,7 +22,7 @@ module.exports = generator.extend({
     };
   },
 
-  write: function() {
+  writing: function() {
     // write package.json
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
@@ -33,7 +33,7 @@ module.exports = generator.extend({
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    // write file
+    // copy files
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
