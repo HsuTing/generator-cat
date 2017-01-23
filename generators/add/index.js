@@ -6,11 +6,7 @@ const extend = _.merge;
 
 module.exports = generator.extend({
   initializing: function() {
-    this.props = {
-      plugins: this.config.get('plugins') || [],
-      js: this.config.get('js') || [],
-      alias: this.config.get('alias') || {}
-    };
+    this.props = {};
   },
 
   prompting: {
@@ -60,12 +56,6 @@ module.exports = generator.extend({
           componentName: componentName
         }
       );
-
-      // add config
-      if(this.props.js.indexOf(componentName.toLowerCase()) === -1) {
-        this.props.js.push(componentName.toLowerCase());
-        this.config.set('js', this.props.js);
-      }
     }
   }
 });
