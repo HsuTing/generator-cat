@@ -1193,6 +1193,10 @@ pad-component@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/pad-component/-/pad-component-0.0.1.tgz#ad1f22ce1bf0fdc0d6ddd908af17f351a404b8ac"
 
+parse-author@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/parse-author/-/parse-author-1.0.0.tgz#5ec1590062977bd9cb3962e9173b87586437f5df"
+
 parse-json@^2.1.0, parse-json@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-2.2.0.tgz#f480f40434ef80741f8469099f8dea18f55a4dc9"
