@@ -12,8 +12,8 @@ module.exports = generator.extend({
     };
 
     const newAlias = extend(this.props.alias, {
-      components: './components',
-      componentsShare: './components/share'
+      components: 'components',
+      componentsShare: 'components/share'
     });
     this.config.set('alias', newAlias);
   },
