@@ -8,10 +8,11 @@ module.exports = generator.extend({
   initializing: function() {
     this.props = {
       plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || []
+      alias: this.config.get('alias') || {}
     };
 
     const newAlias = extend(this.props.alias, {
+      components: './components',
       componentsShare: './components/share'
     });
     this.config.set('alias', newAlias);

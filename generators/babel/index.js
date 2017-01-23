@@ -18,7 +18,7 @@ module.exports = generator.extend({
   initializing: function() {
     this.props = {
       plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || []
+      alias: this.config.get('alias') || {}
     };
   },
 
