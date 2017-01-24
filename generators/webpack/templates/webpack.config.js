@@ -8,9 +8,7 @@ const src = './src/public';
 
 module.exports = {
   entry: {
-<% js.forEach(function(name) { -%>
-    <%= name %>: path.resolve(src, './<%= name %>.js'),
-<% }) -%>
+    index: path.resolve(src, './index.js'),
     common: [
 <% if(router) { -%>
       'react-router',

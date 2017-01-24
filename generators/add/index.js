@@ -1,6 +1,7 @@
 'use strict';
 
 const generator = require('yeoman-generator');
+const chalk = require('chalk');
 const _ = require('lodash');
 const extend = _.merge;
 
@@ -56,6 +57,8 @@ module.exports = generator.extend({
           componentName: componentName
         }
       );
+
+      this.log(chalk.cyan('Remember to modify `webpack` and `.babelrc`'));
     }
   }
 });

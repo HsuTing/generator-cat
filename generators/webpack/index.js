@@ -7,8 +7,7 @@ const extend = _.merge;
 module.exports = generator.extend({
   initializing: function() {
     this.props = {
-      plugins: this.config.get('plugins') || [],
-      js: this.config.get('js') || []
+      plugins: this.config.get('plugins') || []
     };
   },
 
@@ -27,7 +26,6 @@ module.exports = generator.extend({
     this.fs.copyTpl(
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'), {
-        js: this.props.js,
         router: this.props.plugins.indexOf('router') !== -1,
         redux: this.props.plugins.indexOf('redux') !== -1
       }

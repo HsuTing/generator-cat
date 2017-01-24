@@ -10,7 +10,7 @@ const a = {
 };
 
 @radium
-export default class Style extends React.Component {
+export default class Normalize extends React.Component {
   render() {
     return (
       <style>
