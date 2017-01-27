@@ -15,11 +15,13 @@ const extend = _.merge;
 const config = [
   {
     component: './../lib/components/Index',
+    js: 'index',
     name: 'index'
   }
 ];
 /*
  * Example:
+ * You can add any value for template
  *
  * config = [
  *   {
@@ -31,7 +33,10 @@ const config = [
  *     data: data, (if `redux` is true, you can give a inital data or not)
  *
  *     component: 'PATH TO COMONENT', (your main component)
- *     name: 'index' (output name of html)
+ *     js: 'index', (name of main js)
+ *     name: 'index', (output name of html)
+ *
+ *     template: 'tempalate.html' (if you need, you can choose your template in `views`)
  *   }
  * ];
 */
