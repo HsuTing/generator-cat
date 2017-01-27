@@ -164,5 +164,9 @@ module.exports = generator.extend({
       this.destinationPath('views/template.html'),
       this.props
     )
+  },
+
+  install: function() {
+    this.yarnInstall('nunjucks', {dev: true});
   }
 });

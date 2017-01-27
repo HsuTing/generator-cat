@@ -39,6 +39,6 @@ module.exports = generator.extend({
       'webpack',
       'webpack-dev-server',
       'babel-loader'
-    ]);
+    ], {dev: true});
   }
 });

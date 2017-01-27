@@ -3,9 +3,9 @@
 const generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
-var parseAuthor = require('parse-author');
-var _ = require('lodash');
-var extend = _.merge;
+const parseAuthor = require('parse-author');
+const _ = require('lodash');
+const extend = _.merge;
 
 module.exports = generator.extend({
   constructor: function() {
@@ -85,33 +85,106 @@ module.exports = generator.extend({
         message: 'Choose type',
         choices: [
           'website',
-          'server'
+          'server',
+          'npm'
         ]
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));
+    }
+  },
+
+  default: {
+    wirtePkg: function() {
+      const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+      const pkg = extend({
+        name: _.kebabCase(this.props.name),
+        version: '0.0.0',
+        description: this.props.description,
+        author: {
+          name: this.props.authorName,
+          email: this.props.authorEmail,
+          url: this.props.authorUrl
+        },
+        main: './lib/index.js',
+        keywords: [],
+        'pre-commit': [
+          'lint'
+        ]
+      }, currentPkg);
+
+      if(this.props.homepage) {
+        pkg.homepage = this.props.homepage;
+        pkg.repository = {
+          type: 'git',
+          url: 'git+' + this.props.homepage + '.git'
+        };
+        pkg.bugs = {
+          url: this.props.homepage + '/issues'
+        };
+      }
+
+      if(this.props.keywords)
+        pkg.keywords = _.uniq(this.props.keywords.concat(pkg.keywords));
+
+      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
     },
 
-    askForPlugins: function() {
-      /* temp */
-      return this.prompt([{
-        type: 'checkbox',
-        name: 'plugins',
-        message: 'Choose plugins',
-        choices: [{
-          name: 'react',
-          checked: this.props.type.indexOf('website') !== -1
-        }, {
-          name: 'websiteNoServer',
-          checked: (
-            this.props.type.indexOf('website') !== -1 &&
-            this.props.type.indexOf('server') === -1
-          )
-        }]
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-        this.config.set('plugins', props.plugins);
-      }.bind(this));
+    addPlugins: function() {
+      const plugins = [];
+      if(this.props.type.indexOf('website') !== -1) {
+        plugins.push('react');
+
+        if(this.props.type.indexOf('server') === -1) {
+          plugins.push('websiteNoServer');
+        }
+      }
+
+      this.props.plugins = plugins;
+      this.config.set('plugins', plugins);
+    },
+
+    react: function() {
+      if(this.props.plugins.indexOf('react') === -1)
+        return;
+
+      this.composeWith(require.resolve('../template'));
+      this.composeWith(require.resolve('../react'));
+      this.composeWith(require.resolve('../webpack'));
+    },
+
+    npm: function() {
+      if(this.props.type.indexOf('npm') === -1)
+        return;
+
+      this.composeWith(require.resolve('../npm'));
+    },
+
+    normal: function() {
+      this.composeWith(require.resolve('../babel'));
+      this.composeWith(require.resolve('../bin'));
+      this.composeWith(require.resolve('../eslint'));
     }
-  }
+  },
+
+  writing: {
+    files: function() {
+      this.fs.copy(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
+
+      this.fs.copy(
+        this.templatePath('gitignore'),
+        this.destinationPath('.gitignore')
+      );
+    }
+  },
+
+  install: function() {
+    this.yarnInstall([
+      'pre-commit',
+      'concurrently'
+    ], {dev: true});
+  },
 });

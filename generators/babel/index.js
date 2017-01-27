@@ -49,7 +49,6 @@ module.exports = generator.extend({
 
   install: function() {
     const modules = [
-      'add',
       'babel-cli',
       'babel-core',
       'babel-plugin-transform-object-assign',
