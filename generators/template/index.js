@@ -159,7 +159,6 @@ module.exports = generator.extend({
   },
 
   writing: function() {
-    // copy files
     this.fs.copyTpl(
       this.templatePath('template.html'),
       this.destinationPath('views/template.html'),

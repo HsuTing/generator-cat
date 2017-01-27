@@ -19,7 +19,6 @@ module.exports = generator.extend({
   },
 
   writing: function() {
-    // copy files
     this.fs.copy(
       this.templatePath('Wrapper.js'),
       this.destinationPath('src/components/share/Wrapper.js')

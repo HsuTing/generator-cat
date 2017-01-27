@@ -53,7 +53,7 @@ module.exports = generator.extend({
       ], true);
     },
 
-    writePkg: function() {
+    pkg: function() {
       const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       const pkg = extend({
         scripts: this.props.scripts

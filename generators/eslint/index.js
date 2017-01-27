@@ -11,24 +11,26 @@ module.exports = generator.extend({
     };
   },
 
-  writing: function() {
-    // write package.json
-    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    const pkg = extend({
-      scripts: {
-        lint: 'eslint --cache ./src ./bin --ext .js',
-        'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
-      }
-    }, currentPkg);
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+  writing: {
+    pkg: function() {
+      const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+      const pkg = extend({
+        scripts: {
+          lint: 'eslint --cache ./src ./bin --ext .js',
+          'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
+        }
+      }, currentPkg);
+      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    },
 
-    // copy files
-    this.fs.copyTpl(
-      this.templatePath('eslintrc.js'),
-      this.destinationPath('.eslintrc.js'), {
-        react: this.props.plugins.indexOf('react') !== -1
-      }
-    );
+    files: function() {
+      this.fs.copyTpl(
+        this.templatePath('eslintrc.js'),
+        this.destinationPath('.eslintrc.js'), {
+          react: this.props.plugins.indexOf('react') !== -1
+        }
+      );
+    }
   },
 
   install: function() {

@@ -22,27 +22,29 @@ module.exports = generator.extend({
     };
   },
 
-  writing: function() {
-    // write package.json
-    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    const pkg = extend({
-      scripts: {
-        babel: 'rm -rf ./lib && babel src --out-dir lib',
-        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
-      }
-    }, currentPkg);
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+  writing: {
+    pkg: function() {
+      const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+      const pkg = extend({
+        scripts: {
+          babel: 'rm -rf ./lib && babel src --out-dir lib',
+          'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+        }
+      }, currentPkg);
+      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    },
 
-    // copy files
-    this.fs.copyTpl(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc'), {
-        react: this.props.plugins.indexOf('react') !== -1,
-        alias: convertAlias(
-          this.props.alias
-        )
-      }
-    );
+    files: function() {
+      this.fs.copyTpl(
+        this.templatePath('babelrc'),
+        this.destinationPath('.babelrc'), {
+          react: this.props.plugins.indexOf('react') !== -1,
+          alias: convertAlias(
+            this.props.alias
+          )
+        }
+      );
+    }
   },
 
   install: function() {
