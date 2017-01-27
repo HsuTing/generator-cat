@@ -17,8 +17,7 @@ const convertAlias = function(alias) {
 module.exports = generator.extend({
   initializing: function() {
     this.props = {
-      plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || {}
+      plugins: this.config.get('plugins') || []
     };
   },
 
@@ -40,7 +39,7 @@ module.exports = generator.extend({
         this.destinationPath('.babelrc'), {
           react: this.props.plugins.indexOf('react') !== -1,
           alias: convertAlias(
-            this.props.alias
+            this.config.get('alias') || {}
           )
         }
       );

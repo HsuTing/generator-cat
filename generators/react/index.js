@@ -11,12 +11,11 @@ module.exports = generator.extend({
       alias: this.config.get('alias') || {}
     };
 
-    const newAlias = extend(this.props.alias, {
+    this.props.alias = extend(this.props.alias, {
       public: 'public',
       components: 'components',
       componentsShare: 'components/share'
     });
-    this.config.set('alias', newAlias);
   },
 
   prompting: function() {
@@ -31,15 +30,28 @@ module.exports = generator.extend({
       message: 'Use react-redux',
       store: true
     }]).then(function(props) {
-      if(props.router && this.props.plugins.indexOf('router') === -1)
+      if(props.router && this.props.plugins.indexOf('router') === -1) {
+        this.props.alias = extend(this.props.alias, {
+          containers: 'containers'
+        });
         this.props.plugins.push('router');
-      if(props.redux && this.props.plugins.indexOf('redux') === -1)
+      }
+
+      if(props.redux && this.props.plugins.indexOf('redux') === -1) {
+        this.props.alias = extend(this.props.alias, {
+          containers: 'containers',
+          reducers: 'reducers',
+          actions: 'actions',
+          stores: 'stores'
+        });
         this.props.plugins.push('redux');
-      this.config.set('plugins', this.props.plugins);
+      }
     }.bind(this));
   },
 
   default: function() {
+    this.config.set('alias', this.props.alias);
+    this.config.set('plugins', this.props.plugins);
     this.composeWith(require.resolve('../webpack'));
   },
 
