@@ -87,7 +87,8 @@ module.exports = generator.extend({
           'website',
           'server',
           'npm'
-        ]
+        ],
+        store: true
       }]).then(function(props) {
         this.props = extend(this.props, props);
       }.bind(this));

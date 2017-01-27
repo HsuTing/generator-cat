@@ -12,6 +12,7 @@ module.exports = generator.extend({
     };
 
     const newAlias = extend(this.props.alias, {
+      public: 'public',
       components: 'components',
       componentsShare: 'components/share'
     });
