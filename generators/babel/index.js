@@ -48,9 +48,6 @@ module.exports = generator.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
     const modules = [
       'add',
       'babel-cli',
@@ -67,7 +64,6 @@ module.exports = generator.extend({
         'babel-plugin-transform-decorators-legacy'
       );
 
-    modules.push('--dev');
-    this.spawnCommandSync('yarn', modules);
+    this.yarnInstall(modules, {dev: true});
   }
 });

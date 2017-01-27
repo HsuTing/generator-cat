@@ -37,11 +37,7 @@ module.exports = generator.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
     const modules = [
-      'add',
       'react',
       'react-dom',
       'radium',
@@ -57,6 +53,6 @@ module.exports = generator.extend({
         'react-redux'
       );
 
-    this.spawnCommandSync('yarn', modules);
+    this.yarnInstall(modules);
   }
 });

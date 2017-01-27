@@ -16,8 +16,8 @@ module.exports = generator.extend({
     this.props = {
       plugins: this.config.get('plugins') || [],
       scripts: {},
-      modules: ['add'],
-      devModules: ['add']
+      modules: [],
+      devModules: []
     }
 
     this.addModules = function(modules, devFlag) {
@@ -63,12 +63,9 @@ module.exports = generator.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
-    if(this.props.modules.length !== 1)
-      this.spawnCommandSync('yarn', this.props.modules);
-    if(this.props.devModules.length !== 1)
-      this.spawnCommandSync('yarn', this.props.devModules.concat(['--dev']));
+    if(this.props.modules.length !== 0)
+      this.yarnInstall(this.props.modules);
+    if(this.props.devModules.length !== 0)
+      this.yarnInstall(this.props.devModules, {dev: true});
   }
 });

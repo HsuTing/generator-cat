@@ -35,17 +35,10 @@ module.exports = generator.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
-    const modules = [
-      'add',
+    this.yarnInstall([
       'webpack',
       'webpack-dev-server',
       'babel-loader'
-    ];
-
-    modules.push('--dev');
-    this.spawnCommandSync('yarn', modules);
+    ]);
   }
 });

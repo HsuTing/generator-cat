@@ -49,11 +49,11 @@ module.exports = generator.extend({
       }, {
         name: 'extension',
         message: 'Extension of static file link',
+        default: '',
         when: !this.props.extension,
         filter: function(words) {
           return words === '' ? false : words
-        },
-        store: true
+        }
       }, {
         type: 'checkbox',
         name: 'other',

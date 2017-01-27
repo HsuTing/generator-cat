@@ -34,11 +34,7 @@ module.exports = generator.extend({
   },
 
   install: function() {
-    if(this.options.skipInstall)
-      return;
-
     const modules = [
-      'add',
       'eslint',
       'eslint-watch',
       'eslint-config-google',
@@ -50,7 +46,6 @@ module.exports = generator.extend({
     if(this.props.plugins.indexOf('react') !== -1)
       modules.push('eslint-plugin-react');
 
-    modules.push('--dev');
-    this.spawnCommandSync('yarn', modules);
+    this.yarnInstall(modules, {dev: true});
   }
 });
