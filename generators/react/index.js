@@ -8,14 +8,12 @@ module.exports = generator.extend({
   initializing: function() {
     this.props = {
       plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || {}
+      alias: {
+        public: 'public',
+        components: 'components',
+        componentsShare: 'components/share'
+      }
     };
-
-    this.props.alias = extend(this.props.alias, {
-      public: 'public',
-      components: 'components',
-      componentsShare: 'components/share'
-    });
   },
 
   prompting: function() {
@@ -50,7 +48,10 @@ module.exports = generator.extend({
   },
 
   default: function() {
-    this.config.set('alias', this.props.alias);
+    this.config.set('alias', extend(
+      this.props.alias,
+      this.config.get('alias') || {}
+    ));
     this.config.set('plugins', this.props.plugins);
     this.composeWith(require.resolve('../webpack'));
   },
