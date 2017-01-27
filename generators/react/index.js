@@ -19,6 +19,30 @@ module.exports = generator.extend({
     this.config.set('alias', newAlias);
   },
 
+  prompting: function() {
+    return this.prompt([{
+      type: 'confirm',
+      name: 'router',
+      message: 'Use react-router',
+      store: true
+    }, {
+      type: 'confirm',
+      name: 'redux',
+      message: 'Use react-redux',
+      store: true
+    }]).then(function(props) {
+      if(props.router && this.props.plugins.indexOf('router') === -1)
+        this.props.plugins.push('router');
+      if(props.redux && this.props.plugins.indexOf('redux') === -1)
+        this.props.plugins.push('redux');
+      this.config.set('plugins', this.props.plugins);
+    }.bind(this));
+  },
+
+  default: function() {
+    this.composeWith(require.resolve('../webpack'));
+  },
+
   writing: function() {
     this.fs.copy(
       this.templatePath('Wrapper.js'),
