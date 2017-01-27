@@ -187,4 +187,10 @@ module.exports = generator.extend({
       'concurrently'
     ], {dev: true});
   },
+
+  end: function() {
+    this.log(yosay(
+      'Meooooooow~~'
+    ));
+  }
 });

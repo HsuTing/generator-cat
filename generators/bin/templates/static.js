@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const process = require('process');
 const nunjucks = require('nunjucks');
 const chalk = require('chalk');
 const minify = require('html-minifier').minify;
@@ -43,7 +44,9 @@ const copyFile = function(html, options) {
   const filename = (options.name === 'index' ? '' : options.name + '/') + 'index.html';
   const output = nunjucks.render(
     options.template ? options.template : 'template.html',
-    options
+    extend(options, {
+      ENV: process.env.NODE_ENV
+    })
   );
 
   fs.writeFile(
