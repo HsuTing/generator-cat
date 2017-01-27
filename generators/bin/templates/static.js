@@ -95,7 +95,7 @@ const redux = function(component, options) {
   const reducer = require(options.reducer).default;
 
   return React.createElement(Provider, {
-    store: data ? createStore(reducer, options.data) : createStore(reducer)
+    store: options.data ? createStore(reducer, options.data) : createStore(reducer)
   }, component);
 };
 

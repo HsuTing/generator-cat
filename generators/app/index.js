@@ -96,7 +96,37 @@ module.exports = generator.extend({
   },
 
   default: {
+    addPlugins: function() {
+      const plugins = [];
+      if(this.props.type.indexOf('website') !== -1) {
+        plugins.push('react');
+
+        if(this.props.type.indexOf('server') === -1) {
+          plugins.push('websiteNoServer');
+        }
+      }
+
+      this.props.plugins = plugins;
+      this.config.set('plugins', plugins);
+    },
+
     wirtePkg: function() {
+      // script
+      const build = ['yarn babel'];
+      const production = ['export NODE_ENV=production', 'yarn babel'];
+      const watch = ['concurrently -c green', '"yarn lint:watch"', '"yarn babel:watch"'];
+
+      if(this.props.plugins.indexOf('react') !== -1) {
+        if(this.props.plugins.indexOf('websiteNoServer') !== -1) {
+          build.push('yarn static');
+          production.push('yarn static');
+        }
+
+        production.push('yarn webpack')
+        watch.push('"yarn webpack-server"')
+      }
+
+      // pkg
       const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       const pkg = extend({
         name: _.kebabCase(this.props.name),
@@ -106,6 +136,11 @@ module.exports = generator.extend({
           name: this.props.authorName,
           email: this.props.authorEmail,
           url: this.props.authorUrl
+        },
+        scripts: {
+          build: build.join(' && '),
+          production: production.join(' && '),
+          watch: watch.join(' ')
         },
         main: './lib/index.js',
         keywords: [],
@@ -129,20 +164,6 @@ module.exports = generator.extend({
         pkg.keywords = _.uniq(this.props.keywords.concat(pkg.keywords));
 
       this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-    },
-
-    addPlugins: function() {
-      const plugins = [];
-      if(this.props.type.indexOf('website') !== -1) {
-        plugins.push('react');
-
-        if(this.props.type.indexOf('server') === -1) {
-          plugins.push('websiteNoServer');
-        }
-      }
-
-      this.props.plugins = plugins;
-      this.config.set('plugins', plugins);
     },
 
     react: function() {
@@ -192,6 +213,8 @@ module.exports = generator.extend({
   },
 
   end: function() {
+    this.spawnCommand('yarn', ['build']);
+
     this.log(yosay(
       'Meooooooow~~'
     ));
