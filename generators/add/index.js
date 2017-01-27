@@ -6,8 +6,23 @@ const _ = require('lodash');
 const extend = _.merge;
 
 module.exports = generator.extend({
+  constructor: function() {
+    generator.apply(this, arguments);
+
+    this.option('item', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Name of item'
+    });
+  },
+
   initializing: function() {
-    this.props = {};
+    this.props = {
+      items: this.options.item === '' ? [] : [
+        this.options.item
+      ]
+    };
   },
 
   prompting: {
@@ -16,6 +31,7 @@ module.exports = generator.extend({
         type: 'checkbox',
         name: 'items',
         message: 'Choose add items',
+        when: this.props.items.length === 0,
         choices: ['component']
       }]).then(function(props) {
         this.props = extend(this.props, props);

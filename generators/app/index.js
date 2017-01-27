@@ -151,6 +151,9 @@ module.exports = generator.extend({
       this.composeWith(require.resolve('../template'));
       this.composeWith(require.resolve('../react'));
       this.composeWith(require.resolve('../webpack'));
+      this.composeWith(require.resolve('../add'), {
+        item: 'component'
+      });
     },
 
     npm: function() {
