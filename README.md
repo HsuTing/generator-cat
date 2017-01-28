@@ -1,5 +1,7 @@
 # generator-cat [![NPM version][npm-image]][npm-url]
 
+![icon](http://hsuting.com/img/icon.svg)
+
 ## Installation
 
 First, install [Yeoman](http://yeoman.io) and generator-cat using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
