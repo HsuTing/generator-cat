@@ -30,7 +30,12 @@ module.exports = class extends Generator {
       name: 'items',
       message: 'Choose add items',
       when: this.props.items.length === 0,
-      choices: ['component']
+      choices: [
+        'component',
+        'reducer',
+        'store',
+        'router'
+      ]
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
@@ -39,5 +44,11 @@ module.exports = class extends Generator {
   writing() {
     if(this.props.items.indexOf('component') !== -1)
       this.composeWith(require.resolve('./component'));
+    if(this.props.items.indexOf('reducer') !== -1)
+      this.composeWith(require.resolve('./reducer'));
+    if(this.props.items.indexOf('store') !== -1)
+      this.composeWith(require.resolve('./store'));
+    if(this.props.items.indexOf('router') !== -1)
+      this.composeWith(require.resolve('./router'));
   }
 };

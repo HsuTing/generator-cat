@@ -3,8 +3,8 @@
 import process from 'process';
 import body from 'koa-body';
 import Router from 'koa-better-router';
-
 <% if(website) { -%>
+
 import React from 'middleware/react';
 import Index from 'components/Index';
 <% } -%>
