@@ -9,19 +9,24 @@ module.exports = class extends Generator {
     // pkg
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
-      main: './lib/index.js'
+      scripts: {
+        static: 'node ./bin/static.js'
+      }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
     // files
     this.fs.copy(
-      this.templatePath('npmignore'),
-      this.destinationPath('.npmignore')
+      this.templatePath('static.js'),
+      this.destinationPath('bin/static.js')
     );
+  }
 
-    this.fs.copy(
-      this.templatePath('index.js'),
-      this.destinationPath('src/index.js')
-    );
+  install() {
+    this.yarnInstall([
+      'nunjucks',
+      'chalk',
+      'html-minifier'
+    ], {dev: true});
   }
 };

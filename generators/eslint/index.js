@@ -1,39 +1,37 @@
 'use strict';
 
-const generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 const _ = require('lodash');
 const extend = _.merge;
 
-module.exports = generator.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  initializing() {
     this.props = {
       plugins: this.config.get('plugins') || []
     };
-  },
+  }
 
-  writing: {
-    pkg: function() {
-      const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-      const pkg = extend({
-        scripts: {
-          lint: 'eslint --cache ./src ./bin --ext .js',
-          'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
-        }
-      }, currentPkg);
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-    },
+  writing() {
+    // pkg
+    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    const pkg = extend({
+      scripts: {
+        lint: 'eslint --cache ./src ./bin --ext .js',
+        'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
+      }
+    }, currentPkg);
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    files: function() {
-      this.fs.copyTpl(
-        this.templatePath('eslintrc.js'),
-        this.destinationPath('.eslintrc.js'), {
-          react: this.props.plugins.indexOf('react') !== -1
-        }
-      );
-    }
-  },
+    // files
+    this.fs.copyTpl(
+      this.templatePath('eslintrc.js'),
+      this.destinationPath('.eslintrc.js'), {
+        react: this.props.plugins.indexOf('react') !== -1
+      }
+    );
+  }
 
-  install: function() {
+  install() {
     const modules = [
       'eslint',
       'eslint-watch',
@@ -48,4 +46,4 @@ module.exports = generator.extend({
 
     this.yarnInstall(modules, {dev: true});
   }
-});
+};

@@ -191,9 +191,9 @@ module.exports = generator.extend({
       if(this.props.plugins.indexOf('react') === -1)
         return;
 
-      this.composeWith(require.resolve('../template'));
-      this.composeWith(require.resolve('../react'));
-      this.composeWith(require.resolve('../add'), {
+      this.composeWith(require.resolve('./../template'));
+      this.composeWith(require.resolve('./../react'));
+      this.composeWith(require.resolve('./../add'), {
         item: 'component'
       });
     },
@@ -202,7 +202,7 @@ module.exports = generator.extend({
       if(this.props.type.indexOf('npm') === -1)
         return;
 
-      this.composeWith(require.resolve('../npm'));
+      this.composeWith(require.resolve('./../npm'));
     },
 
     normal: function() {
@@ -213,10 +213,10 @@ module.exports = generator.extend({
           website: this.props.authorUrl
         });
 
-      this.composeWith(require.resolve('../babel'));
-      this.composeWith(require.resolve('../eslint'));
-      this.composeWith(require.resolve('../bin'));
-      this.composeWith(require.resolve('../readme'));
+      this.composeWith(require.resolve('./../babel'));
+      this.composeWith(require.resolve('./../eslint'));
+      this.composeWith(require.resolve('./../bin'));
+      this.composeWith(require.resolve('./../readme'));
     }
   },
 

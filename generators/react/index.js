@@ -1,11 +1,11 @@
 'use strict';
 
-const generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 const _ = require('lodash');
 const extend = _.merge;
 
-module.exports = generator.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  initializing() {
     this.props = {
       plugins: this.config.get('plugins') || [],
       alias: {
@@ -14,9 +14,9 @@ module.exports = generator.extend({
         componentsShare: 'components/share'
       }
     };
-  },
+  }
 
-  prompting: function() {
+  prompting() {
     return this.prompt([{
       type: 'confirm',
       name: 'router',
@@ -45,18 +45,18 @@ module.exports = generator.extend({
         this.props.plugins.push('redux');
       }
     }.bind(this));
-  },
+  }
 
-  default: function() {
+  default() {
     this.config.set('alias', extend(
       this.props.alias,
       this.config.get('alias') || {}
     ));
     this.config.set('plugins', this.props.plugins);
     this.composeWith(require.resolve('../webpack'));
-  },
+  }
 
-  writing: function() {
+  writing() {
     this.fs.copy(
       this.templatePath('Wrapper.js'),
       this.destinationPath('src/components/share/Wrapper.js')
@@ -72,9 +72,9 @@ module.exports = generator.extend({
         this.templatePath('Link.js'),
         this.destinationPath('src/components/share/Link.js')
       );
-  },
+  }
 
-  install: function() {
+  install() {
     const modules = [
       'react',
       'react-dom',
@@ -93,4 +93,4 @@ module.exports = generator.extend({
 
     this.yarnInstall(modules);
   }
-});
+};

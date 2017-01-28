@@ -1,6 +1,6 @@
 'use strict';
 
-const generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 const _ = require('lodash');
 const extend = _.merge;
 
@@ -14,39 +14,37 @@ const convertAlias = function(alias) {
     });
 };
 
-module.exports = generator.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  initializing() {
     this.props = {
       plugins: this.config.get('plugins') || []
     };
-  },
+  }
 
-  writing: {
-    pkg: function() {
-      const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-      const pkg = extend({
-        scripts: {
-          babel: 'rm -rf ./lib && babel src --out-dir lib',
-          'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
-        }
-      }, currentPkg);
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-    },
+  writing() {
+    // pkg
+    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+    const pkg = extend({
+      scripts: {
+        babel: 'rm -rf ./lib && babel src --out-dir lib',
+        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+      }
+    }, currentPkg);
+    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
-    files: function() {
-      this.fs.copyTpl(
-        this.templatePath('babelrc'),
-        this.destinationPath('.babelrc'), {
-          react: this.props.plugins.indexOf('react') !== -1,
-          alias: convertAlias(
-            this.config.get('alias') || {}
-          )
-        }
-      );
-    }
-  },
+    // files
+    this.fs.copyTpl(
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc'), {
+        react: this.props.plugins.indexOf('react') !== -1,
+        alias: convertAlias(
+          this.config.get('alias') || {}
+        )
+      }
+    );
+  }
 
-  install: function() {
+  install() {
     const modules = [
       'babel-cli',
       'babel-core',
@@ -64,4 +62,4 @@ module.exports = generator.extend({
 
     this.yarnInstall(modules, {dev: true});
   }
-});
+};

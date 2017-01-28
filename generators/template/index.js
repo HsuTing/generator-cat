@@ -1,12 +1,12 @@
 'use strict';
 
-const generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 const parseAuthor = require('parse-author');
 const _ = require('lodash');
 const extend = _.merge;
 
-module.exports = generator.extend({
-  initializing: function() {
+module.exports = class extends Generator {
+  initializing() {
     const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
 
     this.props = {
@@ -15,11 +15,7 @@ module.exports = generator.extend({
       subject: this.config.get('subject'),
       url: this.config.get('url'),
       extension: this.config.get('extension'),
-      author: pkg.author,
-      geo: this.config.get('geo'),
-      google: this.config.get('google'),
-      facebook: this.config.get('facebook'),
-      twitter: this.config.get('twitter')
+      author: pkg.author
     };
 
     if(_.isString(pkg.author)) {
@@ -31,142 +27,77 @@ module.exports = generator.extend({
         url: author.url
       };
     }
-  },
+  }
 
-  prompting: {
-    askForNormal: function() {
-      const other = ['geo', 'facebook', 'google', 'twitter'];
-      return this.prompt([{
-        name: 'subject',
-        message: 'Subject of this template',
-        when: !this.props.subject,
-        store: true
-      }, {
-        name: 'url',
-        message: 'Base url of this template',
-        when: !this.props.url,
-        store: true
-      }, {
-        name: 'extension',
-        message: 'Extension of static file link',
-        default: '',
-        when: !this.props.extension,
-        filter: function(words) {
-          return words === '' ? false : words
-        }
-      }, {
-        type: 'checkbox',
-        name: 'other',
-        message: 'Choose other setting of this template',
-        choices: other,
-        store: true
-      }]).then(function(props) {
-        this.props = extend(this.props, props);
-        Object.keys(props).forEach(function(name) {
-          if(name === 'other')
-            return;
-          this.config.set(name, props[name]);
-        }.bind(this));
+  prompting() {
+    const other = ['geo', 'facebook', 'google', 'twitter'];
+    return this.prompt([{
+      name: 'subject',
+      message: 'Subject of this template',
+      when: !this.props.subject,
+      store: true
+    }, {
+      name: 'url',
+      message: 'Base url of this template',
+      when: !this.props.url,
+      store: true
+    }, {
+      name: 'extension',
+      message: 'Extension of static file link',
+      default: '',
+      when: !this.props.extension,
+      filter: function(words) {
+        return words === '' ? false : words
+      }
+    }, {
+      type: 'checkbox',
+      name: 'other',
+      message: 'Choose other setting of this template',
+      choices: other,
+      store: true
+    }]).then(function(props) {
+      this.props = extend(this.props, props);
+      Object.keys(props).forEach(function(name) {
+        if(name === 'other')
+          return;
 
-        other.forEach(function(name) {
-          if(this.props.other.indexOf(name) === -1) {
-            this.props[name] = false;
-            this.config.delete(name);
-          }
-        }.bind(this));
+        this.config.set(name, props[name]);
       }.bind(this));
-    },
 
-    askForGeo: function() {
-      if(this.props.other.indexOf('geo') === -1 || this.props.geo)
-        return;
-
-      return this.prompt([{
-        name: 'lat',
-        message: 'Latitude of geo tag',
-        store: true
-      }, {
-        name: 'lon',
-        message: 'Longitude of geo tag',
-        store: true
-      }, {
-        name: 'placename',
-        message: 'Placename of geo tag',
-        store: true
-      }]).then(function(props) {
-        this.props.geo = props;
-        this.config.set('geo', props);
+      other.forEach(function(name) {
+        if(this.props.other.indexOf(name) === -1)
+          this.config.delete(name);
       }.bind(this));
-    },
+    }.bind(this));
+  }
 
-    askForGoogle: function() {
-      if(this.props.other.indexOf('google') === -1 || this.props.google)
-        return;
+  default() {
+    if(this.props.other.indexOf('geo') !== -1)
+      this.composeWith(require.resolve('./geo'));
+    if(this.props.other.indexOf('google') !== -1)
+      this.composeWith(require.resolve('./google'));
+    if(this.props.other.indexOf('facebook') !== -1)
+      this.composeWith(require.resolve('./facebook'));
+    if(this.props.other.indexOf('twitter') !== -1)
+      this.composeWith(require.resolve('./twitter'));
+  }
 
-      return this.prompt([{
-        name: 'id',
-        message: 'id of google analytics',
-        store: true
-      }, {
-        name: 'verification_token',
-        message: 'verification_token of google site verification',
-        store: true
-      }, {
-        name: 'publisher',
-        message: 'publisher of google plus',
-        store: true
-      }]).then(function(props) {
-        this.props.google = props;
-        this.config.set('google', props);
-      }.bind(this));
-    },
+  writing() {
+    this.props = extend(this.props, {
+      geo: this.config.get('geo'),
+      google: this.config.get('google'),
+      facebook: this.config.get('facebook'),
+      twitter: this.config.get('twitter')
+    });
 
-    askForFacebook: function() {
-      if(this.props.other.indexOf('facebook') === -1 || this.props.facebook)
-        return;
-
-      return this.prompt([{
-        name: 'app_id',
-        message: 'app id of facebook',
-        store: true
-      }, {
-        name: 'version',
-        message: 'version of facebook sdk',
-        store: true
-      }]).then(function(props) {
-        this.props.facebook = props;
-        this.config.set('facebook', props);
-      }.bind(this));
-    },
-
-    askForTwitter: function() {
-      if(this.props.other.indexOf('twitter') === -1 || this.props.twitter)
-        return;
-
-      return this.prompt([{
-        name: 'site',
-        message: 'site of twitter',
-        store: true
-      }, {
-        name: 'creator',
-        message: 'creator of twitter',
-        store: true
-      }]).then(function(props) {
-        this.props.twitter = props;
-        this.config.set('twitter', props);
-      }.bind(this));
-    }
-  },
-
-  writing: function() {
     this.fs.copyTpl(
       this.templatePath('template.html'),
       this.destinationPath('views/template.html'),
       this.props
     )
-  },
+  }
 
-  install: function() {
+  install() {
     this.yarnInstall('nunjucks', {dev: true});
   }
-});
+};
