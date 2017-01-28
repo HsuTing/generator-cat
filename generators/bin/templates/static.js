@@ -43,7 +43,7 @@ const config = [
 const root = path.resolve(__dirname, './../');
 nunjucks.configure(path.resolve(root, './views'));
 
-const copyFile = function(html, options) {
+const copyFile = (html, options) => {
   options.content = html;
 
   const filename = (options.name === 'index' ? '' : options.name + '/') + 'index.html';
@@ -63,7 +63,7 @@ const copyFile = function(html, options) {
       minifyURLs: true,
       minifyJS: true
     }),
-    function(err) {
+    err => {
       if(err)
         throw err;
 
@@ -72,10 +72,10 @@ const copyFile = function(html, options) {
   );
 };
 
-const render = function(component, options) {
+const render = (component, options) => {
   const html = renderToStaticMarkup(component);
   if(options.name !== 'index') {
-    fs.mkdir(options.name, function(err) {
+    fs.mkdir(options.name, err => {
       if(err)
         throw err;
 
@@ -85,11 +85,11 @@ const render = function(component, options) {
     copyFile(html, options);
 };
 
-const radium = function(component) {
+const radium = component => {
   return React.createElement(Wrapper, null, component);
 };
 
-const redux = function(component, options) {
+const redux = (component, options) => {
   const Provider = require('react-redux').Provider;
   const createStore = require('redux').createStore;
   const reducer = require(options.reducer).default;
@@ -99,11 +99,11 @@ const redux = function(component, options) {
   }, component);
 };
 
-const router = function(component, options) {
+const router = (component, options) => {
   const match = require('react-router').match;
   const RouterContext = require('react-router').RouterContext;
 
-  match({routes: component, location: options.location}, function(error, redirextLocation, renderProps) {
+  match({routes: component, location: options.location}, (error, redirextLocation, renderProps) => {
     if(renderProps) {
       let output = React.createElement(RouterContext, renderProps);
 
@@ -117,7 +117,7 @@ const router = function(component, options) {
   });
 }
 
-config.forEach(function(options) {
+config.forEach(options => {
   options.component = require(options.component).default;
 
   if(options.router) {
