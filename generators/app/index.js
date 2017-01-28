@@ -1,9 +1,11 @@
 'use strict';
 
+const path = require('path');
 const generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const parseAuthor = require('parse-author');
+const askName = require('inquirer-npm-name');
 const _ = require('lodash');
 const extend = _.merge;
 
@@ -40,6 +42,25 @@ module.exports = generator.extend({
   },
 
   prompting: {
+    askForProjectName: function() {
+      if(this.pkg.name || this.options.name) {
+        this.props.name = this.pkg.name || _.kebabCase(this.options.name);
+        return;
+      }
+
+      return askName({
+        name: 'name',
+        message: 'Module Name',
+        default: path.basename(process.cwd()),
+        filter: _.kebabCase,
+        validate: function(str) {
+          return str.length > 0;
+        }
+      }, this).then(function(props) {
+        this.props.name = props.name;
+      }.bind(this));
+    },
+
     askForPkg: function() {
       return this.prompt([{
         name: 'description',
@@ -185,9 +206,17 @@ module.exports = generator.extend({
     },
 
     normal: function() {
+      if(!this.pkg.license)
+        this.composeWith('generator-license/app', {
+          name: this.props.authorName,
+          email: this.props.authorEmail,
+          website: this.props.authorUrl
+        });
+
       this.composeWith(require.resolve('../babel'));
-      this.composeWith(require.resolve('../bin'));
       this.composeWith(require.resolve('../eslint'));
+      this.composeWith(require.resolve('../bin'));
+      this.composeWith(require.resolve('../readme'));
     }
   },
 
@@ -213,7 +242,8 @@ module.exports = generator.extend({
   },
 
   end: function() {
-    this.spawnCommand('yarn', ['build']);
+    if(!this.options.skipInstall)
+      this.spawnCommand('yarn', ['build']);
 
     this.log(yosay(
       'Meooooooow~~'
