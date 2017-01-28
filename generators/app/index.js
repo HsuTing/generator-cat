@@ -134,16 +134,16 @@ module.exports = generator.extend({
     wirtePkg: function() {
       // script
       const build = ['yarn babel'];
-      const production = ['export NODE_ENV=production', 'yarn babel'];
+      const prod = ['export NODE_ENV=production', 'yarn babel'];
       const watch = ['concurrently -c green', '"yarn lint:watch"', '"yarn babel:watch"'];
 
       if(this.props.plugins.indexOf('react') !== -1) {
         if(this.props.plugins.indexOf('websiteNoServer') !== -1) {
           build.push('yarn static');
-          production.push('yarn static');
+          prod.push('yarn static');
         }
 
-        production.push('yarn webpack')
+        prod.push('yarn webpack')
         watch.push('"yarn webpack-server"')
       }
 
@@ -160,7 +160,7 @@ module.exports = generator.extend({
         },
         scripts: {
           build: build.join(' && '),
-          production: production.join(' && '),
+          prod: prod.join(' && '),
           watch: watch.join(' ')
         },
         main: './lib/index.js',
@@ -196,6 +196,13 @@ module.exports = generator.extend({
       this.composeWith(require.resolve('./../add'), {
         item: 'component'
       });
+    },
+
+    server: function() {
+      if(this.props.type.indexOf('server') === -1)
+        return;
+
+      this.composeWith(require.resolve('./../server'));
     },
 
     npm: function() {

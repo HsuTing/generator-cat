@@ -111,9 +111,8 @@ const router = (component, options) => {
         output = redux(output, options);
 
       render(radium(output), options);
-    } else {
+    } else
       render('not find', options);
-    }
   });
 }
 
