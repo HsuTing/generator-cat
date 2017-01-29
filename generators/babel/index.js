@@ -26,8 +26,16 @@ module.exports = class extends Generator {
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        babel: 'rm -rf ./lib && babel src --out-dir lib',
-        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+        babel: (
+          this.props.plugins.indexOf('graphql') !== -1 ?
+          'export BABEL_ENV=graphql && rm -rf ./lib && babel src --out-dir lib' :
+          'rm -rf ./lib && babel src --out-dir lib'
+        ),
+        'babel:watch': (
+          this.props.plugins.indexOf('graphql') !== -1 ?
+          'export BABEL_ENV=graphql && rm -rf ./lib && babel -w src --out-dir lib' :
+          'rm -rf ./lib && babel -w src --out-dir lib'
+        )
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
@@ -36,12 +44,20 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
+        graphql: this.props.plugins.indexOf('graphql') !== -1,
         react: this.props.plugins.indexOf('react') !== -1,
         alias: convertAlias(
           this.config.get('alias') || {}
         )
       }
     );
+
+    // graphql
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      this.fs.copy(
+        this.templatePath('plugins/babelRelayPlugin.js'),
+        this.destinationPath('plugins/babelRelayPlugin.js')
+      );
   }
 
   install() {
@@ -59,6 +75,9 @@ module.exports = class extends Generator {
         'babel-preset-react',
         'babel-plugin-transform-decorators-legacy'
       );
+
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      modules.push('babel-relay-plugin');
 
     this.yarnInstall(modules, {dev: true});
   }

@@ -1,4 +1,13 @@
 {
+<% if(graphql) { -%>
+  "env": {
+    "graphql": {
+      "plugins": [
+        "./plugins/babelRelayPlugin"
+      ]
+    }
+  },
+<% } -%>
   "presets": [
 <% if(react) { -%>
     "react",
