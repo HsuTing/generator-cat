@@ -53,6 +53,12 @@ module.exports = class extends Generator {
         this.templatePath('middleware/react.js'),
         this.destinationPath('src/middleware/react.js')
       );
+
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      this.fs.copy(
+        this.templatePath('graphql/schema.js'),
+        this.destinationPath('src/schema/schema.js')
+      );
   }
 
   install() {
@@ -78,6 +84,7 @@ module.exports = class extends Generator {
 
     if(this.props.plugins.indexOf('graphql') !== -1)
       modules.push(
+        'graphql',
         'koa-convert',
         'koa-graphql'
       );
