@@ -22,17 +22,21 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const graphql = (
+      this.props.plugins.indexOf('graphql') !== -1 &&
+      this.props.plugins.indexOf('react') !== -1
+    );
     // pkg
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
         babel: (
-          this.props.plugins.indexOf('graphql') !== -1 ?
+          graphql ?
           'export BABEL_ENV=graphql && rm -rf ./lib && babel src --out-dir lib' :
           'rm -rf ./lib && babel src --out-dir lib'
         ),
         'babel:watch': (
-          this.props.plugins.indexOf('graphql') !== -1 ?
+          graphql ?
           'export BABEL_ENV=graphql && rm -rf ./lib && babel -w src --out-dir lib' :
           'rm -rf ./lib && babel -w src --out-dir lib'
         )
@@ -44,7 +48,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
-        graphql: this.props.plugins.indexOf('graphql') !== -1,
+        graphql: graphql,
         react: this.props.plugins.indexOf('react') !== -1,
         alias: convertAlias(
           this.config.get('alias') || {}

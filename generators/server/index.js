@@ -13,8 +13,12 @@ module.exports = class extends Generator {
     this.config.set('alias', extend({
       routes: 'routes',
       middleware: 'middleware'
-    }, this.config.get('alias') || {}
-    ));
+    }, this.config.get('alias') || {}));
+
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      this.config.set('alias', extend({
+        schema: 'schema'
+      }, this.config.get('alias') || {}));
   }
 
   writing() {
@@ -39,7 +43,8 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('router.js'),
       this.destinationPath('src/router.js'), {
-        website: this.props.plugins.indexOf('react') !== -1
+        website: this.props.plugins.indexOf('react') !== -1,
+        graphql: this.props.plugins.indexOf('graphql') !== -1
       }
     );
 
@@ -69,6 +74,12 @@ module.exports = class extends Generator {
         'koa-views@next',
         'koa-html-minifier',
         'nunjucks'
+      );
+
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      modules.push(
+        'koa-convert',
+        'koa-graphql'
       );
 
     this.yarnInstall(modules, {dev: true});
