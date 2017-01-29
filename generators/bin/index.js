@@ -12,5 +12,7 @@ module.exports = class extends Generator {
   default() {
     if(this.props.plugins.indexOf('websiteNoServer') !== -1)
       this.composeWith(require.resolve('./static'));
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      this.composeWith(require.resolve('./graphql'));
   }
 };
