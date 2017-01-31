@@ -12,7 +12,7 @@ module.exports = class extends Generator {
       type: String,
       required: false,
       default: '',
-      desc: 'Name of component'
+      desc: 'Name of relay'
     });
   }
 
@@ -22,13 +22,13 @@ module.exports = class extends Generator {
 
   prompting() {
     if(this.options.name !== '') {
-      this.props.componentName = this.options.name;
+      this.props.relayName = this.options.name;
       return;
     }
 
     return this.prompt([{
-      name: 'componentName',
-      message: 'Name of component',
+      name: 'relayName',
+      message: 'Name of relay',
       default: 'index',
       filter: function(words) {
         return words[0].toUpperCase() + words.slice(1);
@@ -39,19 +39,26 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const componentName = this.props.componentName;
+    const relayName = this.props.relayName;
 
     this.fs.copyTpl(
-      this.templatePath('component/public.js'),
-      this.destinationPath(`src/public/${componentName.toLowerCase()}.js`), {
-        componentName: componentName
+      this.templatePath('relay/component.js'),
+      this.destinationPath(`src/components/${relayName}.js`), {
+        name: relayName
       }
     );
 
     this.fs.copyTpl(
-      this.templatePath('component/component.js'),
-      this.destinationPath(`src/components/${componentName}.js`), {
-        componentName: componentName
+      this.templatePath('relay/public.js'),
+      this.destinationPath(`src/public/${relayName}.js`), {
+        name: relayName
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('relay/container.js'),
+      this.destinationPath(`src/containers/${relayName.toLowerCase()}.js`), {
+        name: relayName
       }
     );
   }

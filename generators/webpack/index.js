@@ -12,12 +12,13 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const graphql = this.props.plugins.indexOf('graphql') !== -1;
     // pkg
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        'webpack-server': 'webpack-dev-server --content-base src --hot --inline',
-        webpack: 'NODE_ENV=production webpack'
+        'webpack-server': `${graphql ? 'export BABEL_ENV=graphql && ': ''}webpack-dev-server --content-base src --hot --inline`,
+        webpack: `${graphql ? 'export BABEL_ENV=graphql && ': ''}NODE_ENV=production webpack`
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);

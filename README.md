@@ -17,6 +17,10 @@ Then generate your new project:
 yo cat
 ```
 
+## Subgenerator
+- `add`: use to add new files.
+- `test`: use to add test framework.
+
 ## Getting To Know Yeoman
 
  * Yeoman has a heart of gold.

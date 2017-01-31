@@ -17,7 +17,6 @@ import minify from 'koa-html-minifier';
 <% if(graphql) { -%>
 import convert from 'koa-convert';
 import graphql from 'koa-graphql';
-
 import schema from 'schemas/schema';
 <% } -%>
 
@@ -66,7 +65,7 @@ if(ENV)
 <% } -%>
 app.use(router.middleware());
 <% if(graphql) { -%>
-  app.use(mount('/graphql', convert(graphql({
+app.use(mount('/graphql', convert(graphql({
   schema,
   graphiql: !ENV,
   pretty: !ENV,
@@ -78,6 +77,6 @@ app.use(router.middleware());
 <% } -%>
 
 // setting
-app.listen(8000, () => {
+app.listen(ENV ? 80 : 8000, () => {
   console.log('server start');
 });

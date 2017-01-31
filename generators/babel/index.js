@@ -32,12 +32,12 @@ module.exports = class extends Generator {
       scripts: {
         babel: (
           graphql ?
-          'export BABEL_ENV=graphql && rm -rf ./lib && babel src --out-dir lib' :
+          'export BABEL_ENV=async && rm -rf ./lib && babel src --out-dir lib' :
           'rm -rf ./lib && babel src --out-dir lib'
         ),
         'babel:watch': (
           graphql ?
-          'export BABEL_ENV=graphql && rm -rf ./lib && babel -w src --out-dir lib' :
+          'export BABEL_ENV=async && rm -rf ./lib && babel -w src --out-dir lib' :
           'rm -rf ./lib && babel -w src --out-dir lib'
         )
       }
@@ -80,8 +80,12 @@ module.exports = class extends Generator {
         'babel-plugin-transform-decorators-legacy'
       );
 
-    if(this.props.plugins.indexOf('graphql') !== -1)
+    if(this.props.plugins.indexOf('graphql') !== -1) {
       modules.push('babel-relay-plugin');
+
+      if(this.props.plugins.indexOf('react') !== -1)
+        modules.push('babel-plugin-transform-runtime');
+    }
 
     this.yarnInstall(modules, {dev: true});
   }

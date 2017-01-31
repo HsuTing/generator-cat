@@ -35,7 +35,8 @@ module.exports = class extends Generator {
         'reducer',
         'store',
         'router',
-        'schema'
+        'schema',
+        'relay'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);
@@ -45,7 +46,7 @@ module.exports = class extends Generator {
   writing() {
     if(this.props.items.indexOf('component') !== -1)
       this.composeWith(require.resolve('./component'), {
-        name: this.options.item !== '' ? 'index' : ''
+        name: this.options.item !== '' ? 'Index' : ''
       });
     if(this.props.items.indexOf('reducer') !== -1)
       this.composeWith(require.resolve('./reducer'));
@@ -56,6 +57,10 @@ module.exports = class extends Generator {
     if(this.props.items.indexOf('schema') !== -1)
       this.composeWith(require.resolve('./schema'), {
         name: this.options.item !== '' ? 'index' : ''
+      });
+    if(this.props.items.indexOf('relay') !== -1)
+      this.composeWith(require.resolve('./relay'), {
+        name: this.options.item !== '' ? 'Index' : ''
       });
   }
 };

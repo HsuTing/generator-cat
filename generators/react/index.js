@@ -91,6 +91,11 @@ module.exports = class extends Generator {
         'react-redux'
       );
 
+    if(this.props.plugins.indexOf('graphql') !== -1)
+      modules.push(
+        'react-relay'
+      );
+
     this.yarnInstall(modules);
   }
 };

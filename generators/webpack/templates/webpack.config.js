@@ -30,7 +30,7 @@ module.exports = {
   output: {
     filename: ENV ? '[name].min.js' : '[name].js',
     publicPath: '/assets/',
-    path: './public/js'
+    path: path.resolve(__dirname, './public/js')
   },
   module: {
     rules: [

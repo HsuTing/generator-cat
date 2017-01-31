@@ -2,22 +2,56 @@
 
 import {
   GraphQLNonNull,
-  GraphQLString
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInputObjectType
 } from 'graphql';
 
-export const query = {
-  type: GraphQLString,
-  description: '<%= name %> query',
-  resolve: () => 'query'
-};
+const dataType = new GraphQLObjectType({
+  name: 'data',
+  fields: () => ({
+    clientMutationId: {
+      type: GraphQLString
+    },
+    data: {
+      type: GraphQLString,
+      description: 'data',
+      resolve: root => root.data || ''
+    }
+  })
+});
 
-export const mutation = {
-  type: GraphQLString,
-  description: '<%= name %> mutation',
+const inputType = new GraphQLInputObjectType({
+  name: 'input',
+  fields: () => ({
+    clientMutationId: {
+      type: GraphQLString
+    },
+    data: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: 'input data'
+    }
+  })
+});
+
+export const query = {
+  type: dataType,
+  description: '<%= name %> query',
   args: {
     input: {
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  resolve: () => 'mutation'
+  resolve: () => ({data: 'query'})
+};
+
+export const mutation = {
+  type: dataType,
+  description: '<%= name %> mutation',
+  args: {
+    input: {
+      type: new GraphQLNonNull(inputType)
+    }
+  },
+  resolve: () => ({data: 'mutation'})
 };

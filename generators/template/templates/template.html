@@ -72,6 +72,9 @@
     {% block body %}{% endblock %}
   </body>
   {% block script %}{% endblock %}
+  <script>
+    var data = {{ data | safe }}
+  </script>
 
   {% if ENV %}
   <script defer src="/<%= extension ? extension + '/' : '' %>public/js/common.min.js" type="text/javascript"></script>

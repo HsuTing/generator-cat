@@ -135,16 +135,19 @@ module.exports = generator.extend({
     },
 
     wirtePkg: function() {
-      // script
-      const script = (
+      const graphql = (
         this.props.plugins.indexOf('graphql') !== -1 &&
-        this.props.plugins.indexOf('react') !== -1 ?
-        ['yarn graphql'] :
-        []
+        this.props.plugins.indexOf('react') !== -1
       );
+      // script
+      const script = graphql ? ['yarn graphql'] : [];
       const build = script.concat(['yarn babel']);
       const prod = script.concat(['export NODE_ENV=production', 'yarn babel']);
-      const watch = ['concurrently -c green', '"yarn lint:watch"', '"yarn babel:watch"'];
+      const watch = [
+        `${graphql ? 'export BABEL_ENV=graphql && ' : ''}concurrently -c green`,
+        '"yarn lint:watch"',
+        '"yarn babel:watch"'
+      ];
 
       if(this.props.plugins.indexOf('react') !== -1) {
         if(this.props.plugins.indexOf('websiteNoServer') !== -1) {
@@ -203,7 +206,7 @@ module.exports = generator.extend({
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
       this.composeWith(require.resolve('./../add'), {
-        item: 'component'
+        item: this.props.plugins.indexOf('graphql') === -1 ? 'component' : 'relay'
       });
     },
 
