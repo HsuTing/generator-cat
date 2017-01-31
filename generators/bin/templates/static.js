@@ -50,19 +50,19 @@ const copyFile = (html, options) => {
   const output = nunjucks.render(
     options.template ? options.template : 'template.html',
     extend(options, {
-      ENV: process.env.NODE_ENV
+      ENV: process.env.NODE_ENV === 'production'
     })
   );
 
   fs.writeFile(
     path.resolve(root, filename),
-    minify(output, {
+    minify(output, process.env.NODE_ENV === 'production' ? {
       removeComments: true,
       collapseWhitespace: true,
       minifyCSS: true,
       minifyURLs: true,
       minifyJS: true
-    }),
+    }: {}),
     err => {
       if(err)
         throw err;
