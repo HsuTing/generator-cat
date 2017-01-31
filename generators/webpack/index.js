@@ -26,6 +26,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'), {
+        graphql: this.props.plugins.indexOf('graphql') !== -1,
         router: this.props.plugins.indexOf('router') !== -1,
         redux: this.props.plugins.indexOf('redux') !== -1
       }

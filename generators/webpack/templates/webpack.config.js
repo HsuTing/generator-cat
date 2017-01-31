@@ -11,6 +11,9 @@ module.exports = {
   entry: {
     index: path.resolve(src, './index.js'),
     common: [
+<% if(graphql) { -%>
+      'react-relay',
+<% } -%>
 <% if(router) { -%>
       'react-router',
 <% } -%>
@@ -30,23 +33,17 @@ module.exports = {
     path: './public/js'
   },
   module: {
-    loaders: [
-      {test: /\.js$/, loader: 'babel'}
+    rules: [
+      {test: /\.js$/, loader: 'babel-loader'}
     ]
-  },
-  resolve: {
-    extensions: ['', '.js']
   },
   plugins: ENV ? [
     new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),
-    new webpack.optimize.CommonsChunkPlugin('common', 'common.min.js'),
-    new webpack.optimize.UglifyJsPlugin({minimize: true}),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.min.js'}),
+    new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
+    new webpack.LoaderOptionsPlugin({minimize: true, debug: true})
   ] : [
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.js'}),
     new webpack.HotModuleReplacementPlugin()
   ]
 };
