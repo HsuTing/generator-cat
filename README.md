@@ -1,6 +1,6 @@
 # generator-cat [![NPM version][npm-image]][npm-url]
 
-![icon](http://hsuting.com/img/icon.svg)
+![icon](http://hsuting.github.io/img/icon.svg)
 
 ## Installation
 
