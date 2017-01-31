@@ -36,7 +36,9 @@ module.exports = class extends Generator {
         'store',
         'router',
         'schema',
-        'relay'
+        'relay',
+        'nodemailer',
+        'sqlite3'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);
@@ -44,16 +46,24 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const special = [
+      'component',
+      'schema',
+      'relay'
+    ];
+
+    this.props.items.forEach(function(name) {
+      if(special.indexOf(name) !== -1)
+        return;
+
+      this.composeWith(require.resolve(`./${name}`));
+    }.bind(this));
+
+    // special
     if(this.props.items.indexOf('component') !== -1)
       this.composeWith(require.resolve('./component'), {
         name: this.options.item !== '' ? 'Index' : ''
       });
-    if(this.props.items.indexOf('reducer') !== -1)
-      this.composeWith(require.resolve('./reducer'));
-    if(this.props.items.indexOf('store') !== -1)
-      this.composeWith(require.resolve('./store'));
-    if(this.props.items.indexOf('router') !== -1)
-      this.composeWith(require.resolve('./router'));
     if(this.props.items.indexOf('schema') !== -1)
       this.composeWith(require.resolve('./schema'), {
         name: this.options.item !== '' ? 'index' : ''
