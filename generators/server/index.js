@@ -17,7 +17,7 @@ module.exports = class extends Generator {
 
     if(this.props.plugins.indexOf('graphql') !== -1)
       this.config.set('alias', extend({
-        schema: 'schema'
+        schemas: 'schemas'
       }, this.config.get('alias') || {}));
   }
 
@@ -36,15 +36,15 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('server.js'),
       this.destinationPath('src/server.js'), {
-        website: this.props.plugins.indexOf('react') !== -1
+        website: this.props.plugins.indexOf('react') !== -1,
+        graphql: this.props.plugins.indexOf('graphql') !== -1
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('router.js'),
       this.destinationPath('src/router.js'), {
-        website: this.props.plugins.indexOf('react') !== -1,
-        graphql: this.props.plugins.indexOf('graphql') !== -1
+        website: this.props.plugins.indexOf('react') !== -1
       }
     );
 
@@ -57,7 +57,7 @@ module.exports = class extends Generator {
     if(this.props.plugins.indexOf('graphql') !== -1)
       this.fs.copy(
         this.templatePath('graphql/schema.js'),
-        this.destinationPath('src/schema/schema.js')
+        this.destinationPath('src/schemas/schema.js')
       );
   }
 
@@ -70,12 +70,12 @@ module.exports = class extends Generator {
       'koa-body@2',
       'koa-better-router',
       'koa-morgan',
+      'koa-mount@next',
       'nodemon'
     ];
 
     if(this.props.plugins.indexOf('react') !== -1)
       modules.push(
-        'koa-mount@next',
         'koa-static@next',
         'koa-views@next',
         'koa-html-minifier',

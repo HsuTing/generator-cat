@@ -8,11 +8,17 @@ import morgan from 'koa-morgan';
 import helmet from 'koa-helmet';
 import compress from 'koa-compress';
 import etag from 'koa-etag';
-<% if(website) { -%>
 import mount from 'koa-mount';
+<% if(website) { -%>
 import serve from 'koa-static';
 import views from 'koa-views';
 import minify from 'koa-html-minifier';
+<% } -%>
+<% if(graphql) { -%>
+import convert from 'koa-convert';
+import graphql from 'koa-graphql';
+
+import schema from 'schemas/schema';
 <% } -%>
 
 import router from './router';
@@ -59,8 +65,19 @@ if(ENV)
   }));
 <% } -%>
 app.use(router.middleware());
+<% if(graphql) { -%>
+  app.use(mount('/graphql', convert(graphql({
+  schema,
+  graphiql: !ENV,
+  pretty: !ENV,
+  formatError: error => {
+    if(!ENV)
+      console.log(error);
+  }
+}))));
+<% } -%>
 
 // setting
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log('server start');
 });

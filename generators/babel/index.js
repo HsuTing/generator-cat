@@ -57,7 +57,7 @@ module.exports = class extends Generator {
     );
 
     // graphql
-    if(this.props.plugins.indexOf('graphql') !== -1)
+    if(graphql)
       this.fs.copy(
         this.templatePath('plugins/babelRelayPlugin.js'),
         this.destinationPath('plugins/babelRelayPlugin.js')

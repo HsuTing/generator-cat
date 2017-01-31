@@ -5,11 +5,27 @@ const _ = require('lodash');
 const extend = _.merge;
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    this.option('name', {
+      type: String,
+      required: false,
+      default: '',
+      desc: 'Name of component'
+    });
+  }
+
   initializing() {
     this.props = {};
   }
 
   prompting() {
+    if(this.options.name !== '') {
+      this.props.componentName = this.options.name;
+      return;
+    }
+
     return this.prompt([{
       name: 'componentName',
       message: 'Name of component',

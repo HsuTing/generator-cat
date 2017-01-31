@@ -107,6 +107,7 @@ module.exports = generator.extend({
         choices: [
           'website',
           'server',
+          'graphql',
           'npm'
         ],
         store: true
@@ -122,10 +123,12 @@ module.exports = generator.extend({
       if(this.props.type.indexOf('website') !== -1) {
         plugins.push('react');
 
-        if(this.props.type.indexOf('server') === -1) {
+        if(this.props.type.indexOf('server') === -1)
           plugins.push('websiteNoServer');
-        }
       }
+
+      if(this.props.type.indexOf('graphql') !== -1)
+        plugins.push('graphql');
 
       this.props.plugins = plugins;
       this.config.set('plugins', plugins);
@@ -133,8 +136,14 @@ module.exports = generator.extend({
 
     wirtePkg: function() {
       // script
-      const build = ['yarn babel'];
-      const prod = ['export NODE_ENV=production', 'yarn babel'];
+      const script = (
+        this.props.plugins.indexOf('graphql') !== -1 &&
+        this.props.plugins.indexOf('react') !== -1 ?
+        ['yarn graphql'] :
+        []
+      );
+      const build = script.concat(['yarn babel']);
+      const prod = script.concat(['export NODE_ENV=production', 'yarn babel']);
       const watch = ['concurrently -c green', '"yarn lint:watch"', '"yarn babel:watch"'];
 
       if(this.props.plugins.indexOf('react') !== -1) {
@@ -195,6 +204,15 @@ module.exports = generator.extend({
       this.composeWith(require.resolve('./../react'));
       this.composeWith(require.resolve('./../add'), {
         item: 'component'
+      });
+    },
+
+    graphql: function() {
+      if(this.props.plugins.indexOf('graphql') === -1)
+        return;
+
+      this.composeWith(require.resolve('./../add'), {
+        item: 'schema'
       });
     },
 

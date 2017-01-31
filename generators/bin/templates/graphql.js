@@ -6,7 +6,7 @@ const graphql  = require('graphql').graphql;
 const introspectionQuery = require('graphql/utilities').introspectionQuery;
 const printSchema = require('graphql/utilities').printSchema;
 
-const schema = require('./../lib/schema/index').default;
+const schema = require('./../lib/schemas/schema').default;
 
 const schemaPath = path.resolve(__dirname, './../');
 
