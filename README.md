@@ -19,6 +19,16 @@ yo cat
 
 ## Subgenerator
 - `add`: use to add new files.
+  - `component`: add default component and js of `react`.
+  - `reducer`: add default reducer and action of `redux`.
+  - `store`: add default store of `redux`.
+  - `router`: add default router of `react-router`.
+  - `schema`: add default schema of `graphql`.
+  - `relay`: add default component, route and js of `react-relay`.
+  - `nodemailer`: add default `nodemailer` with `react`.
+  - `sqlite3`: add default `sqlite3`.
+  - `imgResize`: add function to do resize image for meeting this size of the parentNode.
+  - `firebase`: add default `firebase` with `nodejs`.
 - `test`: use to add test framework.
 
 ## Getting To Know Yeoman
