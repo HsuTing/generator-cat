@@ -53,11 +53,13 @@
 
 <% } -%>
     <title><%= title %></title>
+<% if(author) { -%>
 
     <link rel="author" href="<%= author.url %>/author/">
     <link rel="copyright" href="<%= author.url %>/copyright/">
     <link rel="me" href="<%= author.url %>" type="text/html">
     <link rel="me" href="mailto:<%= author.email %>">
+<% } -%>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/<%= extension ? extension + '/' : '' %>public/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/<%= extension ? extension + '/' : '' %>public/favicon/favicon-32x32.png" sizes="32x32">
@@ -117,6 +119,20 @@
 
     ga('create', '<%= google.id %>', 'auto');
     ga('send', 'pageview');
+  </script>
+<% } -%>
+<% if(other.indexOf('firebase') !== -1) { -%>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+  <script>
+    var config = {
+      apiKey: "<%= firebase.apiKey %>",
+      authDomain: "<%= firebase.authDomain %>",
+      databaseURL: "<%= firebase.databaseURL %>",
+      storageBucket: "<%= firebase.storageBucket %>",
+      messagingSenderId: "<%= firebase.messagingSenderId %>"
+    };
+    firebase.initializeApp(config);
   </script>
 <% } -%>
 </html>

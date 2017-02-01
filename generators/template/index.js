@@ -30,7 +30,7 @@ module.exports = class extends Generator {
   }
 
   prompting() {
-    const other = ['geo', 'facebook', 'google', 'twitter'];
+    const other = ['geo', 'facebook', 'google', 'twitter', 'firebase'];
     return this.prompt([{
       name: 'subject',
       message: 'Subject of this template',
@@ -72,14 +72,9 @@ module.exports = class extends Generator {
   }
 
   default() {
-    if(this.props.other.indexOf('geo') !== -1)
-      this.composeWith(require.resolve('./geo'));
-    if(this.props.other.indexOf('google') !== -1)
-      this.composeWith(require.resolve('./google'));
-    if(this.props.other.indexOf('facebook') !== -1)
-      this.composeWith(require.resolve('./facebook'));
-    if(this.props.other.indexOf('twitter') !== -1)
-      this.composeWith(require.resolve('./twitter'));
+    this.props.other.forEach(function(name) {
+      this.composeWith(require.resolve(`./${name}`));
+    }.bind(this));
   }
 
   writing() {
@@ -87,7 +82,8 @@ module.exports = class extends Generator {
       geo: this.config.get('geo'),
       google: this.config.get('google'),
       facebook: this.config.get('facebook'),
-      twitter: this.config.get('twitter')
+      twitter: this.config.get('twitter'),
+      firebase: this.config.get('firebase')
     });
 
     this.fs.copyTpl(

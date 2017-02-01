@@ -39,7 +39,8 @@ module.exports = class extends Generator {
         'relay',
         'nodemailer',
         'sqlite3',
-        'imgResize'
+        'imgResize',
+        'firebase'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);

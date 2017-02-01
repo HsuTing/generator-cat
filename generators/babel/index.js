@@ -50,9 +50,11 @@ module.exports = class extends Generator {
       this.destinationPath('.babelrc'), {
         graphql: graphql,
         react: this.props.plugins.indexOf('react') !== -1,
-        alias: convertAlias(
-          this.config.get('alias') || {}
-        )
+        alias: convertAlias(extend(
+          this.config.get('alias') || {}, {
+            utils: 'utils'
+          }
+        ))
       }
     );
 
