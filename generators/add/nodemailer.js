@@ -12,10 +12,6 @@ module.exports = class extends Generator {
 
   install() {
     this.yarnInstall([
-      'react',
-      'react-dom'
-    ]);
-    this.yarnInstall([
       'nodemailer'
     ], {dev: true});
   }
