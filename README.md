@@ -1,5 +1,7 @@
 # generator-cat [![NPM version][npm-image]][npm-url]
 
+You can use this to build a website, a server or both of them.
+
 ![icon](http://hsuting.github.io/img/icon.svg)
 
 ## Installation
@@ -18,6 +20,23 @@ yo cat
 ```
 
 ## Subgenerator
+- Except for `add` and `test`, those of subgenerator will be controled by `plugins` in `.yo-rc.json`.
+- `babel`: use to set setting of `babel`.
+  - This will be different when plugins have `react` or `graphql`.
+- `bin`: use to add bin files.
+  - This will add something when some plugins are included.
+- `eslint`: use to add setting of `eslint`.
+- `npm`: use to add `.npmignore`.
+- `react`: use to install plugins of `react`.
+- `readme`: use to add default `README.md`.
+- `server`: use to add server.
+  - This server use `koa` and add some middleware of `koa`.
+  - If `graphql` is include in plugins, it will also make a `graphql` server.
+- `template`: use to add default template.
+  - This is a template of `nunjucks`.
+- `webpack`: use to add setting of `webpack`.
+  - This will be deifferent when plugins have `redux`, `router` or `graphql`.
+  - This use `webpack 2`.
 - `add`: use to add new files.
   - `component`: add default component and js of `react`.
   - `reducer`: add default reducer and action of `redux`.
@@ -30,6 +49,7 @@ yo cat
   - `imgResize`: add function to do resize image for meeting this size of the parentNode.
   - `firebase`: add default `firebase` with `nodejs`.
 - `test`: use to add test framework.
+  - This use `istanbul` and `mocha`.
 
 ## Getting To Know Yeoman
 
