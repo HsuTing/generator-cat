@@ -1,7 +1,6 @@
 'use strict';
 
 import nodemailer from 'nodemailer';
-import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 
 const transporter = nodemailer.createTransport({
@@ -14,18 +13,18 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const mailOptions = {
-  from: `<${process.env.email}>`,
-  to: '',
-  subject: 'test',
-  html: renderToStaticMarkup(
-    <div>hello world</div>
-  )
+export default options => {
+  transporter.sendMail({
+    from: `<${process.env.email}>`,
+    to: options.recipient,
+    subject: options.subject,
+    html: renderToStaticMarkup(
+      options.content
+    )
+  }, (error, info) => {
+    if(error)
+      return console.log(error);
+
+    console.log('Message sent: ' + info.response);
+  });
 };
-
-transporter.sendMail(mailOptions, (error, info) => {
-  if(error)
-    return console.log(error);
-
-  console.log('Message sent: ' + info.response);
-});
