@@ -20,7 +20,7 @@ yo cat
 ```
 
 ## Subgenerator
-- Except for `add` and `test`, those of subgenerator will be controled by `plugins` in `.yo-rc.json`.
+- Those of subgenerator will be controled by `plugins` in `.yo-rc.json`.
 - `babel`: use to set setting of `babel`.
   - This will be different when plugins have `react` or `graphql`.
 - `bin`: use to add bin files.
