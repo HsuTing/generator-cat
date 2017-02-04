@@ -47,7 +47,7 @@ module.exports = class extends Generator {
       default: '',
       when: !this.props.extension,
       filter: function(words) {
-        return words === '' ? false : words
+        return words === '' ? '' : `${words}/`;
       }
     }, {
       type: 'checkbox',
@@ -90,6 +90,18 @@ module.exports = class extends Generator {
       this.templatePath('template.html'),
       this.destinationPath('views/template.html'),
       this.props
+    )
+
+    this.fs.copy(
+      this.templatePath('favicon'),
+      this.destinationPath('public/favicon')
+    )
+
+    this.fs.copyTpl(
+      this.templatePath('manifest.json'),
+      this.destinationPath('public/favicon/manifest.json'), {
+        extension: this.props.extension
+      }
     )
   }
 

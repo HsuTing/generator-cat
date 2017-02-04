@@ -34,6 +34,7 @@ yo cat
   - If `graphql` is include in plugins, it will also make a `graphql` server.
 - `template`: use to add default template.
   - This is a template of `nunjucks`.
+  - This will add favions for all platform.
 - `webpack`: use to add setting of `webpack`.
   - This will be deifferent when plugins have `redux`, `router` or `graphql`.
   - This use `webpack 2`.
