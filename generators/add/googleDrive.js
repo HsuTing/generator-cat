@@ -37,6 +37,15 @@ module.exports = class extends Generator {
       );
   }
 
+  install() {
+    if(this.props.plugins.indexOf('node') !== -1)
+      this.yarnInstall([
+        'readline',
+        'googleapis',
+        'google-auth-library'
+      ], {dev: true});
+  }
+
   end() {
     this.log(chalk.red('You need to add "https://apis.google.com/js/api.js" to html.'));
   }
