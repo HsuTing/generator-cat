@@ -40,7 +40,8 @@ module.exports = class extends Generator {
         'nodemailer',
         'sqlite3',
         'imgResize',
-        'firebase'
+        'firebase',
+        'googleDrive'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);
