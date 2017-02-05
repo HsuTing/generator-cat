@@ -41,7 +41,8 @@ module.exports = class extends Generator {
         'sqlite3',
         'imgResize',
         'firebase',
-        'googleDrive'
+        'googleDrive',
+        'allpay'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);

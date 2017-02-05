@@ -8,14 +8,14 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.email,
-    pass: process.env.password
+    user: process.env.MAIL_EMAIL,
+    pass: process.env.MAIL_PASSWORD
   }
 });
 
 export default options => {
   transporter.sendMail({
-    from: `<${process.env.email}>`,
+    from: `<${process.env.MAIL_EMAIL}>`,
     to: options.recipient,
     subject: options.subject,
     html: renderToStaticMarkup(
