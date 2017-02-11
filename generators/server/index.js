@@ -27,7 +27,7 @@ module.exports = class extends Generator {
     const pkg = extend({
       scripts: {
         'test-server': 'nodemon ./lib/server.js',
-        start: 'NODE_ENV=production node ./lib/server.js'
+        start: 'NODE_ENV=production sudo node ./lib/server.js'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
