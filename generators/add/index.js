@@ -37,13 +37,7 @@ module.exports = class extends Generator {
         'router',
         'schema',
         'relay',
-        'nodemailer',
-        'sqlite3',
-        'imgResize',
-        'firebase',
-        'googleDrive',
-        'allpay',
-        'paypal'
+        'sqlite3'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);

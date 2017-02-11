@@ -6,13 +6,13 @@ module.exports = class extends Generator {
   writing() {
     this.fs.copy(
       this.templatePath('sqlite3.js'),
-      this.destinationPath('src/utils/sqlite3.js')
+      this.destinationPath('bin/sqlite3.js')
     );
   }
 
   install() {
     this.yarnInstall([
-      'sqlite3'
+      'cat-utils'
     ], {dev: true});
   }
 };

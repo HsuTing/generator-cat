@@ -3,13 +3,13 @@
   "env": {
     "graphql": {
       "plugins": [
-        "cat-graphql/lib/babelRelayPlugin"
+        "cat-graphql"
       ]
     }<%= react ? ',' : '' %>
 <% if(react) { -%>
     "async": {
       "plugins": [
-        "cat-graphql/lib/babelRelayPlugin",
+        "cat-graphql",
         ["transform-runtime", {
           "polyfill": false,
           "regenerator": true
