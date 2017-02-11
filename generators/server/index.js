@@ -49,24 +49,11 @@ module.exports = class extends Generator {
       }
     );
 
-    if(this.props.plugins.indexOf('react') !== -1)
-      this.fs.copy(
-        this.templatePath('middleware/react.js'),
-        this.destinationPath('src/middleware/react.js')
-      );
-
-    if(this.props.plugins.indexOf('graphql') !== -1) {
+    if(this.props.plugins.indexOf('graphql') !== -1)
       this.fs.copy(
         this.templatePath('schema.js'),
         this.destinationPath('src/schemas/schema.js')
       );
-
-      if(this.props.plugins.indexOf('react') !== -1)
-        this.fs.copy(
-          this.templatePath('middleware/relay.js'),
-          this.destinationPath('src/middleware/relay.js')
-        );
-    }
   }
 
   install() {
@@ -82,13 +69,16 @@ module.exports = class extends Generator {
       'nodemon'
     ];
 
-    if(this.props.plugins.indexOf('react') !== -1)
+    if(this.props.plugins.indexOf('react') !== -1) {
       modules.push(
         'koa-static@next',
-        'koa-views@next',
         'koa-html-minifier',
         'nunjucks'
       );
+
+      if(this.props.plugins.indexOf('graphql') === -1)
+        modules.push('cat-middleware');
+    }
 
     if(this.props.plugins.indexOf('graphql') !== -1) {
       modules.push(
@@ -99,7 +89,8 @@ module.exports = class extends Generator {
 
       if(this.props.plugins.indexOf('react') !== -1)
         modules.push(
-          'isomorphic-relay'
+          'isomorphic-relay',
+          'cat-middleware'
         );
     }
 

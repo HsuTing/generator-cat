@@ -10,21 +10,15 @@ module.exports = class extends Generator {
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        graphql: 'rm -rf ./lib/schemas && babel src/schemas --out-dir lib/schemas && node ./bin/graphql.js'
+        graphql: 'rm -rf ./lib/schemas && babel src/schemas --out-dir lib/schemas && build-graphql ./lib/schemas/schema'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-
-    // files
-    this.fs.copy(
-      this.templatePath('graphql.js'),
-      this.destinationPath('bin/graphql.js')
-    );
   }
 
   install() {
     this.yarnInstall([
-      'graphql'
+      'cat-graphql'
     ], {dev: true});
   }
 };

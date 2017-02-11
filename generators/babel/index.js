@@ -57,13 +57,6 @@ module.exports = class extends Generator {
         ))
       }
     );
-
-    // graphql
-    if(graphql)
-      this.fs.copy(
-        this.templatePath('plugins/babelRelayPlugin.js'),
-        this.destinationPath('plugins/babelRelayPlugin.js')
-      );
   }
 
   install() {
@@ -86,7 +79,10 @@ module.exports = class extends Generator {
       modules.push('babel-relay-plugin');
 
       if(this.props.plugins.indexOf('react') !== -1)
-        modules.push('babel-plugin-transform-runtime');
+        modules.push(
+          'cat-graphql',
+          'babel-plugin-transform-runtime'
+        );
     }
 
     this.yarnInstall(modules, {dev: true});

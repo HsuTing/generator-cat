@@ -50,7 +50,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('relay/public.js'),
-      this.destinationPath(`src/public/${relayName}.js`), {
+      this.destinationPath(`src/public/${relayName.toLowerCase()}.js`), {
         name: relayName
       }
     );

@@ -10,10 +10,10 @@ import body from 'koa-body';
 import Router from 'koa-better-router';
 <% if(website) { -%>
 <% if(graphql) { -%>
-import relay from 'middleware/relay';
+import relay from 'cat-middleware/lib/koa-relay';
 import index from 'containers/index';
 <% } else { -%>
-import react from 'middleware/react';
+import react from 'cat-middleware/lib/koa-react';
 import Index from 'components/Index';
 <% } -%>
 <% } -%>
@@ -36,14 +36,10 @@ router.get('/', body(), relay({
 }));
 <% } else { -%>
 router.get('/', body(), react({
-  component: Index
-}), ctx => {
-  return ctx.render('template.html', {
-    js: 'index',
-    content: ctx.react,
-    ENV
-  });
-});
+  component: Index,
+  js: 'index',
+  ENV
+}));
 <% } -%>
 <% } else { -%>
 router.get('/', body(), ctx => {

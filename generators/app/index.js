@@ -151,8 +151,8 @@ module.exports = generator.extend({
 
       if(this.props.plugins.indexOf('react') !== -1) {
         if(this.props.plugins.indexOf('websiteNoServer') !== -1) {
-          build.push('yarn static');
-          prod.push('yarn static');
+          build.push('yarn static static.config.js');
+          prod.push('yarn static static.config.js');
         }
 
         prod.push('yarn webpack')
@@ -217,6 +217,7 @@ module.exports = generator.extend({
       this.composeWith(require.resolve('./../add'), {
         item: 'schema'
       });
+      this.composeWith(require.resolve('./../graphql'));
     },
 
     server: function() {
@@ -243,7 +244,6 @@ module.exports = generator.extend({
 
       this.composeWith(require.resolve('./../babel'));
       this.composeWith(require.resolve('./../eslint'));
-      this.composeWith(require.resolve('./../bin'));
       this.composeWith(require.resolve('./../readme'));
     }
   },
@@ -258,6 +258,16 @@ module.exports = generator.extend({
       this.fs.copy(
         this.templatePath('gitignore'),
         this.destinationPath('.gitignore')
+      );
+    },
+
+    static: function() {
+      if(this.props.plugins.indexOf('websiteNoServer') === -1)
+        return;
+
+      this.fs.copy(
+        this.templatePath('static.config.js'),
+        this.destinationPath('static.config.js')
       );
     }
   },

@@ -58,24 +58,14 @@ module.exports = class extends Generator {
 
   writing() {
     this.fs.copy(
-      this.templatePath('Wrapper.js'),
-      this.destinationPath('src/components/share/Wrapper.js')
-    );
-
-    this.fs.copy(
       this.templatePath('Normalize.js'),
       this.destinationPath('src/components/share/Normalize.js')
     );
-
-    if(this.props.plugins.indexOf('router') !== -1)
-      this.fs.copy(
-        this.templatePath('Link.js'),
-        this.destinationPath('src/components/share/Link.js')
-      );
   }
 
   install() {
     const modules = [
+      'cat-components',
       'react',
       'react-dom',
       'radium',

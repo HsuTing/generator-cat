@@ -11,7 +11,6 @@ import etag from 'koa-etag';
 import mount from 'koa-mount';
 <% if(website) { -%>
 import serve from 'koa-static';
-import views from 'koa-views';
 import minify from 'koa-html-minifier';
 <% } -%>
 <% if(graphql) { -%>
@@ -47,13 +46,6 @@ app.use(compress({
 app.use(mount('/public', serve(
   path.resolve(root, 'public')
 )));
-app.use(views(
-  path.resolve(root, 'views'), {
-    map: {
-      html: 'nunjucks'
-    }
-  }
-));
 if(ENV)
   app.use(minify({
     removeComments: true,
