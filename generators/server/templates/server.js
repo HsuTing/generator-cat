@@ -1,6 +1,7 @@
 'use strict';
 
 import fs from 'fs';
+import process from 'process';
 import zlib from 'zlib';
 import path from 'path';
 import Koa from 'koa';
