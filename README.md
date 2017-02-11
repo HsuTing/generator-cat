@@ -45,13 +45,7 @@ yo cat
   - `router`: add default router of `react-router`.
   - `schema`: add default schema of `graphql`.
   - `relay`: add default component, route and js of `react-relay`.
-  - `nodemailer`: add default `nodemailer` with `react`.
   - `sqlite3`: add default `sqlite3`.
-  - `imgResize`: add function to do resize image for meeting this size of the parentNode.
-  - `firebase`: add default `firebase` with `node.js`.
-  - `googleDrive`: add default google drive api with `react` or `node.js`.
-  - `allpay`: add default function of allpay.
-  - `paypal`: add default config about paypal.
 - `test`: use to add test framework.
   - This use `istanbul` and `mocha`.
 
