@@ -23,8 +23,7 @@ yo cat
 - Those of subgenerator will be controled by `plugins` in `.yo-rc.json`.
 - `babel`: use to set setting of `babel`.
   - This will be different when plugins have `react` or `graphql`.
-- `bin`: use to add bin files.
-  - This will add something when some plugins are included.
+- `graphql`: add main `schema`.
 - `eslint`: use to add setting of `eslint`.
 - `npm`: use to add `.npmignore`.
 - `react`: use to install plugins of `react`.
