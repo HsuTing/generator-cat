@@ -3,13 +3,13 @@
   "env": {
     "graphql": {
       "plugins": [
-        "cat-graphql"
+        "cat-graphql/plugins/schema"
       ]
     }<%= react ? ',' : '' %>
 <% if(react) { -%>
     "async": {
       "plugins": [
-        "cat-graphql",
+        "cat-graphql/plugins/schema",
         ["transform-runtime", {
           "polyfill": false,
           "regenerator": true
