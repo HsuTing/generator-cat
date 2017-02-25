@@ -94,6 +94,6 @@ module.exports = class extends Generator {
         );
     }
 
-    this.yarnInstall(modules, {dev: true});
+    this.yarnInstall(modules);
   }
 };

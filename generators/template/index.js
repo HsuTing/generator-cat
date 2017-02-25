@@ -106,6 +106,6 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.yarnInstall('nunjucks', {dev: true});
+    this.yarnInstall('nunjucks');
   }
 };

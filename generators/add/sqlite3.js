@@ -13,6 +13,6 @@ module.exports = class extends Generator {
   install() {
     this.yarnInstall([
       'cat-utils'
-    ], {dev: true});
+    ]);
   }
 };

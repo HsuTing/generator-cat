@@ -25,6 +25,6 @@ module.exports = class extends Generator {
   install() {
     this.yarnInstall([
       'cat-graphql'
-    ], {dev: true});
+    ]);
   }
 };
