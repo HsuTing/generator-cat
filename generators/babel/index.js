@@ -4,9 +4,9 @@ const Generator = require('yeoman-generator');
 const _ = require('lodash');
 const extend = _.merge;
 
-const convertAlias = function(alias) {
+const convertAlias = alias => {
   return Object.keys(alias)
-    .map(function(key) {
+    .map(key => {
       return {
         key: key,
         value: alias[key]
@@ -22,21 +22,18 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const graphql = (
-      this.props.plugins.indexOf('graphql') !== -1 &&
-      this.props.plugins.indexOf('react') !== -1
-    );
+    const relay = this.props.plugins.indexOf('relay') !== -1;
     // pkg
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
         babel: (
-          graphql ?
+          relay ?
           'export BABEL_ENV=async && rm -rf ./lib && babel src --out-dir lib' :
           'rm -rf ./lib && babel src --out-dir lib'
         ),
         'babel:watch': (
-          graphql ?
+          relay ?
           'export BABEL_ENV=async && rm -rf ./lib && babel -w src --out-dir lib' :
           'rm -rf ./lib && babel -w src --out-dir lib'
         )
@@ -48,7 +45,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('babelrc'),
       this.destinationPath('.babelrc'), {
-        graphql: graphql,
+        relay: relay,
         react: this.props.plugins.indexOf('react') !== -1,
         alias: convertAlias(extend(
           this.config.get('alias') || {}, {
@@ -75,16 +72,13 @@ module.exports = class extends Generator {
         'babel-plugin-transform-decorators-legacy'
       );
 
-    if(this.props.plugins.indexOf('graphql') !== -1) {
-      modules.push('babel-relay-plugin');
+    if(this.props.plugins.indexOf('relay') !== -1)
+      modules.push(
+        'cat-graphql',
+        'babel-relay-plugin',
+        'babel-plugin-transform-runtime'
+      );
 
-      if(this.props.plugins.indexOf('react') !== -1)
-        modules.push(
-          'cat-graphql',
-          'babel-plugin-transform-runtime'
-        );
-    }
-
-    this.yarnInstall(modules, {dev: true});
+    this.yarnInstall(modules, this.props.plugins.indexOf('heroku') !== -1 ? {} : {dev: true});
   }
 };

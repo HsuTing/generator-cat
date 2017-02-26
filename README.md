@@ -55,9 +55,6 @@ yo cat
  * Yeoman can be too opinionated at times but is easily convinced not to be.
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
-## Issue
-- [ ] `app` does not use `class extends generator`.
-
 ## License
 
 MIT © [hsuting](hsuting.com)

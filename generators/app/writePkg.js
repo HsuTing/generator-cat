@@ -5,11 +5,12 @@ const extend = _.merge;
 
 module.exports = (props, currentPkg) => {
   // scripts
-  const script = props.graphql ? ['yarn graphql'] : [];
-  const build = script.concat(['yarn babel']);
-  const prod = script.concat(['export NODE_ENV=production', 'yarn babel']);
+  const relay = props.plugins.indexOf('relay') !== -1;
+  const base_script = relay ? ['yarn graphql'] : [];
+  const build = base_script.concat(['yarn babel']);
+  const prod = base_script.concat(['export NODE_ENV=production', 'yarn babel']);
   const watch = [
-    `${props.graphql ? 'export BABEL_ENV=graphql && ' : ''}concurrently -c green`,
+    `${relay ? 'export BABEL_ENV=relay && ' : ''}concurrently -c green`,
     '"yarn lint:watch"',
     '"yarn babel:watch"'
   ];
@@ -24,6 +25,19 @@ module.exports = (props, currentPkg) => {
     watch.push('"yarn webpack-server"')
   }
 
+  // add other script
+  const scripts = {
+    build: build.join(' && '),
+    prod: prod.join(' && '),
+    watch: watch.join(' ')
+  }
+
+  if(props.plugins.indexOf('react') !== -1)
+    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc'
+
+  if(props.plugins.indexOf('heroku') !== -1)
+    scripts['heroku-postbuild'] = 'yarn prod';
+
   // pkg
   const pkg = extend({
     name: _.kebabCase(props.name),
@@ -34,11 +48,7 @@ module.exports = (props, currentPkg) => {
       email: props.authorEmail,
       url: props.authorUrl
     },
-    scripts: {
-      build: build.join(' && '),
-      prod: prod.join(' && '),
-      watch: watch.join(' ')
-    },
+    scripts: scripts,
     main: './lib/index.js',
     keywords: [],
     'pre-commit': [
@@ -46,14 +56,14 @@ module.exports = (props, currentPkg) => {
     ]
   }, currentPkg);
 
-  if(props.gitLink) {
-    pkg.gitLink = props.gitLink;
+  if(props.homepage) {
+    pkg.homepage = props.homepage;
     pkg.repository = {
       type: 'git',
-      url: 'git+' + props.gitLink + '.git'
+      url: 'git+' + props.homepage + '.git'
     };
     pkg.bugs = {
-      ur: props.gitLink + '/issues'
+      ur: props.homepage + '/issues'
     };
   }
 

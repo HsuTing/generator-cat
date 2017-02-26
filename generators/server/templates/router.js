@@ -2,14 +2,14 @@
 
 <% if(website) { -%>
 import process from 'process';
-<% if(graphql) { -%>
+<% if(relay) { -%>
 import Relay from 'react-relay';
 <% } -%>
 <% } -%>
 import body from 'koa-body';
 import Router from 'koa-better-router';
 <% if(website) { -%>
-<% if(graphql) { -%>
+<% if(relay) { -%>
 import relay from 'cat-middleware/lib/koa-relay';
 import index from 'containers/index';
 <% } else { -%>
@@ -21,13 +21,13 @@ import Index from 'components/Index';
 const router = Router().loadMethods();
 <% if(website) { -%>
 const ENV = process.env.NODE_ENV === 'production';
-<% if(graphql) { -%>
+<% if(relay) { -%>
 const graphqlLink = ENV ? 'http://localhost/graphql' : 'http://localhost:8000/graphql';
 <% } -%>
 <% } -%>
 
 <% if(website) { -%>
-<% if(graphql) { -%>
+<% if(relay) { -%>
 router.get('/', body(), relay({
   rootContainerProps: index({input: 'index'}),
   networkLayer: new Relay.DefaultNetworkLayer(graphqlLink),

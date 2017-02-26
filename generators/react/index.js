@@ -81,7 +81,7 @@ module.exports = class extends Generator {
         'react-redux'
       );
 
-    if(this.props.plugins.indexOf('graphql') !== -1)
+    if(this.props.plugins.indexOf('relay') !== -1)
       modules.push(
         'react-relay'
       );

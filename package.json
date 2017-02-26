@@ -23,9 +23,7 @@
   "devDependencies": {
     "eslint": "^3.13.0",
     "eslint-config-google": "^0.7.1",
-    "pre-commit": "^1.2.2",
-    "yeoman-assert": "^2.2.1",
-    "yeoman-test": "^1.6.0"
+    "pre-commit": "^1.2.2"
   },
   "pre-commit": [
     "lint"

@@ -17,5 +17,13 @@ module.exports = (type) => {
       plugins.push('relay');
   }
 
+  [
+    'heroku',
+    'docs'
+  ].forEach(name => {
+    if(type.indexOf(name) !== -1)
+      plugins.push(name);
+  });
+
   return plugins;
 };

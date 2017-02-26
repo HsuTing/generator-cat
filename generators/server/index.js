@@ -27,7 +27,7 @@ module.exports = class extends Generator {
     const pkg = extend({
       scripts: {
         'test-server': 'nodemon ./lib/server.js',
-        start: 'NODE_ENV=production sudo node ./lib/server.js'
+        start: 'NODE_ENV=production node ./lib/server.js'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
@@ -37,14 +37,15 @@ module.exports = class extends Generator {
       this.templatePath('server.js'),
       this.destinationPath('src/server.js'), {
         website: this.props.plugins.indexOf('react') !== -1,
-        graphql: this.props.plugins.indexOf('graphql') !== -1
+        graphql: this.props.plugins.indexOf('graphql') !== -1,
+        heroku: this.props.plugins.indexOf('heroku') !== -1
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('router.js'),
       this.destinationPath('src/router.js'), {
-        graphql: this.props.plugins.indexOf('graphql') !== -1,
+        relay: this.props.plugins.indexOf('relay') !== -1,
         website: this.props.plugins.indexOf('react') !== -1
       }
     );
@@ -69,30 +70,26 @@ module.exports = class extends Generator {
       'nodemon'
     ];
 
-    if(this.props.plugins.indexOf('react') !== -1) {
+    if(this.props.plugins.indexOf('react') !== -1)
       modules.push(
         'koa-static@next',
         'koa-html-minifier',
-        'nunjucks'
+        'nunjucks',
+        'cat-middleware'
       );
 
-      if(this.props.plugins.indexOf('graphql') === -1)
-        modules.push('cat-middleware');
-    }
-
-    if(this.props.plugins.indexOf('graphql') !== -1) {
+    if(this.props.plugins.indexOf('graphql') !== -1)
       modules.push(
         'graphql',
         'koa-convert',
         'koa-graphql'
       );
 
-      if(this.props.plugins.indexOf('react') !== -1)
-        modules.push(
-          'isomorphic-relay',
-          'cat-middleware'
-        );
-    }
+    if(this.props.plugins.indexOf('relay') !== -1)
+      modules.push(
+        'isomorphic-relay',
+        'cat-middleware'
+      );
 
     this.yarnInstall(modules);
   }

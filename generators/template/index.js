@@ -46,7 +46,7 @@ module.exports = class extends Generator {
       message: 'Extension of static file link',
       default: '',
       when: !this.props.extension,
-      filter: function(words) {
+      filter: words => {
         return words === '' ? '' : `${words}/`;
       }
     }, {

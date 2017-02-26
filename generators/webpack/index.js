@@ -12,13 +12,13 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const graphql = this.props.plugins.indexOf('graphql') !== -1;
+    const relay = this.props.plugins.indexOf('relay') !== -1;
     // pkg
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        'webpack-server': `${graphql ? 'export BABEL_ENV=graphql && ': ''}webpack-dev-server --content-base src --hot --inline`,
-        webpack: `${graphql ? 'export BABEL_ENV=graphql && ': ''}NODE_ENV=production webpack`
+        'webpack-server': `${relay ? 'export BABEL_ENV=relay && ': ''}webpack-dev-server --content-base src --hot --inline`,
+        webpack: `${relay ? 'export BABEL_ENV=relay && ': ''}NODE_ENV=production webpack`
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
@@ -27,7 +27,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'), {
-        graphql: this.props.plugins.indexOf('graphql') !== -1,
+        relay: this.props.plugins.indexOf('relay') !== -1,
         router: this.props.plugins.indexOf('router') !== -1,
         redux: this.props.plugins.indexOf('redux') !== -1
       }
@@ -39,6 +39,6 @@ module.exports = class extends Generator {
       'webpack',
       'webpack-dev-server',
       'babel-loader'
-    ]);
+    ], this.props.plugins.indexOf('heroku') !== -1 ? {} : {dev: true});
   }
 };

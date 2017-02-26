@@ -1,12 +1,11 @@
 {
-<% if(graphql) { -%>
+<% if(relay) { -%>
   "env": {
-    "graphql": {
+    "relay": {
       "plugins": [
         "cat-graphql/plugins/schema"
       ]
-    }<%= react ? ',' : '' %>
-<% if(react) { -%>
+    },
     "async": {
       "plugins": [
         "cat-graphql/plugins/schema",
@@ -16,7 +15,6 @@
         }]
       ]
     }
-<% } -%>
   },
 <% } -%>
   "presets": [

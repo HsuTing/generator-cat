@@ -49,17 +49,18 @@ module.exports = class extends Generator {
       message: 'Project name',
       default: path.basename(process.cwd()),
       filter: _.kebabCase,
-      validate: function(str) {
+      validate: str => {
         return str.length > 0;
-      }
+      },
+      when: !this.props.name
     }, {
       name: 'description',
       message: 'Description',
       when: !this.props.description
     }, {
-      name: 'gitLink',
+      name: 'homepage',
       message: 'Github url',
-      when: !this.props.gitLink
+      when: !this.props.homepage
     }, {
       name: 'authorName',
       message: 'Author\'s Name',
@@ -81,7 +82,7 @@ module.exports = class extends Generator {
       name: 'keywords',
       message: 'Package keywords (comma to split)',
       when: !this.pkg.keywords,
-      filter: function(words) {
+      filter: words => {
         return words.split(/\s*,\s*/g);
       }
     }, {
@@ -92,9 +93,18 @@ module.exports = class extends Generator {
         'website',
         'server',
         'graphql',
-        'npm'
+        'npm',
+        'heroku',
+        'docs'
       ],
-      store: true
+      store: true,
+      validate: choices => {
+        return !(
+          choices.indexOf('website') !== -1 &&
+          choices.indexOf('server') === -1 &&
+          choices.indexOf('graphql') !== -1
+        );
+      }
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this))
@@ -119,16 +129,17 @@ module.exports = class extends Generator {
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
       this.composeWith(require.resolve('./../add'), {
-        item: this.props.plugins.indexOf('graphql') === -1 ? 'component' : 'relay'
+        item: this.props.plugins.indexOf('relay') === -1 ? 'component' : 'relay'
       });
     }
 
-    if(this.props.plugins.indexOf('graphql') !== -1) {
+    if(this.props.plugins.indexOf('graphql') !== -1)
       this.composeWith(require.resolve('./../add'), {
         item: 'schema'
       });
+
+    if(this.props.plugins.indexOf('relay') !== -1)
       this.composeWith(require.resolve('./../graphql'));
-    }
 
     if(this.props.type.indexOf('server') !== -1)
       this.composeWith(require.resolve('./../server'));
@@ -164,9 +175,11 @@ module.exports = class extends Generator {
 
     // static
     if(this.props.plugins.indexOf('websiteNoServer') !== -1)
-      this.fs.copy(
+      this.fs.copyTpl(
         this.templatePath('static.config.js'),
-        this.destinationPath('static.config.js')
+        this.destinationPath('static.config.js'), {
+          docs: this.props.plugins.indexOf('docs') !== -1
+        }
       );
   }
 
@@ -178,7 +191,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    if(!this.options.skipInstall)
+    if(!this.options.skipInstall && this.props.type.length !== 0)
       this.spawnCommand('yarn', ['build']);
 
     this.log(yosay(

@@ -11,7 +11,7 @@ module.exports = {
   entry: {
     index: path.resolve(src, './index.js'),
     common: [
-<% if(graphql) { -%>
+<% if(relay) { -%>
       'react-relay',
 <% } -%>
 <% if(router) { -%>
