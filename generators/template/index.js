@@ -15,7 +15,8 @@ module.exports = class extends Generator {
       subject: this.config.get('subject'),
       url: this.config.get('url'),
       extension: this.config.get('extension'),
-      author: pkg.author
+      author: pkg.author,
+      plugins: this.config.get('plugins') || []
     };
 
     if(_.isString(pkg.author)) {
@@ -94,12 +95,12 @@ module.exports = class extends Generator {
 
     this.fs.copy(
       this.templatePath('favicon'),
-      this.destinationPath('public/favicon')
+      this.destinationPath(`${this.props.plugins.indexOf('docs') !== -1 ? 'docs/' : ''}public/favicon`)
     )
 
     this.fs.copyTpl(
       this.templatePath('manifest.json'),
-      this.destinationPath('public/favicon/manifest.json'), {
+      this.destinationPath(`${this.props.plugins.indexOf('docs') !== -1 ? 'docs/' : ''}public/favicon/manifest.json`), {
         extension: this.props.extension
       }
     )
