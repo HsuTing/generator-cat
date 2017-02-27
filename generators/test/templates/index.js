@@ -2,9 +2,9 @@
 
 const should = require('should');
 
-describe('test', function() {
-  describe('#first', function() {
-    it('should be equal to "test"', function() {
+describe('test', () => {
+  describe('#first', () => {
+    it('should be equal to "test"', () => {
       ('test').should.equal('test');
     });
   });
