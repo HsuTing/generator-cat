@@ -2,9 +2,10 @@
 'use strict';
 
 const db = require('cat-utils/lib/sqlite').default;
+const create = require('cat-utils/lib/sqlite').create;
 
 db.serialize(() => {
-  db.run(`CREATE TABLE example (id TEXT)`);
+  create('example', {id: 'TEXT'}, err => console.log(err));
 });
 
 db.close();
