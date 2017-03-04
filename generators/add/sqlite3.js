@@ -12,7 +12,8 @@ module.exports = class extends Generator {
 
   install() {
     this.yarnInstall([
-      'cat-utils'
+      'cat-utils',
+      'sqlite3'
     ]);
   }
 };

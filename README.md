@@ -44,7 +44,7 @@ yo cat
   - `router`: add default router of `react-router`.
   - `schema`: add default schema of `graphql`.
   - `relay`: add default component, route and js of `react-relay`.
-  - `sqlite3`: add default `sqlite3`.
+  - `sqlite3`: add bin of `sqlite3` to build default data.
 - `test`: use to add test framework.
   - This use `istanbul` and `mocha`.
 

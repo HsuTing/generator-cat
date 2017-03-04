@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 'use strict';
 
-const db = require('cat-utils/lib/sqlite').default;
-const create = require('cat-utils/lib/sqlite').create;
+const sqlite = require('cat-utils/lib/sqlite').default;
 
-db.serialize(() => {
-  create('example', {id: 'TEXT'}, err => console.log(err));
+const db = new sqlite();
+
+db.sqlite.serialize(() => {
+  db.create('example', {id: 'TEXT'})
+    .then(() => {
+      db.insert('test', {
+        id: '\'0\''
+      });
+    })
+    .cathc(err => {});
 });
-
-db.close();
