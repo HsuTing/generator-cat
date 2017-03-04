@@ -4,6 +4,5 @@ node_modules
 .eslintcache
 *.log
 coverage
-schema.*
 .ignore
 lib
