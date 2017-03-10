@@ -21,7 +21,7 @@
 <% if(react) { -%>
     "react",
 <% } -%>
-    "latest",
+    "env",
     "stage-0"
   ],
   "plugins": [

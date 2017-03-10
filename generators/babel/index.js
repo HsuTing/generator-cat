@@ -62,7 +62,7 @@ module.exports = class extends Generator {
       'babel-core',
       'babel-plugin-transform-object-assign',
       'babel-plugin-module-resolver',
-      'babel-preset-latest',
+      'babel-preset-env',
       'babel-preset-stage-0'
     ];
 
