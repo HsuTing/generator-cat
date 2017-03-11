@@ -45,6 +45,8 @@ yo cat
   - `schema`: add default schema of `graphql`.
   - `relay`: add default component, route and js of `react-relay`.
   - `sqlite3`: add bin of `sqlite3` to build default data.
+  - `fb-bot`: template of `fb bot` with `cat-middleware`.
+  - `line-bot`: template of `line bot` with `cat-middleware`.
 - `test`: use to add test framework.
   - This use `istanbul` and `mocha`.
 

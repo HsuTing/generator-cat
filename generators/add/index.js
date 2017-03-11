@@ -37,7 +37,9 @@ module.exports = class extends Generator {
         'router',
         'schema',
         'relay',
-        'sqlite3'
+        'sqlite3',
+        'fb-bot',
+        'line-bot'
       ]
     }]).then(function(props) {
       this.props = extend(this.props, props);
