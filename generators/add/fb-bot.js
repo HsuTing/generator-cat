@@ -17,7 +17,8 @@ module.exports = class extends Generator {
 
   install() {
     this.yarnInstall([
-      'cat-middleware'
+      'cat-middleware',
+      'request'
     ]);
   }
 };
