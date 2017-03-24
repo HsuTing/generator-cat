@@ -63,8 +63,9 @@ app.use(mount('/graphql', convert(graphql({
   graphiql: !ENV,
   pretty: !ENV,
   formatError: error => {
+    console.log(error);
     if(!ENV)
-      console.log(error);
+      return error;
   }
 }))));
 <% } -%>
