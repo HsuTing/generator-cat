@@ -188,10 +188,18 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.yarnInstall([
+    const modules = [
       'pre-commit',
       'concurrently'
-    ], {dev: true});
+    ];
+
+    if(this.props.plugins.indexOf('desktop app') !== -1)
+      modules.push(
+        'electron',
+        'electron-packager'
+      );
+
+    this.yarnInstall(modules, {dev: true});
   }
 
   end() {
