@@ -19,6 +19,7 @@ module.exports = (type) => {
 
   [
     'heroku',
+    'desktop app',
     'docs'
   ].forEach(name => {
     if(type.indexOf(name) !== -1)

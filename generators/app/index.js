@@ -95,15 +95,19 @@ module.exports = class extends Generator {
         'graphql',
         'npm',
         'heroku',
+        'desktop app',
         'docs'
       ],
       store: true,
       validate: choices => {
-        return !(
+        return !((
           choices.indexOf('website') !== -1 &&
           choices.indexOf('server') === -1 &&
           choices.indexOf('graphql') !== -1
-        );
+        ) || (
+          choices.indexOf('server') !== -1 &&
+          choices.indexOf('desktop app') !== -1
+        ));
       }
     }]).then(function(props) {
       this.props = extend(this.props, props);

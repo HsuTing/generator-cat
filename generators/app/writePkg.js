@@ -33,10 +33,13 @@ module.exports = (props, currentPkg) => {
   }
 
   if(props.plugins.indexOf('react') !== -1)
-    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc'
+    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc';
 
   if(props.plugins.indexOf('heroku') !== -1)
     scripts['heroku-postbuild'] = 'yarn prod';
+
+  if(props.plugins.indexOf('desktop app') !== -1)
+    scripts['package'] = `electron-packager ./ ${name} --all --overwrite`;
 
   // pkg
   const pkg = extend({
