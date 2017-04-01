@@ -4,17 +4,12 @@ import {
   GraphQLString,
   GraphQLObjectType
 } from 'graphql';
+import {getFields} from 'cat-utils/lib/graphql-utils';
 
 export const dataType = new GraphQLObjectType({
   name: 'data',
-  fields: () => ({
-    clientMutationId: {
-      type: GraphQLString
-    },
-    data: {
-      type: GraphQLString,
-      description: 'data',
-      resolve: root => root.data || ''
-    }
+  fields: () => getFields({
+    clientMutationId: 'mutation id'
+    data: 'data'
   })
 });
