@@ -2,24 +2,11 @@
 
 import {
   GraphQLNonNull,
-  GraphQLObjectType,
   GraphQLString,
   GraphQLInputObjectType
 } from 'graphql';
 
-const dataType = new GraphQLObjectType({
-  name: 'data',
-  fields: () => ({
-    clientMutationId: {
-      type: GraphQLString
-    },
-    data: {
-      type: GraphQLString,
-      description: 'data',
-      resolve: root => root.data || ''
-    }
-  })
-});
+import {dataType} from './data';
 
 const inputType = new GraphQLInputObjectType({
   name: 'input',
@@ -34,18 +21,7 @@ const inputType = new GraphQLInputObjectType({
   })
 });
 
-export const query = {
-  type: dataType,
-  description: '<%= name %> query',
-  args: {
-    input: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  },
-  resolve: () => ({data: 'query'})
-};
-
-export const mutation = {
+export default {
   type: dataType,
   description: '<%= name %> mutation',
   args: {

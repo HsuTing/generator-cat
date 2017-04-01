@@ -39,8 +39,27 @@ module.exports = class extends Generator {
     const schemaName = this.props.schemaName;
 
     this.fs.copyTpl(
-      this.templatePath('schema.js'),
+      this.templatePath('schema/schema.js'),
       this.destinationPath(`src/schemas/${schemaName}.js`), {
+        name: schemaName
+      }
+    );
+
+    this.fs.copy(
+      this.templatePath('schema/data.js'),
+      this.destinationPath(`src/schemas/${schemaName}/data.js`)
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('schema/query.js'),
+      this.destinationPath(`src/schemas/${schemaName}/query.js`), {
+        name: schemaName
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('schema/mutation.js'),
+      this.destinationPath(`src/schemas/${schemaName}/mutation.js`), {
         name: schemaName
       }
     );
