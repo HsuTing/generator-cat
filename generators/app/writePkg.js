@@ -66,7 +66,7 @@ module.exports = (props, currentPkg) => {
       url: 'git+' + props.homepage + '.git'
     };
     pkg.bugs = {
-      ur: props.homepage + '/issues'
+      url: props.homepage + '/issues'
     };
   }
 
