@@ -4,6 +4,7 @@ import React from 'react';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 <% if(redux) { -%>
 import {Provider} from 'react-redux';
+
 import store from 'stores/<%= name %>';
 <% } -%>
 

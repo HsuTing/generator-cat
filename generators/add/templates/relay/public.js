@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 import IsomorphicRelay from 'isomorphic-relay';
 import Wrapper from 'cat-components/lib/Wrapper';
+
 import <%= name.toLowerCase() %> from 'containers/<%= name.toLowerCase() %>';
 
 const environment = new Relay.Environment();

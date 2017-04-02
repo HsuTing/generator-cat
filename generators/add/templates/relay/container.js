@@ -1,6 +1,7 @@
 'use strict';
 
 import Relay from 'react-relay';
+
 import <%= name %> from 'components/<%= name %>';
 
 const Container = Relay.createContainer(<%= name %>, {

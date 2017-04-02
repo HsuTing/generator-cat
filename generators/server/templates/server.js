@@ -17,6 +17,7 @@ import minify from 'koa-html-minifier';
 <% if(graphql) { -%>
 import convert from 'koa-convert';
 import graphql from 'koa-graphql';
+
 import schema from 'schemas/schema';
 <% } -%>
 

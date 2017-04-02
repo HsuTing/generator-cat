@@ -2,6 +2,7 @@
 
 import React from 'react';
 import radium from 'radium';
+
 import Normalize from 'componentsShare/Normalize';
 
 @radium

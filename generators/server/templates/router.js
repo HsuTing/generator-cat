@@ -11,9 +11,11 @@ import Router from 'koa-better-router';
 <% if(website) { -%>
 <% if(relay) { -%>
 import relay from 'cat-middleware/lib/koa-relay';
+
 import index from 'containers/index';
 <% } else { -%>
 import react from 'cat-middleware/lib/koa-react';
+
 import Index from 'components/Index';
 <% } -%>
 <% } -%>

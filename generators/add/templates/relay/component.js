@@ -3,6 +3,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 import radium from 'radium';
+
 import Normalize from 'componentsShare/Normalize';
 
 export class <%= name %>Mutation extends Relay.Mutation {
