@@ -22,7 +22,7 @@ class Route extends Relay.Route {
   };
 
   static queries = {
-    <%= name.toLowerCase() %>: (Component) => Relay.QL`
+    <%= name.toLowerCase() %>: Component => Relay.QL`
       query <%= name.toLowerCase() %>Data {
         <%= name.toLowerCase() %>Query (input: $input) {
           ${Component.getFragment('index')}

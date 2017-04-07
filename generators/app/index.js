@@ -104,9 +104,6 @@ module.exports = class extends Generator {
           choices.indexOf('website') !== -1 &&
           choices.indexOf('server') === -1 &&
           choices.indexOf('graphql') !== -1
-        ) || (
-          choices.indexOf('server') !== -1 &&
-          choices.indexOf('desktop app') !== -1
         ));
       }
     }]).then(function(props) {
