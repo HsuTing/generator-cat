@@ -72,6 +72,6 @@ app.use(mount('/graphql', convert(graphql({
 <% } -%>
 
 // setting
-app.listen(ENV ? <%= heroku ? 'process.env.PORT' : 80 %> : 8000, () => {
+app.listen(ENV ? process.env.PORT : 8000, () => {
   console.log('server start');
 });

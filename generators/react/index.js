@@ -68,6 +68,7 @@ module.exports = class extends Generator {
       'cat-components',
       'react',
       'react-dom',
+      'prop-types',
       'radium',
       'radium-normalize'
     ];

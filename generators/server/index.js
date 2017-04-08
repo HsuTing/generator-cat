@@ -37,8 +37,7 @@ module.exports = class extends Generator {
       this.templatePath('server.js'),
       this.destinationPath('src/server.js'), {
         website: this.props.plugins.indexOf('react') !== -1,
-        graphql: this.props.plugins.indexOf('graphql') !== -1,
-        heroku: this.props.plugins.indexOf('heroku') !== -1
+        graphql: this.props.plugins.indexOf('graphql') !== -1
       }
     );
 
@@ -46,7 +45,8 @@ module.exports = class extends Generator {
       this.templatePath('router.js'),
       this.destinationPath('src/router.js'), {
         relay: this.props.plugins.indexOf('relay') !== -1,
-        website: this.props.plugins.indexOf('react') !== -1
+        website: this.props.plugins.indexOf('react') !== -1,
+        desktop_app: this.props.plugins.indexOf('desktop app') !== -1
       }
     );
 

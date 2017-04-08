@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Relay from 'react-relay';
+import PropTypes from 'prop-types';
 import radium from 'radium';
 
 import Normalize from 'componentsShare/Normalize';
@@ -46,7 +47,7 @@ export class <%= name %>Mutation extends Relay.Mutation {
 @radium
 export default class <%= name %> extends React.Component {
   static propTypes = {
-    relay: React.PropTypes.object.isRequired
+    relay: PropTypes.object.isRequired
   };
 
   constructor(props) {

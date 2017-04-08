@@ -39,7 +39,7 @@ module.exports = (props, currentPkg) => {
     scripts['heroku-postbuild'] = 'yarn prod';
 
   if(props.plugins.indexOf('desktop app') !== -1)
-    scripts['package'] = `electron-packager ./ ${props.name} --all --overwrite`;
+    scripts['package'] = `yarn prod && node ./bin/build-app.js`;
 
   // pkg
   const pkg = extend({
@@ -52,7 +52,7 @@ module.exports = (props, currentPkg) => {
       url: props.authorUrl
     },
     scripts: scripts,
-    main: './lib/index.js',
+    main: props.plugins.indexOf('desktop app') !== -1 ? './index.js' : './lib/index.js',
     keywords: [],
     'pre-commit': [
       'lint'

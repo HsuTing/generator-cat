@@ -104,6 +104,9 @@ module.exports = class extends Generator {
           choices.indexOf('website') !== -1 &&
           choices.indexOf('server') === -1 &&
           choices.indexOf('graphql') !== -1
+        ) || (
+          choices.indexOf('server') === -1 &&
+          choices.indexOf('desktop app') !== -1
         ));
       }
     }]).then(function(props) {
@@ -182,6 +185,25 @@ module.exports = class extends Generator {
           docs: this.props.plugins.indexOf('docs') !== -1
         }
       );
+
+    // desktop app
+    if(this.props.plugins.indexOf('desktop app') !== -1) {
+      this.fs.copyTpl(
+        this.templatePath('electron.js'),
+        this.destinationPath('index.js'), {
+          server: this.props.type.indexOf('server') !== -1,
+          name: this.props.name
+        }
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('electron-build.js'),
+        this.destinationPath('bin/build-app.js'), {
+          authorName: this.props.authorName,
+          name: this.props.name
+        }
+      );
+    }
   }
 
   install() {
@@ -193,7 +215,8 @@ module.exports = class extends Generator {
     if(this.props.plugins.indexOf('desktop app') !== -1)
       modules.push(
         'electron',
-        'electron-packager'
+        'electron-packager',
+        'shelljs'
       );
 
     this.yarnInstall(modules, {dev: true});

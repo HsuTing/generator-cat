@@ -1,5 +1,8 @@
 'use strict';
 
+<% if(desktop_app) { -%>
+import path from 'path';
+<% } -%>
 <% if(website) { -%>
 import process from 'process';
 <% if(relay) { -%>
@@ -24,13 +27,16 @@ const router = Router().loadMethods();
 <% if(website) { -%>
 const ENV = process.env.NODE_ENV === 'production';
 <% if(relay) { -%>
-const graphqlLink = ENV ? 'http://localhost/graphql' : 'http://localhost:8000/graphql';
+const graphqlLink = ENV ? `http://localhost:${process.env.PORT}/graphql` : 'http://localhost:8000/graphql';
 <% } -%>
 <% } -%>
 
 <% if(website) { -%>
 <% if(relay) { -%>
 router.get('/', body(), relay({
+<% if(desktop_app) { -%>
+  root: path.resolve(__dirname, './../views'),
+<% } -%>
   rootContainerProps: index({input: 'index'}),
   networkLayer: new Relay.DefaultNetworkLayer(graphqlLink),
   js: 'index',
@@ -38,9 +44,12 @@ router.get('/', body(), relay({
 }));
 <% } else { -%>
 router.get('/', body(), react({
+<% if(desktop_app) { -%>
+  root: path.resolve(__dirname, './../views'),
+<% } -%>
   component: Index,
   js: 'index',
-  ENV
+  ENV,
 }));
 <% } -%>
 <% } else { -%>
