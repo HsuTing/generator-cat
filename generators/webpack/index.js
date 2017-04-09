@@ -28,9 +28,7 @@ module.exports = class extends Generator {
       this.templatePath('webpack.config.js'),
       this.destinationPath('webpack.config.js'), {
         docs: this.props.plugins.indexOf('docs') !== -1,
-        relay: this.props.plugins.indexOf('relay') !== -1,
-        router: this.props.plugins.indexOf('router') !== -1,
-        redux: this.props.plugins.indexOf('redux') !== -1
+        relay: this.props.plugins.indexOf('relay') !== -1
       }
     );
   }

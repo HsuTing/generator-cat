@@ -1,6 +1,7 @@
 'use strict';
 
 const Generator = require('yeoman-generator');
+const yosay = require('yosay');
 const _ = require('lodash');
 const extend = _.merge;
 
@@ -31,33 +32,46 @@ module.exports = class extends Generator {
       message: 'Name of relay',
       default: 'index',
       filter: _.capitalize
+    }, {
+      name: 'router',
+      message: 'Use react-router',
+      type: 'confirm'
     }]).then(function(props) {
       this.props = extend(this.props, props);
     }.bind(this));
   }
 
   writing() {
-    const relayName = this.props.relayName;
+    const {relayName, router} = this.props;
 
     this.fs.copyTpl(
       this.templatePath('relay/component.js'),
       this.destinationPath(`src/components/${relayName}.js`), {
-        name: relayName
+        name: relayName,
+        router
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('relay/public.js'),
       this.destinationPath(`src/public/${relayName.toLowerCase()}.js`), {
-        name: relayName
+        name: relayName,
+        router
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('relay/container.js'),
       this.destinationPath(`src/containers/${relayName.toLowerCase()}.js`), {
-        name: relayName
+        name: relayName,
+        router
       }
     );
+  }
+
+  end() {
+    this.log(yosay(
+      'Remeber that you need to give `props: {location: req.url, context: {}}` to `rootContainerProps` as query.'
+    ));
   }
 };

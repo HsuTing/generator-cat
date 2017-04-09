@@ -1,10 +1,40 @@
 'use strict';
 
+<% if(router) { -%>
+import React from 'react';
+<% } -%>
 import Relay from 'react-relay';
+<% if(router) { -%>
+import {BrowserRouter, StaticRouter, Route} from 'react-router-dom';
+<% } -%>
 
 import <%= name %> from 'components/<%= name %>';
 
+<% if(router) { -%>
+const routes = (isServer, props) => {
+  const Router = isServer ? StaticRouter : BrowserRouter;
+
+  class <%= name %>Router extends React.Component {
+    render() {
+      return (
+        <Router {...props}>
+          <div>
+            <Route exact path='/' component={<%= name %>}/>
+          </div>
+        </Router>
+      );
+    }
+  }
+
+  return <%= name %>Router;
+};
+<% } -%>
+
+<% if(router) { -%>
+const Container = (isServer, props) => Relay.createContainer(routes(isServer, props), {
+<% } else { -%>
 const Container = Relay.createContainer(<%= name %>, {
+<% } -%>
   fragments: {
     <%= name.toLowerCase() %>: () => Relay.QL`
       fragment on data {
@@ -14,7 +44,7 @@ const Container = Relay.createContainer(<%= name %>, {
   }
 });
 
-class Route extends Relay.Route {
+class <%= name %>Route extends Relay.Route {
   static routeName = '<%= name %>Route';
 
   static paramDefinitions = {
@@ -32,7 +62,18 @@ class Route extends Relay.Route {
   };
 }
 
+<% if(router) { -%>
+export default query => {
+  const {isServer, props, ...<%= name.toLowerCase() %>RouteQuery} = query;
+
+  return {
+    Container: Container(isServer, props),
+    queryConfig: new <%= name %>Route(<%= name.toLowerCase() %>RouteQuery)
+  };
+};
+<% } else { -%>
 export default query => ({
   Container,
-  queryConfig: new Route(query || {})
+  queryConfig: new <%= name %>Route(query || {})
 });
+<% } -%>

@@ -16,37 +16,6 @@ module.exports = class extends Generator {
     };
   }
 
-  prompting() {
-    return this.prompt([{
-      type: 'confirm',
-      name: 'router',
-      message: 'Use react-router',
-      store: true
-    }, {
-      type: 'confirm',
-      name: 'redux',
-      message: 'Use react-redux',
-      store: true
-    }]).then(function(props) {
-      if(props.router && this.props.plugins.indexOf('router') === -1) {
-        this.props.alias = extend(this.props.alias, {
-          containers: 'containers'
-        });
-        this.props.plugins.push('router');
-      }
-
-      if(props.redux && this.props.plugins.indexOf('redux') === -1) {
-        this.props.alias = extend(this.props.alias, {
-          containers: 'containers',
-          reducers: 'reducers',
-          actions: 'actions',
-          stores: 'stores'
-        });
-        this.props.plugins.push('redux');
-      }
-    }.bind(this));
-  }
-
   default() {
     this.config.set('alias', extend(
       this.props.alias,
@@ -72,15 +41,6 @@ module.exports = class extends Generator {
       'radium',
       'radium-normalize'
     ];
-
-    if(this.props.plugins.indexOf('router') !== -1)
-      modules.push('react-router');
-
-    if(this.props.plugins.indexOf('redux') !== -1)
-      modules.push(
-        'redux',
-        'react-redux'
-      );
 
     if(this.props.plugins.indexOf('relay') !== -1)
       modules.push(

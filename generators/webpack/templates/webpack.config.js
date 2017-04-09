@@ -14,15 +14,10 @@ module.exports = {
 <% if(relay) { -%>
       'react-relay',
 <% } -%>
-<% if(router) { -%>
-      'react-router',
-<% } -%>
-<% if(redux) { -%>
-      'redux',
-      'react-redux',
-<% } -%>
+      'cat-components',
       'radium',
       'radium-normalize',
+      'prop-types',
       'react',
       'react-dom'
     ]
