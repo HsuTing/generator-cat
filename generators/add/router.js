@@ -35,4 +35,10 @@ module.exports = class extends Generator {
       }
     );
   }
+
+  install() {
+    this.yarnInstall([
+      'react-router-dom'
+    ]);
+  }
 };

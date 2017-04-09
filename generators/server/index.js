@@ -10,11 +10,6 @@ module.exports = class extends Generator {
       plugins: this.config.get('plugins') || []
     }
 
-    this.config.set('alias', extend({
-      routes: 'routes',
-      middleware: 'middleware'
-    }, this.config.get('alias') || {}));
-
     if(this.props.plugins.indexOf('graphql') !== -1)
       this.config.set('alias', extend({
         schemas: 'schemas'

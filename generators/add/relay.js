@@ -69,6 +69,13 @@ module.exports = class extends Generator {
     );
   }
 
+  install() {
+    if(this.props.router)
+      this.yarnInstall([
+        'react-router-dom'
+      ]);
+  }
+
   end() {
     this.log(yosay(
       'Remeber that you need to give `props: {location: req.url, context: {}}` to `rootContainerProps` as query.'
