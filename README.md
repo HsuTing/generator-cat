@@ -35,7 +35,7 @@ yo cat
   - This is a template of `nunjucks`.
   - This will add favions for all platform.
 - `webpack`: use to add setting of `webpack`.
-  - This will be deifferent when plugins have `redux`, `router` or `graphql`.
+  - This will be deifferent when plugins have `graphql`.
   - This use `webpack 2`.
 - `add`: use to add new files.
   - `component`: add default component and js of `react`.
