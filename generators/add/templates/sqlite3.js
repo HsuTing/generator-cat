@@ -12,5 +12,5 @@ db.sqlite.serialize(() => {
         id: '\'0\''
       });
     })
-    .cathc(err => {});
+    .catch(err => {});
 });

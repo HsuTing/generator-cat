@@ -38,6 +38,7 @@ module.exports = class extends Generator {
         'schema',
         'relay',
         'sqlite3',
+        'postgresql',
         'fb-bot',
         'line-bot'
       ]
