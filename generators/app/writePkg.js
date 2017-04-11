@@ -32,8 +32,12 @@ module.exports = (props, currentPkg) => {
     watch: watch.join(' ')
   }
 
-  if(props.plugins.indexOf('react') !== -1)
+  if(props.plugins.indexOf('react') !== -1) {
     scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc && rm -rf ./node_modules/isomorphic-relay/.babelrc';
+
+    if(props.plugins.indexOf('graphql') !== -1)
+      scripts.postinstall += ' && yarn graphql';
+  }
 
   if(props.plugins.indexOf('heroku') !== -1)
     scripts['heroku-postbuild'] = 'yarn prod';
