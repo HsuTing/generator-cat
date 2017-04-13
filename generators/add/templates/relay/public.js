@@ -16,7 +16,9 @@ const <%= name.toLowerCase() %>Query = {
   input: 'input'
 };
 
-environment.injectNetworkLayer(new Relay.DefaultNetworkLayer('/graphql'));
+environment.injectNetworkLayer(new Relay.DefaultNetworkLayer('/graphql', {
+  credentials: 'same-origin'
+}));
 IsomorphicRelay.injectPreparedData(environment, data); // eslint-disable-line no-undef
 
 (() => {
