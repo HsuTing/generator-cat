@@ -11,7 +11,8 @@ import {BrowserRouter, StaticRouter, Route} from 'react-router-dom';
 import <%= name %> from 'components/<%= name %>';
 
 <% if(router) { -%>
-const routes = (isServer, props) => {
+const routes = options => {
+  const {isServer, props} = options;
   const Router = isServer ? StaticRouter : BrowserRouter;
 
   class <%= name %>Router extends React.Component {
@@ -31,7 +32,7 @@ const routes = (isServer, props) => {
 <% } -%>
 
 <% if(router) { -%>
-const Container = (isServer, props) => Relay.createContainer(routes(isServer, props), {
+const Container = options => Relay.createContainer(routes(options), {
 <% } else { -%>
 const Container = Relay.createContainer(<%= name %>, {
 <% } -%>
@@ -67,7 +68,7 @@ export default query => {
   const {isServer, props, ...<%= name.toLowerCase() %>RouteQuery} = query;
 
   return {
-    Container: Container(isServer, props),
+    Container: Container({isServer, props}),
     queryConfig: new <%= name %>Route(<%= name.toLowerCase() %>RouteQuery)
   };
 };
