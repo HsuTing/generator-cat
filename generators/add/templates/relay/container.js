@@ -2,6 +2,7 @@
 
 <% if(router) { -%>
 import React from 'react';
+import radium from 'radium';
 <% } -%>
 import Relay from 'react-relay';
 <% if(router) { -%>
@@ -15,6 +16,7 @@ const routes = options => {
   const {isServer, props} = options;
   const Router = isServer ? StaticRouter : BrowserRouter;
 
+  @radium
   class <%= name %>Router extends React.Component {
     render() {
       return (
@@ -32,7 +34,7 @@ const routes = options => {
 <% } -%>
 
 <% if(router) { -%>
-const Container = options => Relay.createContainer(routes(options), {
+const container = options => Relay.createContainer(routes(options), {
 <% } else { -%>
 const Container = Relay.createContainer(<%= name %>, {
 <% } -%>
@@ -68,7 +70,7 @@ export default query => {
   const {isServer, props, ...<%= name.toLowerCase() %>RouteQuery} = query;
 
   return {
-    Container: Container({isServer, props}),
+    Container: container({isServer, props}),
     queryConfig: new <%= name %>Route(<%= name.toLowerCase() %>RouteQuery)
   };
 };
