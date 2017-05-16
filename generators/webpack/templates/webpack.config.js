@@ -14,7 +14,6 @@ module.exports = {
 <% if(relay) { -%>
       'react-relay',
 <% } -%>
-      'cat-components',
       'radium',
       'radium-normalize',
       'prop-types',
