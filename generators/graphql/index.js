@@ -10,7 +10,7 @@ module.exports = class extends Generator {
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        graphql: 'rm -rf ./lib/schemas && babel src/schemas --out-dir lib/schemas && build-graphql ./graphql.json'
+        graphql: 'rm -rf ./lib && babel src --out-dir lib --ignore containers,middleware,public && build-graphql ./graphql.json'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
