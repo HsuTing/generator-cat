@@ -2,7 +2,7 @@
 'use strict';
 
 const packager = require('electron-packager');
-const rebuild = require('electron-rebuild');
+const rebuild = require('electron-rebuild').default;
 
 const ignore = [
   'src',
