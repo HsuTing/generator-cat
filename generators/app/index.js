@@ -216,7 +216,7 @@ module.exports = class extends Generator {
       modules.push(
         'electron',
         'electron-packager',
-        'shelljs'
+        'electron-rebuild'
       );
 
     this.yarnInstall(modules, {dev: true});
