@@ -10,7 +10,7 @@ module.exports = class extends Generator {
     const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
     const pkg = extend({
       scripts: {
-        test: 'yarn babel && istanbul cover _mocha -- -R spec test/**/*'
+        test: 'yarn babel && istanbul cover _mocha -- -R spec test/**/*.js'
       }
     }, currentPkg);
     this.fs.writeJSON(this.destinationPath('package.json'), pkg);
