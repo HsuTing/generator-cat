@@ -9,8 +9,10 @@ import morgan from 'koa-morgan';
 import helmet from 'koa-helmet';
 import compress from 'koa-compress';
 import etag from 'koa-etag';
-import mount from 'koa-mount';
 import body from 'koa-body';
+<% if(react || graphql) { -%>
+import mount from 'koa-mount';
+<% } -%>
 <% if(react) { -%>
 import serve from 'koa-static';
 import minify from 'koa-html-minifier';

@@ -11,7 +11,7 @@ module.exports = class extends Base {
       if(!this.config.get('cat'))
         this.composeWith(require.resolve('./../add'), {
           item: this.checkPlugins('relay') ? 'relay' : 'react',
-          name: 'Index'
+          name: 'index'
         });
     }
 
@@ -28,7 +28,8 @@ module.exports = class extends Base {
 
       if(!this.config.get('cat'))
         this.composeWith(require.resolve('./../add'), {
-          item: 'router'
+          item: 'router',
+          name: 'index'
         });
     }
 
@@ -40,7 +41,8 @@ module.exports = class extends Base {
 
       if(!this.config.get('cat'))
         this.composeWith(require.resolve('./../add'), {
-          item: 'test'
+          item: 'test',
+          name: 'index'
         });
     }
 

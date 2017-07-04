@@ -20,13 +20,13 @@ module.exports = class extends Base {
       'koa-body',
       'koa-better-router',
       'koa-morgan',
-      'koa-mount',
       'nodemon'
     ], plugin => {
       switch(plugin) {
         case 'react': return [
           'koa-static',
           'koa-html-minifier',
+          'koa-mount',
           'nunjucks',
           'cat-middleware',
           'react',
@@ -34,9 +34,10 @@ module.exports = class extends Base {
         ];
 
         case 'graphql': return [
-          'graphql',
           'koa-convert',
-          'koa-graphql'
+          'koa-mount',
+          'koa-graphql',
+          'graphql'
         ];
       }
     })
