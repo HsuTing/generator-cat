@@ -4,11 +4,14 @@ const Base = require('./../base');
 
 module.exports = class extends Base {
   initializing() {
-    if(this.checkPlugins('graphql'))
-      this.addAlias({
-        schemas: 'schemas'
-      });
+    const alias = {
+      routers: 'routers'
+    };
 
+    if(this.checkPlugins('graphql'))
+      alias.schemas = 'schemas';
+
+    this.addAlias(alias);
     this.addDependencies([
       'koa',
       'koa-helmet',

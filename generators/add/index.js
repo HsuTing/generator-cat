@@ -33,7 +33,8 @@ module.exports = class extends Base {
       message: 'Choose add items',
       when: this.state.items.length === 0,
       choices: fs.readdirSync(__dirname).filter(file => !(
-        file[0] === '.' || file === 'templates' || file === 'index.js'
+        file[0] === '.' || file === 'templates' ||
+        file === 'index.js' || file === 'needName.js'
       )).map(file => file.replace('.js', ''))
     }]).then(function(state) {
       this.state = extend(this.state, state);

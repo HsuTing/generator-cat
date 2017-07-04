@@ -8,17 +8,21 @@ import Router from 'koa-better-router';
 import React from 'react';
 import reactRender from 'cat-middleware/lib/koa-react-render';
 
-import Index from 'components/Index';
+import <%= componentName %> from 'components/<%= componentName %>';
 <% } -%>
 
-const router = Router().loadMethods();
 <% if(react) { -%>
 const ENV = process.env.NODE_ENV === 'production';
 <% } -%>
+<% if(name.toLowerCase() === 'index') { -%>
+const router = Router().loadMethods();
+<% } else { -%>
+const router = Router({prefix: '/<%= name %>'}).loadMethods();
+<% } -%>
 
 <% if(react) { -%>
-router.get('/', reactRender(<Index />, {
-  js: 'index'
+router.get('/', reactRender(<<%= componentName %> />, {
+  js: '<%= name %>'
   ENV,
 }));
 <% } else { -%>

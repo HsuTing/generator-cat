@@ -2,6 +2,7 @@
 
 import fs from 'fs';
 import process from 'process';
+import path from 'path';
 import zlib from 'zlib';
 import path from 'path';
 import Koa from 'koa';
@@ -21,8 +22,6 @@ import graphql from 'koa-graphql';
 
 import schema from 'schemas/schema';
 <% } -%>
-
-import indexRouter from './router';
 
 const app = new Koa();
 const root = path.resolve(__dirname, './../');
@@ -74,7 +73,15 @@ app.use(mount('/graphql', convert(graphql({
 }))));
 <% } -%>
 
-app.use(IndexRouter.middleware());
+// add router
+fs.readdirSync(path.resolve(__dirname, './routers'))
+  .forEach(router => {
+    app.use(
+      require(
+        `routers/${router.replace('.js')}`
+      ).default.middleware()
+    );
+  });
 
 // setting
 app.listen(ENV ? process.env.PORT : 8000, () => {
