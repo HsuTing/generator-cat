@@ -8,7 +8,7 @@ module.exports = class extends Base {
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
       this.composeWith(require.resolve('./../add'), {
-        item: this.checkPlugins('relay') ? 'component' : 'relay'
+        item: this.checkPlugins('relay') ? 'relay' : 'react'
       });
     }
 
@@ -41,14 +41,7 @@ module.exports = class extends Base {
   writing() {
     this.writeFiles({
       editorconfig: '.editorconfig',
-      gitignore: '.gitignore',
-      'README.md': ['README.md', {
-        name: this.getPkg.name,
-        description: this.getPkg.description,
-        license: this.getPkg.license,
-        authorName: this.getAuthor.name,
-        authorUrl: this.getAuthor.url
-      }]
+      gitignore: '.gitignore'
     });
 
     if(this.checkPlugins('react') && (this.checkPlugins('docs') || this.checkPlugins('desktop app')))
@@ -57,5 +50,9 @@ module.exports = class extends Base {
           docs: this.checkPlugins('docs')
         }]
       });
+  }
+
+  end() {
+    this.composeWith(require.resolve('./readme'));
   }
 }

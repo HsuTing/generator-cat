@@ -15,7 +15,8 @@ module.exports = class extends Base {
   writing() {
     this.writePkgScripts({
       graphql: 'babel src/schemas --out-dir lib/schemas && build-graphql --schema ./lib/schemas/schema.js',
-      relay: 'relay-compiler --src ./src --schema ./schema.graphql'
+      relay: 'relay-compiler --src ./src --schema ./schema.graphql',
+      'relay:watch': 'relay-compiler --src ./src --schema ./schema.graphql --watch'
     });
   }
 

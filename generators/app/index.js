@@ -36,11 +36,6 @@ module.exports = class extends Base {
       validate: str => str.length > 0 ? true : 'Can not empty.',
       when: !this.getPkg.description
     }, {
-      name: 'homepage',
-      message: 'Github url',
-      validate: str => str.length > 0 ? true : 'Can not empty.',
-      when: !this.getPkg.homepage
-    }, {
       name: 'authorName',
       message: 'Author\'s Name',
       when: !this.getAuthor.name,

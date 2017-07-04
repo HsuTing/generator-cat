@@ -15,6 +15,10 @@ module.exports = class extends Base {
     this.writePkgScripts({
       test: 'yarn babel && istanbul cover _mocha -- -R spec test/**/*.js'
     });
+
+    this.writeFiles({
+      'travis.yml': '.travis.yml'
+    });
   }
 
   install() {

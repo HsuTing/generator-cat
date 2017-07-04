@@ -24,6 +24,9 @@ module.exports = (props, currentPkg) => {
     watch.push('"yarn webpack-server"')
   }
 
+  if(props.plugins.includes('relay'))
+    watch.push('"yarn relay:watch"');
+
   const scripts = {
     build: build.join(' && '),
     prod: prod.join(' && '),
@@ -39,7 +42,7 @@ module.exports = (props, currentPkg) => {
   // pkg
   const pkg = extend({
     name: _.kebabCase(props.name),
-    version: '0.0.0',
+    version: '0.1.0',
     description: props.description,
     author: {
       name: props.authorName,
@@ -51,19 +54,16 @@ module.exports = (props, currentPkg) => {
     keywords: props.keywords ? _.uniq(props.keywords.concat(props.keywords)) : [],
     'pre-commit': [
       'lint'
-    ]
-  }, currentPkg);
-
-  if(props.homepage) {
-    pkg.homepage = props.homepage;
-    pkg.repository = {
+    ],
+    homepage: `https://github.com/${props.authorName}/${props.name}`,
+    repository: {
       type: 'git',
-      url: 'git+' + props.homepage + '.git'
-    };
-    pkg.bugs = {
-      url: props.homepage + '/issues'
-    };
-  }
+      url: `get+https://github.com/${props.authorName}/${props.name}.git`
+    },
+    bugs: {
+      url: `https://github.com/${props.authorName}/${props.name}/issues`
+    }
+  }, currentPkg);
 
   return pkg;
 };
