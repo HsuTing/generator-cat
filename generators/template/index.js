@@ -76,7 +76,8 @@ module.exports = class extends Base {
       'template.html': ['views/template.html', extend(this.state, {
         title: pkg.name,
         description: pkg.description,
-        author: this.getAuthor
+        author: this.getAuthor,
+        docs: this.checkPlugins('docs')
       })]
     });
   }
