@@ -127,6 +127,7 @@ module.exports = class extends Base {
     if(!this.options.skipInstall && this.state.chooseType.length !== 0)
       this.spawnCommand('yarn', ['build']);
 
+    this.config.set('cat', true);
     this.log(yosay(
       'Meooooooow~~'
     ));

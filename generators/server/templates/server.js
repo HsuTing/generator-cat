@@ -4,7 +4,6 @@ import fs from 'fs';
 import process from 'process';
 import path from 'path';
 import zlib from 'zlib';
-import path from 'path';
 import Koa from 'koa';
 import morgan from 'koa-morgan';
 import helmet from 'koa-helmet';
@@ -78,7 +77,7 @@ fs.readdirSync(path.resolve(__dirname, './routers'))
   .forEach(router => {
     app.use(
       require(
-        `routers/${router.replace('.js')}`
+        `./routers/${router.replace('.js', '')}`
       ).default.middleware()
     );
   });

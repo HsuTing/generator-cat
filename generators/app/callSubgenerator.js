@@ -7,10 +7,12 @@ module.exports = class extends Base {
     if(this.checkPlugins('react')) {
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
-      this.composeWith(require.resolve('./../add'), {
-        item: this.checkPlugins('relay') ? 'relay' : 'react',
-        name: 'Index'
-      });
+
+      if(!this.config.get('cat'))
+        this.composeWith(require.resolve('./../add'), {
+          item: this.checkPlugins('relay') ? 'relay' : 'react',
+          name: 'Index'
+        });
     }
 
     if(this.checkPlugins('graphql'))
@@ -21,17 +23,25 @@ module.exports = class extends Base {
     if(this.checkPlugins('relay'))
       this.composeWith(require.resolve('./../relay'));
 
-    if(this.checkPlugins('server'))
+    if(this.checkPlugins('server')) {
       this.composeWith(require.resolve('./../server'));
+
+      if(!this.config.get('cat'))
+        this.composeWith(require.resolve('./../add'), {
+          item: 'router'
+        });
+    }
 
     if(this.checkPlugins('npm'))
       this.composeWith(require.resolve('./../npm'));
 
     if(this.checkPlugins('test')) {
       this.composeWith(require.resolve('./../test'));
-      this.composeWith(require.resolve('./../add'), {
-        item: 'test'
-      });
+
+      if(!this.config.get('cat'))
+        this.composeWith(require.resolve('./../add'), {
+          item: 'test'
+        });
     }
 
     // normal subgenerator

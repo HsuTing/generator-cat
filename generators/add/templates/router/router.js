@@ -22,8 +22,8 @@ const router = Router({prefix: '/<%= name %>'}).loadMethods();
 
 <% if(react) { -%>
 router.get('/', reactRender(<<%= componentName %> />, {
-  js: '<%= name %>'
-  ENV,
+  js: '<%= name %>',
+  ENV
 }));
 <% } else { -%>
 router.get('/', ctx => {
