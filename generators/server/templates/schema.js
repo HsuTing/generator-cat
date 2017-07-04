@@ -7,6 +7,7 @@ import {
 
 import * as index from './index';
 
+// TODO modify
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',

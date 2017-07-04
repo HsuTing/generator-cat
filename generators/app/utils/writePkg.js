@@ -5,45 +5,36 @@ const extend = _.merge;
 
 module.exports = (props, currentPkg) => {
   // scripts
-  const relay = props.plugins.indexOf('relay') !== -1;
-  const base_script = relay ? ['yarn graphql'] : [];
+  const base_script = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
   const build = base_script.concat(['yarn babel']);
   const prod = base_script.concat(['export NODE_ENV=production', 'yarn babel']);
   const watch = [
-    `${relay ? 'export BABEL_ENV=relay && ' : ''}concurrently -c green`,
+    'concurrently -c green',
     '"yarn lint:watch"',
     '"yarn babel:watch"'
   ];
 
-  if(props.plugins.indexOf('react') !== -1) {
-    if(props.plugins.indexOf('websiteNoServer') !== -1) {
-      build.push('yarn static static.config.js');
-      prod.push('yarn static static.config.js');
+  if(props.plugins.includes('react')) {
+    if(props.plugins.includes('docs') || props.plugins.includes('desktop app')) {
+      build.push('static static.config.js');
+      prod.push('static static.config.js');
     }
 
     prod.push('yarn webpack')
     watch.push('"yarn webpack-server"')
   }
 
-  // add other script
   const scripts = {
     build: build.join(' && '),
     prod: prod.join(' && '),
     watch: watch.join(' ')
   }
 
-  if(props.plugins.indexOf('react') !== -1) {
-    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc && rm -rf ./node_modules/isomorphic-relay/.babelrc';
+  if(props.plugins.includes('react'))
+    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc';
 
-    if(props.plugins.indexOf('graphql') !== -1)
-      scripts.postinstall += ' && yarn graphql';
-  }
-
-  if(props.plugins.indexOf('heroku') !== -1)
+  if(props.plugins.includes('heroku'))
     scripts['heroku-postbuild'] = 'yarn prod';
-
-  if(props.plugins.indexOf('desktop app') !== -1)
-    scripts['package'] = `yarn prod && node ./bin/build-app.js`;
 
   // pkg
   const pkg = extend({
@@ -55,9 +46,9 @@ module.exports = (props, currentPkg) => {
       email: props.authorEmail,
       url: props.authorUrl
     },
-    scripts: scripts,
-    main: props.plugins.indexOf('desktop app') !== -1 ? './index.js' : './lib/index.js',
-    keywords: [],
+    scripts,
+    main: props.plugins.includes('desktop app') ? './index.js' : './lib/index.js',
+    keywords: props.keywords ? _.uniq(props.keywords.concat(props.keywords)) : [],
     'pre-commit': [
       'lint'
     ]
@@ -73,9 +64,6 @@ module.exports = (props, currentPkg) => {
       url: props.homepage + '/issues'
     };
   }
-
-  if(props.keywords)
-    pkg.keywords = _.uniq(props.keywords.concat(pkg.keywords));
 
   return pkg;
 };

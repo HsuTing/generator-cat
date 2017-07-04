@@ -1,91 +1,64 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-const _ = require('lodash');
-const extend = _.merge;
+const Base = require('./../base');
 
-module.exports = class extends Generator {
+module.exports = class extends Base {
   initializing() {
-    this.props = {
-      plugins: this.config.get('plugins') || []
-    }
-
-    if(this.props.plugins.indexOf('graphql') !== -1)
-      this.config.set('alias', extend({
+    if(this.checkPlugins('graphql'))
+      this.addAlias({
         schemas: 'schemas'
-      }, this.config.get('alias') || {}));
+      });
+
+    this.addDependencies([
+      'koa',
+      'koa-helmet',
+      'koa-compress',
+      'koa-etag',
+      'koa-body',
+      'koa-better-router',
+      'koa-morgan',
+      'koa-mount',
+      'nodemon'
+    ], plugin => {
+      switch(plugin) {
+        case 'react': return [
+          'koa-static',
+          'koa-html-minifier',
+          'nunjucks',
+          'cat-middleware',
+          'react',
+          'react-dom'
+        ];
+
+        case 'graphql': return [
+          'graphql',
+          'koa-convert',
+          'koa-graphql'
+        ];
+      }
+    })
   }
 
   writing() {
-    // pkg
-    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    const pkg = extend({
-      scripts: {
-        'test-server': 'nodemon ./lib/server.js',
-        start: 'NODE_ENV=production node ./lib/server.js'
-      }
-    }, currentPkg);
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    this.writePkgScripts({
+      'test-server': 'nodemon ./lib/server.js',
+      start: 'NODE_ENV=production node ./lib/server.js'
+    });
 
-    // files
-    this.fs.copyTpl(
-      this.templatePath('server.js'),
-      this.destinationPath('src/server.js'), {
-        website: this.props.plugins.indexOf('react') !== -1,
-        graphql: this.props.plugins.indexOf('graphql') !== -1
-      }
-    );
+    this.writeFiles({
+      'server.js': ['src/server.js', {
+        react: this.checkPlugins('react'),
+        graphql: this.checkPlugins('graphql')
+      }]
+    });
 
-    this.fs.copyTpl(
-      this.templatePath('router.js'),
-      this.destinationPath('src/router.js'), {
-        relay: this.props.plugins.indexOf('relay') !== -1,
-        website: this.props.plugins.indexOf('react') !== -1,
-        desktop_app: this.props.plugins.indexOf('desktop app') !== -1
-      }
-    );
-
-    if(this.props.plugins.indexOf('graphql') !== -1)
-      this.fs.copy(
-        this.templatePath('schema.js'),
-        this.destinationPath('src/schemas/schema.js')
-      );
+    if(this.checkPlugins('graphql'))
+      this.writeFiles({
+        'schema.js': 'src/schemas/schema.js'
+      });
   }
 
   install() {
-    const modules = [
-      'koa@next',
-      'koa-helmet',
-      'koa-compress@next',
-      'koa-etag@next',
-      'koa-body@2',
-      'koa-better-router',
-      'koa-morgan',
-      'koa-mount@next',
-      'nodemon'
-    ];
-
-    if(this.props.plugins.indexOf('react') !== -1)
-      modules.push(
-        'koa-static@next',
-        'koa-html-minifier',
-        'nunjucks',
-        'cat-middleware'
-      );
-
-    if(this.props.plugins.indexOf('graphql') !== -1)
-      modules.push(
-        'graphql',
-        'koa-convert',
-        'koa-graphql'
-      );
-
-    if(this.props.plugins.indexOf('relay') !== -1)
-      modules.push(
-        'isomorphic-relay',
-        'cat-middleware'
-      );
-
-    this.yarnInstall(modules);
+    this.addInstall();
   }
 };

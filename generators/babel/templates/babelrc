@@ -1,22 +1,4 @@
 {
-<% if(relay) { -%>
-  "env": {
-    "relay": {
-      "plugins": [
-        "cat-graphql/plugins/schema"
-      ]
-    },
-    "async": {
-      "plugins": [
-        "cat-graphql/plugins/schema",
-        ["transform-runtime", {
-          "polyfill": false,
-          "regenerator": true
-        }]
-      ]
-    }
-  },
-<% } -%>
   "presets": [
 <% if(react) { -%>
     "react",
@@ -25,6 +7,9 @@
     "stage-0"
   ],
   "plugins": [
+<% if(relay) { -%>
+    "relay",
+<% } -%>
 <% if(react) { -%>
     "transform-decorators-legacy",
 <% } -%>
@@ -32,8 +17,8 @@
     ["module-resolver", {
       "root": ["./src"],
       "alias": {
-<% alias.forEach(function(item, index) { -%>
-        "<%= item.key %>": "<%= item.value %>"<% if(index !== alias.length - 1) { %>,<% } %>
+<% Object.keys(alias).forEach((key, index) => { -%>
+        "<%= key %>": "<%= alias[key] %>"<% if(index !== Object.keys(alias).length - 1) { %>,<% } %>
 <% }) -%>
       }
     }]

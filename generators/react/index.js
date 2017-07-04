@@ -1,52 +1,40 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-const _ = require('lodash');
-const extend = _.merge;
+const Base = require('./../base');
 
-module.exports = class extends Generator {
+module.exports = class extends Base {
   initializing() {
-    this.props = {
-      plugins: this.config.get('plugins') || [],
-      alias: {
-        public: 'public',
-        components: 'components',
-        componentsShare: 'components/share'
-      }
-    };
-  }
-
-  default() {
-    this.config.set('alias', extend(
-      this.props.alias,
-      this.config.get('alias') || {}
-    ));
-    this.config.set('plugins', this.props.plugins);
-    this.composeWith(require.resolve('../webpack'));
-  }
-
-  writing() {
-    this.fs.copy(
-      this.templatePath('Normalize.js'),
-      this.destinationPath('src/components/share/Normalize.js')
-    );
-  }
-
-  install() {
-    const modules = [
+    this.addDependencies([
       'cat-components',
       'react',
       'react-dom',
       'prop-types',
       'radium',
       'radium-normalize'
-    ];
+    ], plugin => {
+      switch(plugin) {
+        case 'relay': return ['react-relay'];
+      }
+    });
 
-    if(this.props.plugins.indexOf('relay') !== -1)
-      modules.push(
-        'react-relay'
-      );
+    this.addAlias({
+      public: 'public',
+      components: 'components',
+      componentsShare: 'components/share'
+    });
+  }
 
-    this.yarnInstall(modules);
+  default() {
+    this.composeWith(require.resolve('../webpack'));
+  }
+
+  writing() {
+    this.writeFiles({
+      'Normalize.js': 'src/components/share/Normalize.js'
+    });
+  }
+
+  install() {
+    this.addInstall();
   }
 };

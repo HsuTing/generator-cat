@@ -3,6 +3,7 @@ yarn.lock
 .babelrc
 .editorconfig
 .eslint*
+.travis.yml
 .yo-rc.json
 test
 coverage

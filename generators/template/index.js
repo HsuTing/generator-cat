@@ -1,112 +1,87 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-const parseAuthor = require('parse-author');
 const _ = require('lodash');
 const extend = _.merge;
 
-module.exports = class extends Generator {
+const Base = require('./../base');
+
+module.exports = class extends Base {
   initializing() {
-    const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-
-    this.props = {
-      title: pkg.name,
-      description: pkg.description,
-      subject: this.config.get('subject'),
-      url: this.config.get('url'),
-      extension: this.config.get('extension'),
-      author: pkg.author,
-      plugins: this.config.get('plugins') || []
-    };
-
-    if(_.isString(pkg.author)) {
-      const author = parseAuthor(pkg.author);
-
-      this.props.author = {
-        name: author.name,
-        email: author.email,
-        url: author.url
-      };
-    }
+    this.state = this.config.get('template') || {};
+    this.addDependencies([
+      'nunjucks'
+    ]);
   }
 
   prompting() {
-    const other = ['geo', 'facebook', 'google', 'twitter', 'firebase'];
     return this.prompt([{
       name: 'subject',
       message: 'Subject of this template',
-      when: !this.props.subject,
-      store: true
+      store: true,
+      when: !this.state.subject
     }, {
       name: 'url',
       message: 'Base url of this template',
-      when: !this.props.url,
-      store: true
-    }, {
-      name: 'extension',
-      message: 'Extension of static file link',
-      default: '',
-      when: !this.props.extension,
-      filter: words => {
-        return words === '' ? '' : `${words}/`;
-      }
+      store: true,
+      when: !this.state.url
     }, {
       type: 'checkbox',
-      name: 'other',
-      message: 'Choose other setting of this template',
-      choices: other,
+      name: 'otherSettings',
+      message: 'Choose other settings of this template',
+      choices: [
+        'geo',
+        'facebook',
+        'facebook_api',
+        'google',
+        'google_analytics',
+        'twitter',
+        'firebase'
+      ],
       store: true
-    }]).then(function(props) {
-      this.props = extend(this.props, props);
-      Object.keys(props).forEach(function(name) {
-        if(name === 'other')
-          return;
+    }].concat(
+      require('./geo')(this.state),
+      require('./facebook')(this.state),
+      require('./google')(this.state),
+      require('./twitter')(this.state),
+      require('./firebase')(this.state)
+    )).then(function(state) {
+      const otherSettings = {};
 
-        this.config.set(name, props[name]);
-      }.bind(this));
+      state.otherSettings.forEach(setting => {
+        Object.keys(state).forEach(key => {
+          if((new RegExp(`${setting}-`)).test(key)) {
+            const otherKeys = key.split(/-/);
 
-      other.forEach(function(name) {
-        if(this.props.other.indexOf(name) === -1)
-          this.config.delete(name);
-      }.bind(this));
-    }.bind(this));
-  }
+            if(!otherSettings[otherKeys[0]])
+              otherSettings[otherKeys[0]] = {};
 
-  default() {
-    this.props.other.forEach(function(name) {
-      this.composeWith(require.resolve(`./${name}`));
+            otherSettings[otherKeys[0]][otherKeys[1]] = state[key];
+          }
+        });
+      });
+
+      this.state = extend(this.state, {
+        subject: state.subject,
+        url: state.url,
+        otherSettings: state.otherSettings
+      }, otherSettings);
     }.bind(this));
   }
 
   writing() {
-    this.props = extend(this.props, {
-      geo: this.config.get('geo'),
-      google: this.config.get('google'),
-      facebook: this.config.get('facebook'),
-      twitter: this.config.get('twitter'),
-      firebase: this.config.get('firebase')
+    const pkg = this.getPkg;
+
+    this.config.set('template', this.state);
+    this.writeFiles({
+      'template.html': ['views/template.html', extend(this.state, {
+        title: pkg.name,
+        description: pkg.description,
+        author: this.getAuthor
+      })]
     });
-
-    this.fs.copyTpl(
-      this.templatePath('template.html'),
-      this.destinationPath('views/template.html'),
-      this.props
-    )
-
-    this.fs.copy(
-      this.templatePath('favicon'),
-      this.destinationPath(`${this.props.plugins.indexOf('docs') !== -1 ? 'docs/' : ''}public/favicon`)
-    )
-
-    this.fs.copyTpl(
-      this.templatePath('manifest.json'),
-      this.destinationPath(`${this.props.plugins.indexOf('docs') !== -1 ? 'docs/' : ''}public/favicon/manifest.json`), {
-        extension: this.props.extension
-      }
-    )
   }
 
   install() {
-    this.yarnInstall('nunjucks');
+    this.addInstall();
   }
 };

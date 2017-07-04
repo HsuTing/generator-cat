@@ -1,0 +1,12 @@
+{# include firebase api -#}
+<script src="https://www.gstatic.com/firebasejs/<%= firebase.firebase_version %>/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "<%= firebase.apiKey %>",
+    authDomain: "<%= firebase.authDomain %>",
+    databaseURL: "<%= firebase.databaseURL %>",
+    storageBucket: "<%= firebase.storageBucket %>",
+    messagingSenderId: "<%= firebase.messagingSenderId %>"
+  };
+  firebase.initializeApp(config);
+</script>

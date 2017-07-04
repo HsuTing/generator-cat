@@ -1,23 +1,18 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-
-module.exports = class extends Generator {
-  prompting() {
-    return this.prompt([{
-      name: 'lat',
-      message: 'Latitude of geo tag',
-      store: true
-    }, {
-      name: 'lon',
-      message: 'Longitude of geo tag',
-      store: true
-    }, {
-      name: 'placename',
-      message: 'Placename of geo tag',
-      store: true
-    }]).then(function(props) {
-      this.config.set('geo', props);
-    }.bind(this));
-  }
-};
+module.exports = config => [{
+  name: 'geo-lat',
+  message: 'Latitude of geo tag',
+  store: true,
+  when: require('./utils/when')('geo', config)
+}, {
+  name: 'geo-lon',
+  message: 'Longitude of geo tag',
+  store: true,
+  when: require('./utils/when')('geo', config)
+}, {
+  name: 'geo-placename',
+  message: 'Placename of geo tag',
+  store: true,
+  when: require('./utils/when')('geo', config)
+}];

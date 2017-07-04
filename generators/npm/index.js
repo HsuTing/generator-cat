@@ -1,30 +1,15 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-const _ = require('lodash');
-const extend = _.merge;
+const Base = require('./../base');
 
-module.exports = class extends Generator {
+module.exports = class extends Base {
   writing() {
-    // pkg
-    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    const pkg = extend({
-      main: './lib/index.js',
-      scripts: {
-        prepublish: 'yarn babel'
-      }
-    }, currentPkg);
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+    this.writePkgScripts({
+      prepublish: 'yarn babel'
+    });
 
-    // files
-    this.fs.copy(
-      this.templatePath('npmignore'),
-      this.destinationPath('.npmignore')
-    );
-
-    this.fs.copy(
-      this.templatePath('index.js'),
-      this.destinationPath('src/index.js')
-    );
+    this.writeFiles({
+      npmignore: '.npmignore'
+    });
   }
-};
+}

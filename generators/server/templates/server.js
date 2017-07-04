@@ -10,7 +10,8 @@ import helmet from 'koa-helmet';
 import compress from 'koa-compress';
 import etag from 'koa-etag';
 import mount from 'koa-mount';
-<% if(website) { -%>
+import body from 'koa-body';
+<% if(react) { -%>
 import serve from 'koa-static';
 import minify from 'koa-html-minifier';
 <% } -%>
@@ -21,7 +22,7 @@ import graphql from 'koa-graphql';
 import schema from 'schemas/schema';
 <% } -%>
 
-import router from './router';
+import indexRouter from './router';
 
 const app = new Koa();
 const root = path.resolve(__dirname, './../');
@@ -40,11 +41,13 @@ else
   app.use(morgan('dev'));
 app.use(helmet());
 app.use(etag());
+app.use(body());
 app.use(compress({
   threshold: 2048,
   flush: zlib.Z_SYNC_FLUSH
 }));
-<% if(website) { -%>
+<% if(react) { -%>
+
 app.use(mount('/public', serve(
   path.resolve(root, 'public')
 )));
@@ -57,8 +60,8 @@ if(ENV)
     minifyJS: true
   }));
 <% } -%>
-app.use(router.middleware());
 <% if(graphql) { -%>
+
 app.use(mount('/graphql', convert(graphql({
   schema,
   graphiql: !ENV,
@@ -70,6 +73,8 @@ app.use(mount('/graphql', convert(graphql({
   }
 }))));
 <% } -%>
+
+app.use(IndexRouter.middleware());
 
 // setting
 app.listen(ENV ? process.env.PORT : 8000, () => {

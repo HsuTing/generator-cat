@@ -1,19 +1,13 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-
-module.exports = class extends Generator {
-  prompting() {
-    return this.prompt([{
-      name: 'site',
-      message: 'site of twitter',
-      store: true
-    }, {
-      name: 'creator',
-      message: 'creator of twitter',
-      store: true
-    }]).then(function(props) {
-      this.config.set('twitter', props);
-    }.bind(this));
-  }
-};
+module.exports = config => [{
+  name: 'twitter-site',
+  message: 'site of twitter',
+  store: true,
+  when: require('./utils/when')('twitter', config)
+}, {
+  name: 'twitter-creator',
+  message: 'creator of twitter',
+  store: true,
+  when: require('./utils/when')('twitter', config)
+}];

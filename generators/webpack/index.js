@@ -1,43 +1,31 @@
 'use strict';
 
-const Generator = require('yeoman-generator');
-const _ = require('lodash');
-const extend = _.merge;
+const Base = require('./../base');
 
-module.exports = class extends Generator {
+module.exports = class extends Base {
   initializing() {
-    this.props = {
-      plugins: this.config.get('plugins') || []
-    };
-  }
-
-  writing() {
-    const relay = this.props.plugins.indexOf('relay') !== -1;
-    // pkg
-    const currentPkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-    const pkg = extend({
-      scripts: {
-        'webpack-server': `${relay ? 'export BABEL_ENV=relay && ': ''}webpack-dev-server --content-base src --hot --inline`,
-        webpack: `${relay ? 'export BABEL_ENV=relay && ': ''}NODE_ENV=production webpack`
-      }
-    }, currentPkg);
-    this.fs.writeJSON(this.destinationPath('package.json'), pkg);
-
-    // files
-    this.fs.copyTpl(
-      this.templatePath('webpack.config.js'),
-      this.destinationPath('webpack.config.js'), {
-        docs: this.props.plugins.indexOf('docs') !== -1,
-        relay: this.props.plugins.indexOf('relay') !== -1
-      }
-    );
-  }
-
-  install() {
-    this.yarnInstall([
+    this.addDevDependencies([
       'webpack',
       'webpack-dev-server',
       'babel-loader'
-    ], this.props.plugins.indexOf('heroku') !== -1 ? {} : {dev: true});
+    ]);
   }
-};
+
+  writing() {
+    this.writePkgScripts({
+      'webpack-server': 'webpack-dev-server --content-base src --hot --inline',
+      webpack: 'NODE_ENV=production webpack'
+    });
+
+    this.writeFiles({
+      'webpack.config.js': ['webpack.config.js', {
+        docs: this.checkPlugins('docs'),
+        relay: this.checkPlugins('relay')
+      }]
+    });
+  }
+
+  install() {
+    this.addInstall();
+  }
+}

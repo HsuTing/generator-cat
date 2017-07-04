@@ -1,4 +1,9 @@
 {# Reference: https://github.com/joshbuchea/HEAD -#}
+{% set title='<%= title %>' %}
+{% set description='<%= description %>' %}
+{% set subject='<%= subject %>' %}
+{% set url='<%= url %>' %}
+{% set iconUrl='http://hsuting.github.io/' %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,10 +11,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta name="application-name" content="<%= title %>">
-    <meta name="description" content="<%= description %>">
-    <meta name="subject" content="<%= subject %>">
-    <meta name="url" content="<%= url %>">
+    <meta name="application-name" content="{{ title }}">
+    <meta name="description" content="{{ description }}">
+    <meta name="subject" content="{{ subject }}">
+    <meta name="url" content="{{ url }}">
 
     <meta name="generator" content="program">
     <meta name="rating" content="General">
@@ -18,81 +23,29 @@
     <meta name="robots" content="index,follow,noodp">
     <meta name="googlebot" content="index,follow">
 
-<% if(other.indexOf('geo') !== -1) { -%>
-    {# setting of geo -#}
-    <meta name="ICBM" content="<%= geo.lat %>, <%= geo.lon %>">
-    <meta name="geo.position" content="<%= geo.lat %>;<%= geo.lon %>">
-    <meta name="geo.placename" content="<%= geo.placename %>">
-
+<% if(otherSettings.includes('geo')) { -%>
+<% include geo.html %>
 <% } -%>
-<% if(other.indexOf('google') !== -1) { -%>
-    {# setting of google plus -#}
-    <meta name="google-site-verification" content="<%= google.verification_token %>">
-    <meta itemprop="name" content="<%= title %>">
-    <meta itemprop="description" content="<%= description %>">
-    <meta itemprop="image" content="/<%= extension %>public/favicon/android-icon-192x192.png">
-    <link href="https://plus.google.com/<%= google.publisher %>" rel="publisher">
-
+<% if(otherSettings.includes('google')) { -%>
+<% include google.html %>
 <% } -%>
-<% if(other.indexOf('facebook') !== -1) { -%>
-    {# setting of facebook -#}
-    <meta property="fb:app_id" content="<%= facebook.app_id %>">
-    <meta property="og:url" content="<%= url %>">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="<%= title %>">
-    <meta property="og:image" content="/<%= extension %>public/favicon/android-icon-192x192.png">
-    <meta property="og:description" content="<%= description %>">
-    <meta property="og:site_name" content="<%= title %>">
-
+<% if(otherSettings.includes('facebook')) { -%>
+<% include facebook.html %>
 <% } -%>
-<% if(other.indexOf('twitter') !== -1) { -%>
-    {# setting of twitter -#}
-    <meta name="twitter:card" content="<%= title %>">
-    <meta name="twitter:site" content="@<%= twitter.site %>">
-    <meta name="twitter:creator" content="@<%= twitter.creator %>">
-    <meta name="twitter:url" content="<%= url %>">
-    <meta name="twitter:title" content="<%= title %>">
-    <meta name="twitter:description" content="<%= description %>">
-    <meta name="twitter:image" content="/<%= extension %>public/favicon/android-icon-192x192.png">
-
-<% } -%>
-    <title><%= title %></title>
-<% if(author) { -%>
-
-    {# about author -#}
-    <link rel="author" href="<%= author.url %>/author/">
-    <link rel="copyright" href="<%= author.url %>/copyright/">
-    <link rel="me" href="<%= author.url %>" type="text/html">
-    <link rel="me" href="mailto:<%= author.email %>">
+<% if(otherSettings.includes('twitter')) { -%>
+<% include twitter.html %>
 <% } -%>
 
-    {# link of favicon -#}
-    {# use http://www.favicon-generator.org/ -#}
-    <link rel="apple-touch-icon" sizes="57x57" href="/<%= extension %>public/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/<%= extension %>public/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/<%= extension %>public/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/<%= extension %>public/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/<%= extension %>public/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/<%= extension %>public/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/<%= extension %>public/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/<%= extension %>public/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/<%= extension %>public/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/<%= extension %>public/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/<%= extension %>public/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/<%= extension %>public/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/<%= extension %>public/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/<%= extension %>public/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/<%= extension %>public/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    {% block head %}{% endblock %}
+     <title>{{ title }}</title>
+
+<% include author.html %>
+<% include favicon.html %>
   </head>
 
   <body>
     <main id="root">{{ content | safe }}</main>
-    {% block body %}{% endblock %}
   </body>
-  {% block script %}{% endblock %}
+
   {% if data %}
   <script>
     var data = {{ data | safe }};
@@ -100,61 +53,20 @@
   {% endif %}
 
   {% if ENV %}
-  <script defer src="/<%= extension %>public/js/common.min.js" type="text/javascript"></script>
-  <script defer src="/<%= extension %>public/js/{{ js }}.min.js" type="text/javascript"></script>
+  <script defer src="/public/js/common.min.js" type="text/javascript"></script>
+  <script defer src="/public/js/{{ js }}.min.js" type="text/javascript"></script>
   {% else %}
   <script defer src="http://localhost:8080/webpack-dev-server.js" type="text/javascript"></script>
   <script defer src="http://localhost:8080/assets/common.js" type="text/javascript"></script>
   <script defer src="http://localhost:8080/assets/{{ js }}.js" type="text/javascript"></script>
   {% endif %}
-<% if(other.indexOf('facebook') !== -1) { -%>
-
-  {# include facebook sdk -#}
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId: '<%= facebook.app_id %>',
-        xfbml: true,
-        version: '<%= facebook.version %>'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
+<% if(otherSettings.includes('facebook_api')) { -%>
+<% include facebook-api.html %>
 <% } -%>
-<% if(other.indexOf('google') !== -1) { -%>
-
-  {# include google api -#}
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', '<%= google.id %>', 'auto');
-    ga('send', 'pageview');
-  </script>
+<% if(otherSettings.includes('google_analytics')) { -%>
+<% include google-analytics.html %>
 <% } -%>
-<% if(other.indexOf('firebase') !== -1) { -%>
-
-  {# include firebase api -#}
-  <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
-  <script>
-    var config = {
-      apiKey: "<%= firebase.apiKey %>",
-      authDomain: "<%= firebase.authDomain %>",
-      databaseURL: "<%= firebase.databaseURL %>",
-      storageBucket: "<%= firebase.storageBucket %>",
-      messagingSenderId: "<%= firebase.messagingSenderId %>"
-    };
-    firebase.initializeApp(config);
-  </script>
+<% if(otherSettings.includes('firebase')) { -%>
+<% include firebase.html %>
 <% } -%>
 </html>
