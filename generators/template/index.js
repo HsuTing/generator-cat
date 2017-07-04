@@ -39,11 +39,11 @@ module.exports = class extends Base {
       ],
       store: true
     }].concat(
-      require('./geo')(this.state),
-      require('./facebook')(this.state),
-      require('./google')(this.state),
-      require('./twitter')(this.state),
-      require('./firebase')(this.state)
+      require('./utils/geo')(this.state),
+      require('./utils/facebook')(this.state),
+      require('./utils/google')(this.state),
+      require('./utils/twitter')(this.state),
+      require('./utils/firebase')(this.state)
     )).then(function(state) {
       const otherSettings = {};
 

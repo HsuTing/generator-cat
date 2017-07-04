@@ -65,7 +65,7 @@ module.exports = class extends Base {
       store: true
     }, {
       type: 'list',
-      name: 'type',
+      name: 'chooseType',
       message: 'Choose a type',
       default: 0,
       store: true,
@@ -81,7 +81,7 @@ module.exports = class extends Base {
       message: 'Use graphql',
       default: true,
       store: true,
-      when: ({website, type}) => website || type === 'server'
+      when: ({website, chooseType}) => website || chooseType === 'server'
     }, {
       type: 'checkbox',
       name: 'plugins',
@@ -89,10 +89,10 @@ module.exports = class extends Base {
       store: true,
       choices: ['npm', 'heroku', 'test']
     }]).then(function(state) {
-      const {website, type, graphql, plugins} = state;
+      const {website, chooseType, graphql, plugins} = state;
 
-      if(type !== 'none')
-        plugins.push(type);
+      if(chooseType !== 'none')
+        plugins.push(chooseType);
 
       if(website) {
         plugins.push('react');
@@ -124,7 +124,7 @@ module.exports = class extends Base {
   }
 
   end() {
-    if(!this.options.skipInstall && this.state.type.length !== 0)
+    if(!this.options.skipInstall && this.state.chooseType.length !== 0)
       this.spawnCommand('yarn', ['build']);
 
     this.log(yosay(

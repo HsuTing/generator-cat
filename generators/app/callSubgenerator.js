@@ -8,7 +8,8 @@ module.exports = class extends Base {
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
       this.composeWith(require.resolve('./../add'), {
-        item: this.checkPlugins('relay') ? 'relay' : 'react'
+        item: this.checkPlugins('relay') ? 'relay' : 'react',
+        name: 'Index'
       });
     }
 
@@ -26,12 +27,20 @@ module.exports = class extends Base {
     if(this.checkPlugins('npm'))
       this.composeWith(require.resolve('./../npm'));
 
+    if(this.checkPlugins('test')) {
+      this.composeWith(require.resolve('./../test'));
+      this.composeWith(require.resolve('./../add'), {
+        item: 'test'
+      });
+    }
+
     // normal subgenerator
     if(!this.getPkg.license)
       this.composeWith('generator-license/app', {
         name: this.getAuthor.name,
         email: this.getAuthor.email,
-        website: this.getAuthor.url
+        website: this.getAuthor.url,
+        defaultLicense: 'MIT'
       });
 
     this.composeWith(require.resolve('./../babel'));

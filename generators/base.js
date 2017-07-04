@@ -10,9 +10,6 @@ module.exports = class extends Generator {
     super(args, opts);
 
     this.props = {
-      plugins: this.config.get('plugins') || [],
-      alias: this.config.get('alias') || {},
-      pkg: this.fs.readJSON(this.destinationPath('package.json'), {}),
       dependencies: [],
       devDependencies: []
     }
@@ -31,7 +28,7 @@ module.exports = class extends Generator {
   }
 
   addDependencies(dependencies = [], addFunc = () => {}) {
-    this.props.plugins.forEach(plugin => {
+    this.getPlugins.forEach(plugin => {
       (addFunc(plugin) || []).forEach(newDependencies => {
         dependencies.push(newDependencies);
       });
@@ -40,7 +37,7 @@ module.exports = class extends Generator {
   }
 
   addDevDependencies(devDependencies = [], addFunc = () => {}) {
-    this.props.plugins.forEach(plugin => {
+    this.getPlugins.forEach(plugin => {
       (addFunc(plugin) || []).forEach(newDevDependencies => {
         devDependencies.push(newDevDependencies);
       });
@@ -49,27 +46,31 @@ module.exports = class extends Generator {
   }
 
   checkPlugins(name) {
-    return this.props.plugins.includes(name);
+    return this.getPlugins.includes(name);
   }
 
   addAlias(alias) {
-    this.props.alias = extend(
-      this.props.alias,
+    const newAlias = extend(
+      this.getAlias,
       alias
     );
-    this.config.set('alias', this.props.alias);
+    this.config.set('alias', newAlias);
+  }
+
+  get getPlugins() {
+    return this.config.get('plugins') || [];
   }
 
   get getAlias() {
-    return this.props.alias;
+    return this.config.get('alias') || {};
   }
 
   get getPkg() {
-    return this.props.pkg;
+    return this.fs.readJSON(this.destinationPath('package.json'), {});
   }
 
   get getAuthor() {
-    const {pkg} = this.props;
+    const pkg = this.getPkg;
 
     if(_.isString(pkg.author)) {
       const author = parseAuthor(pkg.author);
