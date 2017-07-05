@@ -21,6 +21,9 @@ module.exports = class extends Base {
     if(this.checkPlugins('test'))
       this.composeWith(require.resolve('./../test'));
 
+    if(this.checkPlugins('desktop app'))
+      this.composeWith(require.resolve('./../desktop-app'));
+
     // normal subgenerator
     if(!this.getPkg.license)
       this.composeWith('generator-license/app', {
@@ -42,9 +45,7 @@ module.exports = class extends Base {
 
     if(this.checkPlugins('react') && (this.checkPlugins('docs') || this.checkPlugins('desktop app')))
       this.writeFiles({
-        'static.config.js': ['static.config.js', {
-          docs: this.checkPlugins('docs')
-        }]
+        'static.config.js': 'static.config.js'
       });
   }
 

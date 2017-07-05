@@ -24,7 +24,7 @@ module.exports = {
   output: {
     filename: ENV ? '[name].min.js' : '[name].js',
     publicPath: '/assets/',
-<% if(docs) { -%>
+<% if(docs || desktop_app) { -%>
     path: path.resolve(__dirname, './docs/public/js')
 <% } else { -%>
     path: path.resolve(__dirname, './public/js')

@@ -19,10 +19,10 @@ class <%= componentName %> extends React.Component {
   }
 }
 
-/* eslint-disable react/display-name */
+/* eslint-disable react/display-name, react/prop-types */
 export default ({radiumConfig}) => (
   <Wrapper radiumConfig={radiumConfig}>
     <<%= componentName %> />
   </Wrapper>
 );
-/* eslint-enable react/display-name */
+/* eslint-enable react/display-name, react/prop-types */

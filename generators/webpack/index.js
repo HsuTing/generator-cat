@@ -20,6 +20,7 @@ module.exports = class extends Base {
     this.writeFiles({
       'webpack.config.js': ['webpack.config.js', {
         docs: this.checkPlugins('docs'),
+        desktop_app: this.checkPlugins('desktop app'),
         relay: this.checkPlugins('relay')
       }]
     });

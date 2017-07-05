@@ -13,6 +13,7 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
+      electron: 'electron ./index.js',
       package: 'yarn prod && node ./bin/build-app.js'
     });
 
