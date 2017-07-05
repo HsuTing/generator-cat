@@ -7,7 +7,7 @@ module.exports = (props, currentPkg) => {
   // scripts
   const base_script = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
   const build = base_script.concat(['yarn babel']);
-  const prod = base_script.concat(['export NODE_ENV=production', 'yarn babel']);
+  const prod = ['export NODE_ENV=production'].concat(base_script).concat(['yarn babel']);
   const watch = [
     'concurrently -c green',
     '"yarn lint:watch"',
