@@ -33,6 +33,14 @@ module.exports = class extends NeedName {
           }]
         });
         break;
+
+      default:
+        this.writeFiles({
+          'test/test.js': [`test/${name}.js`, {
+            name
+          }]
+        });
+        break;
     }
   }
 };
