@@ -12,6 +12,14 @@ module.exports = class extends Base {
     ]);
   }
 
+  default() {
+    if(!this.config.get('cat'))
+      this.composeWith(require.resolve('./../add'), {
+        item: 'relay',
+        name: 'index'
+      });
+  }
+
   writing() {
     this.writePkgScripts({
       graphql: 'babel src/schemas --out-dir lib/schemas && build-graphql --schema ./lib/schemas/schema.js',

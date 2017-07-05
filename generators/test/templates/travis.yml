@@ -2,10 +2,12 @@ language: node_js
 node_js:
   - "node"
 script:
-  - yarn run lint
-  - yarn run test
+  - yarn lint
+  - yarn build
+  - yarn prod
+  - yarn test
 branches:
 only:
-- master
+  - master
 cache:
 yarn: true

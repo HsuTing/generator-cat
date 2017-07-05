@@ -87,12 +87,23 @@ module.exports = class extends Base {
       name: 'plugins',
       message: 'Add other options',
       store: true,
-      choices: ['npm', 'heroku', 'test']
+      choices: ({chooseType, graphql}) => {
+        if(chooseType === 'server' && graphql)
+          return ['npm', 'heroku'];
+
+        return ['npm', 'heroku', 'test'];
+      }
     }]).then(function(state) {
       const {website, chooseType, graphql, plugins} = state;
 
       if(chooseType !== 'none')
         plugins.push(chooseType);
+
+      if(chooseType === 'server' && graphql)
+        plugins.push('test');
+
+      if(graphql)
+        plugins.push('graphql');
 
       if(website) {
         plugins.push('react');

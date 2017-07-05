@@ -25,7 +25,13 @@ module.exports = class extends Base {
   }
 
   default() {
-    this.composeWith(require.resolve('../webpack'));
+    this.composeWith(require.resolve('./../webpack'));
+
+    if(!this.config.get('cat'))
+      this.composeWith(require.resolve('./../add'), {
+        item: 'react',
+        name: 'index'
+      });
   }
 
   writing() {

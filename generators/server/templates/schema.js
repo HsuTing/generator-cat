@@ -1,26 +1,40 @@
 'use strict';
 
+import fs from 'fs';
 import {
   GraphQLSchema,
   GraphQLObjectType
 } from 'graphql';
 
-import * as index from './index';
+let query = {};
+let mutation = {};
 
-// TODO modify
+fs.readdirSync(__dirname)
+  .filter(file => !(file[0] === '.' || file === 'schema.js'))
+  .forEach(file => {
+    const name = file.replace('.js', '');
+    const schema = require(`./${name}`).default || require(`./${name}`);
+
+    query = {
+      ...query,
+      ...schema.query
+    };
+
+    mutation = {
+      ...mutation,
+      ...schema.mutation
+    };
+  });
+
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     description: 'all queries',
-    fields: () => ({
-      indexQuery: index.query
-    })
+    fields: () => query
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     description: 'all mutations',
-    fields: () => ({
-      indexMutation: index.mutation
-    })
+    fields: () => mutation
   })
 });

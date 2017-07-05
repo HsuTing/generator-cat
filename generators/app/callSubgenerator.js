@@ -7,44 +7,19 @@ module.exports = class extends Base {
     if(this.checkPlugins('react')) {
       this.composeWith(require.resolve('./../template'));
       this.composeWith(require.resolve('./../react'));
-
-      if(!this.config.get('cat'))
-        this.composeWith(require.resolve('./../add'), {
-          item: this.checkPlugins('relay') ? 'relay' : 'react',
-          name: 'index'
-        });
     }
-
-    if(this.checkPlugins('graphql'))
-      this.composeWith(require.resolve('./../add'), {
-        item: 'schema'
-      });
 
     if(this.checkPlugins('relay'))
       this.composeWith(require.resolve('./../relay'));
 
-    if(this.checkPlugins('server')) {
+    if(this.checkPlugins('server'))
       this.composeWith(require.resolve('./../server'));
-
-      if(!this.config.get('cat'))
-        this.composeWith(require.resolve('./../add'), {
-          item: 'router',
-          name: 'index'
-        });
-    }
 
     if(this.checkPlugins('npm'))
       this.composeWith(require.resolve('./../npm'));
 
-    if(this.checkPlugins('test')) {
+    if(this.checkPlugins('test'))
       this.composeWith(require.resolve('./../test'));
-
-      if(!this.config.get('cat'))
-        this.composeWith(require.resolve('./../add'), {
-          item: 'test',
-          name: 'index'
-        });
-    }
 
     // normal subgenerator
     if(!this.getPkg.license)

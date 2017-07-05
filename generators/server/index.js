@@ -37,10 +37,26 @@ module.exports = class extends Base {
           'koa-convert',
           'koa-mount',
           'koa-graphql',
-          'graphql'
+          'graphql',
+          'graphql-relay'
         ];
       }
     })
+  }
+
+  default() {
+    if(!this.config.get('cat')) {
+      this.composeWith(require.resolve('./../add'), {
+        item: 'router',
+        name: 'index'
+      });
+
+      if(this.checkPlugins('graphql'))
+        this.composeWith(require.resolve('./../add'), {
+          item: 'schema',
+          name: 'data'
+        });
+    }
   }
 
   writing() {
@@ -58,7 +74,8 @@ module.exports = class extends Base {
 
     if(this.checkPlugins('graphql'))
       this.writeFiles({
-        'schema.js': 'src/schemas/schema.js'
+        'schema.js': 'src/schemas/schema.js',
+        'fields.js': 'src/schemas/fields.js'
       });
   }
 

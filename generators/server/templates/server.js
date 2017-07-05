@@ -77,14 +77,11 @@ app.use(mount('/graphql', convert(graphql({
 // add router
 fs.readdirSync(path.resolve(__dirname, './routers'))
   .forEach(router => {
+    const routerPath = `./routers/${router.replace('.js', '')}`;
     app.use(
-      require(
-        `./routers/${router.replace('.js', '')}`
-      ).default.middleware()
+      (require(routerPath).default || require(routerPath)).middleware()
     );
   });
 
 // setting
-app.listen(ENV ? process.env.PORT : 8000, () => {
-  console.log('server start');
-});
+export default app.listen(ENV ? process.env.PORT : 8000);

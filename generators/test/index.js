@@ -21,6 +21,15 @@ module.exports = class extends Base {
     });
   }
 
+  default() {
+    if(this.checkPlugins('graphql') && !this.config.get('cat'))
+      this.composeWith(require.resolve('./../add'), {
+        item: 'test',
+        name: 'data',
+        type: 'graphql'
+      });
+  }
+
   install() {
     this.addInstall(true);
   }

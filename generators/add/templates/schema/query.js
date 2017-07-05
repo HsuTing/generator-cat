@@ -5,15 +5,16 @@ import {
   GraphQLString
 } from 'graphql';
 
-import {dataType} from './data';
+import dataType from './dataType';
 
 export default {
+  description: 'Get the data of the <%= name %>.',
   type: dataType,
-  description: '<%= name %> query',
   args: {
     input: {
+      description: 'This is the args of the <%= name %>.',
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  resolve: () => ({data: 'query'})
+  resolve: () => ({data: 'query <%= name %>'})
 };
