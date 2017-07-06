@@ -16,7 +16,7 @@ yarn install && yarn build
 - `start`: Run the prodiction version server.
 - `test-server`: Run the test server with `nodemon`.
 <% } -%>
-<% if(test { -%>
+<% if(test) { -%>
 - `test`: Run the test.
 <% } -%>
 - You can see other scripts in [package.json](./package.json).
