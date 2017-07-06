@@ -19,36 +19,14 @@ Then generate your new project:
 yo cat
 ```
 
-## Subgenerator
-- Those of subgenerator will be controled by `plugins` in `.yo-rc.json`.
-- `babel`: use to set setting of `babel`.
-  - This will be different when plugins have `react` or `graphql`.
-- `graphql`: add main `schema`.
-- `eslint`: use to add setting of `eslint`.
-- `npm`: use to add `.npmignore`.
-- `react`: use to install plugins of `react`.
-- `readme`: use to add default `README.md`.
-- `server`: use to add server.
-  - This server use `koa` and add some middleware of `koa`.
-  - If `graphql` is include in plugins, it will also make a `graphql` server.
-- `template`: use to add default template.
-  - This is a template of `nunjucks`.
-  - This will add favions for all platform.
-- `webpack`: use to add setting of `webpack`.
-  - This will be deifferent when plugins have `graphql`.
-  - This use `webpack 2`.
-- `add`: use to add new files.
-  - `component`: add default component and js of `react`.
-  - `reducer`: add default reducer and action of `redux`.
-  - `store`: add default store of `redux`.
-  - `router`: add default router of `react-router`.
-  - `schema`: add default schema of `graphql`.
-  - `relay`: add default component, route and js of `react-relay`.
-  - `sqlite3`: add bin of `sqlite3` to build default data.
-  - `fb-bot`: template of `fb bot` with `cat-middleware`.
-  - `line-bot`: template of `line bot` with `cat-middleware`.
-- `test`: use to add test framework.
-  - This use `istanbul` and `mocha`.
+## Subgenerators
+We does not recommend using those subgenerators because the most of those subgenerators use the `plugins` in `.yo-rc.json`. Use those subgenerators with `yo cat:subgenerators`.
+
+- `cat:postgresql-docker`: Add a bin file to use `docker` with `postgresql`.
+- `cat:add`: You can use to add some template file to your project.
+  - `options`
+    - `item`: Choose the template which will be added to project.
+    - `name`: This is the name of the output file.
 
 ## Getting To Know Yeoman
 
