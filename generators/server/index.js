@@ -52,7 +52,7 @@ module.exports = class extends Base {
     return this.prompt([{
       type: 'confirm',
       name: 'server',
-      message: 'Use the server',
+      message: 'Use the db',
       default: true,
       store: true
     }]).then(function(state) {
