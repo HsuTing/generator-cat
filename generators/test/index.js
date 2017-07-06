@@ -17,7 +17,9 @@ module.exports = class extends Base {
     });
 
     this.writeFiles({
-      'travis.yml': '.travis.yml'
+      'travis.yml': ['.travis.yml', {
+        relay: this.checkPlugins('relay')
+      }]
     });
   }
 

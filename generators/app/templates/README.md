@@ -1,4 +1,4 @@
-# <%= name[0].toUpperCase() + name.slice(1).toLowerCase() %> [![NPM version][npm-image]][npm-url] <% if(test) { %>[![Build Status][travis-image]][travis-url]<% } %>
+# <%= name[0].toUpperCase() + name.slice(1).toLowerCase() %><% if(npm) { %> [![NPM version][npm-image]][npm-url]<% } %><% if(test) { %> [![Build Status][travis-image]][travis-url]<% } %>
 <%= description %>
 
 ## Getting Started
@@ -16,13 +16,18 @@ yarn install && yarn build
 - `start`: Run the prodiction version server.
 - `test-server`: Run the test server with `nodemon`.
 <% } -%>
+<% if(test { -%>
+- `test`: Run the test.
+<% } -%>
 - You can see other scripts in [package.json](./package.json).
 
 ## License
 <%= license %> © [<%= author.name %>](<%= author.url %>)
 
+<% if(npm) { -%>
 [npm-image]: https://badge.fury.io/js/<%= name %>.svg
 [npm-url]: https://npmjs.org/package/<%= name %>
+<% } -%>
 <% if(test) { -%>
 [travis-image]: https://travis-ci.org/<%= author.name %>/<%= name %>.svg?branch=master
 [travis-url]: https://travis-ci.org/<%= author.name %>/<%= name %>

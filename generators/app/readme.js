@@ -10,6 +10,7 @@ module.exports = class extends Base {
         description: this.getPkg.description,
         license: this.getPkg.license,
         author: this.getAuthor,
+        npm: this.checkPlugins('npm'),
         test: this.checkPlugins('test'),
         server: this.checkPlugins('server')
       }]
