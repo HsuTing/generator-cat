@@ -24,6 +24,9 @@ module.exports = class extends Base {
     if(this.checkPlugins('desktop app'))
       this.composeWith(require.resolve('./../desktop-app'));
 
+    if(this.checkPlugins('build template'))
+      this.composeWith(require.resolve('./../build'));
+
     // normal subgenerator
     if(!this.getPkg.license)
       this.composeWith('generator-license/app', {
