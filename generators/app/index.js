@@ -114,7 +114,7 @@ module.exports = class extends Base {
 
       this.config.set('plugins', plugins);
       this.state = extend(this.state, state);
-    }.bind(this))
+    }.bind(this));
   }
 
   default() {

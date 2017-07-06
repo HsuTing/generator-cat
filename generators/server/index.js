@@ -1,5 +1,8 @@
 'use strict';
 
+const _ = require('lodash');
+const extend = _.merge;
+
 const Base = require('./../base');
 
 module.exports = class extends Base {
@@ -11,6 +14,7 @@ module.exports = class extends Base {
     if(this.checkPlugins('graphql'))
       alias.schemas = 'schemas';
 
+    this.state = {};
     this.addAlias(alias);
     this.addDependencies([
       'koa',
@@ -44,6 +48,18 @@ module.exports = class extends Base {
     })
   }
 
+  prompting() {
+    return this.prompt([{
+      type: 'confirm',
+      name: 'server',
+      message: 'Use the server',
+      default: true,
+      store: true
+    }]).then(function(state) {
+      this.state = extend(this.state, state);
+    }.bind(this));
+  }
+
   default() {
     if(!this.config.get('cat')) {
       this.composeWith(require.resolve('./../add'), {
@@ -57,6 +73,9 @@ module.exports = class extends Base {
           name: 'data'
         });
     }
+
+    if(this.state.server)
+      this.composeWith(require.resolve('./../db'));
   }
 
   writing() {
