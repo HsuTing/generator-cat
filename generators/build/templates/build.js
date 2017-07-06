@@ -2,7 +2,7 @@
 'use strict';
 
 const path = require('path');
-const procsee = require('process');
+const process = require('process');
 const nunjucks = require('nunjucks');
 const memFs = require('mem-fs');
 const editor = require('mem-fs-editor');
