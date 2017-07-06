@@ -27,6 +27,14 @@ We does not recommend using those subgenerators because the most of those subgen
   - `options`
     - `item`: Choose the template which will be added to project.
     - `name`: This is the name of the output file.
+  - `list`
+    - db
+    - react
+    - reducer
+    - relay
+    - router
+    - schema
+    - test
 
 ## Getting To Know Yeoman
 
