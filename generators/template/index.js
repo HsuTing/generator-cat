@@ -34,16 +34,14 @@ module.exports = class extends Base {
         'facebook_api',
         'google',
         'google_analytics',
-        'twitter',
-        'firebase'
+        'twitter'
       ],
       store: true
     }].concat(
       require('./utils/geo')(this.state),
       require('./utils/facebook')(this.state),
       require('./utils/google')(this.state),
-      require('./utils/twitter')(this.state),
-      require('./utils/firebase')(this.state)
+      require('./utils/twitter')(this.state)
     )).then(function(state) {
       const otherSettings = {};
 
