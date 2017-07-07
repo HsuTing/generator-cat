@@ -4,9 +4,9 @@ const Base = require('./../base');
 
 module.exports = class extends Base {
   initializing() {
-    this.addDevDependencies({
+    this.addDevDependencies([
       'cat-time-tracker'
-    });
+    ]);
   }
 
   writing() {
