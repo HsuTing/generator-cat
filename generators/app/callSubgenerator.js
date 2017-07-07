@@ -27,6 +27,9 @@ module.exports = class extends Base {
     if(this.checkPlugins('build template'))
       this.composeWith(require.resolve('./../build'));
 
+    if(this.checkPlugins('time tracker'))
+      this.composeWith(require.resolve('./../time-tracker'));
+
     // normal subgenerator
     if(!this.getPkg.license)
       this.composeWith('generator-license/app', {

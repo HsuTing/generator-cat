@@ -88,7 +88,7 @@ module.exports = class extends Base {
       message: 'Add other options',
       store: true,
       choices: ({chooseType, graphql}) => [
-        'npm', 'heroku', 'build template'
+        'npm', 'heroku', 'build template', 'time tracker'
       ].concat(
         chooseType === 'server' && graphql ? [] : ['test']
       )
