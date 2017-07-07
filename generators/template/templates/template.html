@@ -52,6 +52,9 @@
   </script>
   {% endif -%}
 
+<% if(otherSettings.includes('firebase')) { -%>
+<% include firebase.html %>
+<% } -%>
   {% if ENV -%}
 <% if(docs) { -%>
   <script defer src="/<%= title %>/public/js/common.min.js" type="text/javascript"></script>
