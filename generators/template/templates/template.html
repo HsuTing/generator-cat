@@ -46,11 +46,11 @@
     <main id="root">{{ content | safe }}</main>
   </body>
 
-  {% if data -%}
   <script>
+    {% if data -%}
     var data = {{ data | safe }};
+    {% endif -%}
   </script>
-  {% endif -%}
 
 <% if(otherSettings.includes('firebase')) { -%>
 <% include firebase.html %>
