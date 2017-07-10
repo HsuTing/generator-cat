@@ -15,7 +15,7 @@ const network = Network.create((
   variables,
   cacheConfig,
   uploadables
-)=> fetch('/graphql', {
+) => fetch('/graphql', {
   method: 'POST',
   headers: {
     'content-type': 'application/json'
