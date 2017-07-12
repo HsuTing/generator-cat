@@ -18,7 +18,6 @@ import serve from 'koa-static';
 import minify from 'koa-html-minifier';
 <% } -%>
 <% if(graphql) { -%>
-import convert from 'koa-convert';
 import graphql from 'koa-graphql';
 
 import schema from 'schemas/schema';
@@ -62,7 +61,7 @@ if(ENV)
 <% } -%>
 <% if(graphql) { -%>
 
-app.use(mount('/graphql', convert(graphql({
+app.use(mount('/graphql', graphql({
   schema,
   graphiql: !ENV,
   pretty: !ENV,
@@ -71,7 +70,7 @@ app.use(mount('/graphql', convert(graphql({
     if(!ENV)
       return error;
   }
-}))));
+})));
 <% } -%>
 
 // add router

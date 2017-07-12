@@ -38,7 +38,6 @@ module.exports = class extends Base {
         ];
 
         case 'graphql': return [
-          'koa-convert',
           'koa-mount',
           'koa-graphql',
           'graphql',
