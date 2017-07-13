@@ -8,6 +8,7 @@ const memFs = require('mem-fs');
 const editor = require('mem-fs-editor');
 const chalk = require('chalk');
 
+nunjucks.configure(path.resolve(__dirname, './templates'));
 const store = memFs.create();
 const fs = editor.create(store);
 const templateName = process.argv[2];
@@ -32,9 +33,6 @@ const config = ({
 // check template
 if(!config)
   throw new Error(`no ${templateName} in templates.`);
-
-// write files
-nunjucks.configure(path.resolve(__dirname, './templates'));
 
 fs.write(
   path.resolve(__dirname, config.path, `${process.argv[3]}${config.extension}`),
