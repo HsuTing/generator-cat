@@ -5,7 +5,6 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
-      'nunjucks',
       'mem-fs',
       'mem-fs-editor',
       'chalk'

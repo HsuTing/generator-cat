@@ -3,12 +3,10 @@
 
 const path = require('path');
 const process = require('process');
-const nunjucks = require('nunjucks');
 const memFs = require('mem-fs');
 const editor = require('mem-fs-editor');
 const chalk = require('chalk');
 
-nunjucks.configure(path.resolve(__dirname, './templates'));
 const store = memFs.create();
 const fs = editor.create(store);
 const templateName = process.argv[2];
@@ -34,9 +32,10 @@ const config = ({
 if(!config)
   throw new Error(`no ${templateName} in templates.`);
 
-fs.write(
+fs.copyTpl(
+  path.resolve(__dirname, config.source),
   path.resolve(__dirname, config.path, `${process.argv[3]}${config.extension}`),
-  nunjucks.render(config.source, config.options || {})
+  config.options || {}
 );
 
 fs.commit(err => {
