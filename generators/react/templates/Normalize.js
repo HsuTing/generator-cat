@@ -4,6 +4,10 @@ import React from 'react';
 import radium, {Style as StyleRadium} from 'radium';
 import normalize from 'radium-normalize';
 
+const all = {
+  overflowScrolling: 'touch'
+};
+
 const a = {
   color: 'inherit',
   textDecoration: 'initial'
@@ -15,6 +19,11 @@ export default class Normalize extends React.Component {
     return (
       <style>
         <StyleRadium rules={normalize} />
+
+        <StyleRadium scopeSelector='a*'
+          rules={all}
+        />
+
         <StyleRadium scopeSelector='a'
           rules={a}
         />
