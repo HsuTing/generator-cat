@@ -8,7 +8,7 @@
     "email": "hsuting0106@gmail.com",
     "url": "hsuting.com"
   },
-  "main": "generators/index.js",
+  "main": "./generators/app/index.js",
   "keywords": [
     "generator-cat",
     "yeoman-generator"
