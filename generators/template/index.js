@@ -1,5 +1,6 @@
 'use strict';
 
+const validator = require('validator');
 const _ = require('lodash');
 const extend = _.merge;
 
@@ -22,8 +23,9 @@ module.exports = class extends Base {
     }, {
       name: 'url',
       message: 'Base url of this template',
-      store: true,
-      when: !this.state.url
+      default: this.getPkg.homepage,
+      when: !this.state.url,
+      validate: value => validator.isURL(value) ? true : 'Must be an url.'
     }, {
       type: 'checkbox',
       name: 'otherSettings',

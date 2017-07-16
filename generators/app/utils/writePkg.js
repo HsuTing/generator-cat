@@ -55,13 +55,13 @@ module.exports = (props, currentPkg) => {
     'pre-commit': [
       'lint'
     ],
-    homepage: `https://github.com/${props.authorName}/${props.name}`,
+    homepage: `https://github.com/${props.authorName}/${props.name}/`,
     repository: {
       type: 'git',
       url: `get+https://github.com/${props.authorName}/${props.name}.git`
     },
     bugs: {
-      url: `https://github.com/${props.authorName}/${props.name}/issues`
+      url: `https://github.com/${props.authorName}/${props.name}/issues/`
     }
   }, currentPkg);
 
