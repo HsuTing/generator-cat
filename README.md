@@ -49,4 +49,4 @@ MIT © [hsuting](hsuting.com)
 
 
 [npm-image]: https://badge.fury.io/js/generator-cat.svg
-[npm-url]: https://npmjs.org/package/generator-cat
+[npm-url]: https://www.npmjs.com/package/generator-cat
