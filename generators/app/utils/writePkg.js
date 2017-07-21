@@ -33,9 +33,6 @@ module.exports = (props, currentPkg) => {
     watch: watch.join(' ')
   }
 
-  if(props.plugins.includes('react'))
-    scripts.postinstall = 'rm -rf ./node_modules/radium/.babelrc';
-
   if(props.plugins.includes('heroku'))
     scripts['heroku-postbuild'] = 'yarn prod';
 
