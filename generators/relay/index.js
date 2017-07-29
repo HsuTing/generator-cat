@@ -5,12 +5,15 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
+      'babel-plugin-relay',
+      'relay-compiler'
+    ]);
+    
+    this.addDependencies([
       'cat-components',
       'cat-graphql',
       'fetch-everywhere',
-      'babel-plugin-relay',
-      'babel-polyfill',
-      'relay-compiler'
+      'babel-polyfill'
     ]);
 
     this.addAlias({
