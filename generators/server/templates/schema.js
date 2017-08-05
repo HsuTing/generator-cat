@@ -34,11 +34,11 @@ export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     description: 'all queries',
-    fields: () => query
+    fields: query
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     description: 'all mutations',
-    fields: () => mutation
+    fields mutation
   })
 });
