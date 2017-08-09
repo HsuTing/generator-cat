@@ -10,15 +10,22 @@ import fields from 'schemas/fields';
 
 const {nodeInterface} = fields;
 
-export default new GraphQLObjectType({
+export const dataFields = {
   name: '<%= name %>',
   description: 'This is the type of the <%= name %>.',
-  interfaces: [nodeInterface],
   fields: {
-    id: globalIdField('<%= name %>'),
     data: {
       type: GraphQLString,
       description: 'This is the data of the <%= name %>.'
     }
+  }
+};
+
+export default new GraphQLObjectType({
+  ...dataFields,
+  interfaces: [nodeInterface],
+  fields: {
+    ...dataFields.fields,
+    id: globalIdField('<%= name %>')
   }
 });
