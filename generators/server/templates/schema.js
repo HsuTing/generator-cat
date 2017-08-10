@@ -15,7 +15,7 @@ fs.readdirSync(__dirname)
   .forEach(file => {
     if(!fs.existsSync(path.resolve(__dirname, `./${file}/index.js`)))
       return;
-  
+
     const name = file.replace('.js', '');
     const schema = require(`./${name}`).default || require(`./${name}`);
 
@@ -39,6 +39,6 @@ export default new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     description: 'all mutations',
-    fields mutation
+    fields: mutation
   })
 });
