@@ -2,7 +2,7 @@
 
 You can use this to build a website, a server or both of them.
 
-![icon](http://hsuting.github.io/img/icon.svg)
+![icon](http://hsuting.github.io/public/img/icon.svg)
 
 ## Installation
 
