@@ -20,7 +20,7 @@ export default class Normalize extends React.Component {
       <style>
         <StyleRadium rules={normalize} />
 
-        <StyleRadium scopeSelector='a*'
+        <StyleRadium scopeSelector='*'
           rules={all}
         />
 
