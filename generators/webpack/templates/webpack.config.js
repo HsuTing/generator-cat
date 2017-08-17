@@ -24,7 +24,11 @@ module.exports = {
   output: {
     filename: ENV ? '[name].min.js' : '[name].js',
     chunkFilename: ENV ? '[name].min.js' : '[name].js',
-    publicPath: '/assets/',
+<% if(docs) { -%>
+    publicPath: ENV ? '/<%= name %>/public/js/' : '/assets/',
+<% } else { -%>
+    publicPath: ENV ? '/public/js/' : '/assets/',
+<% } -%>
 <% if(docs || desktop_app) { -%>
     path: path.resolve(__dirname, './docs/public/js')
 <% } else { -%>
