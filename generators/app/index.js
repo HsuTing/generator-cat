@@ -98,7 +98,7 @@ module.exports = class extends Base {
       if(chooseType !== 'none')
         plugins.push(chooseType);
 
-      if(chooseType === 'server' && graphql)
+      if(chooseType === 'server')
         plugins.push('test');
 
       if(graphql)

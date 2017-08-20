@@ -25,6 +25,13 @@ module.exports = class extends Base {
 
   default() {
     if(!this.config.get('cat')) {
+      if(this.checkPlugins('server'))
+        this.composeWith(require.resolve('./../add'), {
+          item: 'test',
+          name: 'pages',
+          type: 'server'
+        });
+
       if(this.checkPlugins('graphql'))
         this.composeWith(require.resolve('./../add'), {
           item: 'test',

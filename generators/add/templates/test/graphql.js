@@ -7,11 +7,6 @@ const {globalIdField} = require('graphql-relay');
 const schema = require('./../lib/schemas/schema').default;
 
 describe('<%= name %>', () => {
-  let server = null;
-  before(() => {
-    server = require('./../lib/server').default;
-  });
-
   it('# query <%= name %>', () => graphql(schema, `
     query {
       <%= name %>(input: "test") {
@@ -55,8 +50,4 @@ describe('<%= name %>', () => {
       })
     )
   );
-
-  after(() => {
-    server.close();
-  });
 });

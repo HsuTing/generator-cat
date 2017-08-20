@@ -34,6 +34,12 @@ module.exports = class extends NeedName {
         });
         break;
 
+      case 'server':
+        this.writeFiles({
+          'test/pages.js': 'test/pages.js'
+        });
+        break;
+
       default:
         this.writeFiles({
           'test/test.js': [`test/${name}.js`, {
