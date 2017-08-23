@@ -1,5 +1,6 @@
 'use strict';
 
+const should = require('should');
 const fetch = require('fetch-everywhere');
 
 const pages = [{
@@ -15,7 +16,7 @@ describe('pages', () => {
   pages.forEach(({path}) => {
     it(path, () => fetch(`http://localhost:8000${path}`)
       .then(res => res.status)
-      .should.eventually.be.equal(200)
+      .should.be.eventually.equal(200)
     );
   });
 
