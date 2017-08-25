@@ -27,7 +27,7 @@ module.exports = class extends NeedName {
     switch(this.options.type) {
       case 'graphql':
         this.writeFiles({
-          'test/graphql.js': [`test/${name}.js`, {
+          'test/graphql.js': [`src/test/${name}.js`, {
             name,
             dataName
           }]
@@ -36,13 +36,13 @@ module.exports = class extends NeedName {
 
       case 'server':
         this.writeFiles({
-          'test/pages.js': 'test/pages.js'
+          'test/pages.js': 'src/test/pages.js'
         });
         break;
 
       default:
         this.writeFiles({
-          'test/test.js': [`test/${name}.js`, {
+          'test/test.js': [`src/test/${name}.js`, {
             name
           }]
         });

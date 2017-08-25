@@ -5,7 +5,7 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
-      'istanbul',
+      'nyc',
       'should',
       'mocha'
     ]);
@@ -13,10 +13,11 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
-      test: 'yarn babel && istanbul cover _mocha -- -R spec test/**/*.js'
+      test: 'nyc mocha ./src/test/*.js --recursive --reporter spec'
     });
 
     this.writeFiles({
+      nycrc: '.nycrc',
       'travis.yml': ['.travis.yml', {
         relay: this.checkPlugins('relay')
       }]

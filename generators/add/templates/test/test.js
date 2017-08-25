@@ -1,6 +1,6 @@
 'use strict';
 
-const should = require('should');
+import should from 'should'; // eslint-disable-line no-unused-vars
 
 describe('<%= name %>', () => {
 });

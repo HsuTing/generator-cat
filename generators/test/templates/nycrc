@@ -1,0 +1,18 @@
+{
+  "exclude": [
+    "coverage/**/*.js",
+    "lib/**/*.js"
+  ],
+  "extension": [
+    ".js"
+  ],
+  "require": [
+    "babel-core/register"
+  ],
+  "cache": true,
+  "all": true,
+  "reporter": [
+    "html",
+    "text"
+  ]
+}

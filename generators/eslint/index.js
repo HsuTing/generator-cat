@@ -26,6 +26,7 @@ module.exports = class extends Base {
 
     this.writeFiles({
       'eslintrc.js': ['.eslintrc.js', {
+        test: this.checkPlugins('test'),
         react: this.checkPlugins('react')
       }]
     });

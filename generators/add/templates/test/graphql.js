@@ -1,10 +1,9 @@
 'use strict';
 
-const should = require('should');
-const {graphql} = require('graphql');
-const {globalIdField} = require('graphql-relay');
+import should from 'should'; // eslint-disable-line no-unused-vars
+import {graphql} from 'graphql';
 
-const schema = require('./../lib/schemas/schema').default;
+import schema from './../schemas/schema';
 
 describe('<%= name %>', () => {
   it('# query <%= name %>', () => graphql(schema, `
@@ -13,18 +12,14 @@ describe('<%= name %>', () => {
         data
       }
     }
-  `)
-    .then(result => JSON.stringify(result))
-    .should.be.eventually.equal(
-      JSON.stringify({
-        data: {
-          <%= name %>: {
-            data: 'query Data'
-          }
+  `).then(result => result)
+    .should.be.eventually.equal({
+      data: {
+        <%= name %>: {
+          data: 'query Data'
         }
-      })
-    )
-  );
+      }
+    }));
 
   it('# mutation <%= name %>', () => graphql(schema, `
     mutation {
@@ -36,18 +31,14 @@ describe('<%= name %>', () => {
         }
       }
     }
-  `)
-    .then(result => JSON.stringify(result))
-    .should.be.eventually.equal(
-      JSON.stringify({
-        data: {
-          modify<%= dataName %>: {
-            newData: {
-              data: 'mutation Data'
-            }
+  `).then(result => result)
+    .should.be.eventually.equal({
+      data: {
+        modify<%= dataName %>: {
+          newData: {
+            data: 'mutation Data'
           }
         }
-      })
-    )
-  );
+      }
+    }));
 });

@@ -15,8 +15,8 @@ module.exports = class extends Base {
     const pkg = this.getPkg;
 
     this.writePkgScripts({
-      'webpack-server': 'webpack-dev-server --content-base src --hot --inline',
-      webpack: 'NODE_ENV=production webpack'
+      webpack: 'cross-env NODE_ENV=production webpack',
+      'webpack-server': 'webpack-dev-server --content-base src --hot --inline'
     });
 
     this.writeFiles({

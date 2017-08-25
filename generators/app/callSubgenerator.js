@@ -43,7 +43,9 @@ module.exports = class extends Base {
   writing() {
     this.writeFiles({
       editorconfig: '.editorconfig',
-      gitignore: '.gitignore'
+      gitignore: ['.gitignore', {
+        test: this.checkPlugins('test')
+      }]
     });
 
     if(this.checkPlugins('react') && (this.checkPlugins('docs') || this.checkPlugins('desktop app')))

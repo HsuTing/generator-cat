@@ -7,7 +7,7 @@ module.exports = (props, currentPkg) => {
   // scripts
   const base_script = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
   const build = base_script.concat(['yarn babel']);
-  const prod = ['export NODE_ENV=production'].concat(base_script).concat(['yarn babel']);
+  const prod = ['cross-env-shell NODE_ENV=production'].concat(base_script).concat(['yarn babel']);
   const watch = [
     'concurrently -c green',
     '"yarn lint:watch"',
@@ -17,7 +17,7 @@ module.exports = (props, currentPkg) => {
   if(props.plugins.includes('react')) {
     if(props.plugins.includes('docs') || props.plugins.includes('desktop app')) {
       build.push('static static.config.js');
-      prod.push('static static.config.js');
+      prod.push('cross-env NODE_ENV=production static static.config.js');
     }
 
     prod.push('yarn webpack')

@@ -32,6 +32,9 @@ module.exports = {
     }
   },
   "env": {
+<% if(test) { -%>
+    "mocha": true,
+<% } -%>
     "browser": true,
     "node": true
   },

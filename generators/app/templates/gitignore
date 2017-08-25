@@ -3,5 +3,8 @@ node_modules
 *.swp
 .eslintcache
 *.log
+<% if(test) { -%>
 coverage
+.nyc_output
+<% } -%>
 lib

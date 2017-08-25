@@ -16,6 +16,9 @@ module.exports = class extends Base {
     ));
 
     this.state = {};
+    this.addDependencies([
+      'cross-env'
+    ]);
     this.addDevDependencies([
       'pre-commit',
       'concurrently'
