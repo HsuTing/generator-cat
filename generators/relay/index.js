@@ -2,13 +2,14 @@
 
 const Base = require('./../base');
 
+/* istanbul ignore next */
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
       'babel-plugin-relay',
       'relay-compiler'
     ]);
-    
+
     this.addDependencies([
       'cat-components',
       'cat-graphql',

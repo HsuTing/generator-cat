@@ -5,6 +5,7 @@ const extend = _.merge;
 
 const Base = require('./../base');
 
+/* istanbul ignore next */
 module.exports = class extends Base {
   initializing() {
     const alias = {

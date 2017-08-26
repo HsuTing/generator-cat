@@ -2,9 +2,14 @@ node_modules
 .DS_Store
 *.swp
 .eslintcache
+lib
+<% if(server) { -%>
 *.log
+<% if(react) { -%>
+public
+<% } -%>
+<% } -%>
 <% if(test) { -%>
 coverage
 .nyc_output
 <% } -%>
-lib

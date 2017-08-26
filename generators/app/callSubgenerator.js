@@ -2,6 +2,7 @@
 
 const Base = require('./../base');
 
+/* istanbul ignore next */
 module.exports = class extends Base {
   default() {
     if(this.checkPlugins('react')) {
@@ -44,6 +45,8 @@ module.exports = class extends Base {
     this.writeFiles({
       editorconfig: '.editorconfig',
       gitignore: ['.gitignore', {
+        server: this.checkPlugins('server'),
+        react: this.checkPlugins('react'),
         test: this.checkPlugins('test')
       }]
     });

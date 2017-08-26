@@ -2,6 +2,7 @@
 
 const Base = require('./../base');
 
+/* istanbul ignore next */
 module.exports = class extends Base {
   writing() {
     this.writeFiles({

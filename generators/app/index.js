@@ -9,6 +9,7 @@ const extend = _.merge;
 const Base = require('./../base');
 const writePkg = require('./utils/writePkg');
 
+/* istanbul ignore next */
 module.exports = class extends Base {
   initializing() {
     this.log(yosay(
@@ -31,12 +32,12 @@ module.exports = class extends Base {
       message: 'Project name',
       default: path.basename(process.cwd()),
       filter: _.kebabCase,
-      validate: str => str.length > 0 ? true : 'Can not empty.',
+      validate: /* istanbul ignore next */str => str.length > 0 ? true : 'Can not empty.',
       when: !this.getPkg.name
     }, {
       name: 'description',
       message: 'Description',
-      validate: str => str.length > 0 ? true : 'Can not empty.',
+      validate: /* istanbul ignore next */str => str.length > 0 ? true : 'Can not empty.',
       when: !this.getPkg.description
     }, {
       name: 'authorName',
@@ -59,7 +60,7 @@ module.exports = class extends Base {
       name: 'keywords',
       message: 'Package keywords (comma to split)',
       when: !this.getPkg.keywords,
-      filter: words => words.split(/\s*,\s*/g)
+      filter: /* istanbul ignore next */ words => words.split(/\s*,\s*/g)
     }, {
       type: 'confirm',
       name: 'website',
@@ -91,18 +92,15 @@ module.exports = class extends Base {
       message: 'Add other options',
       store: true,
       choices: ({chooseType, graphql}) => [
-        'npm', 'heroku', 'build template'
-      ].concat(
-        chooseType === 'server' && graphql ? [] : ['test']
-      )
+        'npm',
+        'heroku',
+        'test'
+      ]
     }]).then(function(state) {
       const {website, chooseType, graphql, plugins} = state;
 
       if(chooseType !== 'none')
         plugins.push(chooseType);
-
-      if(chooseType === 'server')
-        plugins.push('test');
 
       if(graphql)
         plugins.push('graphql');

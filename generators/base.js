@@ -5,6 +5,7 @@ const parseAuthor = require('parse-author');
 const _ = require('lodash');
 const extend = _.merge;
 
+/* istanbul ignore next */
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
