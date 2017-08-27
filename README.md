@@ -1,4 +1,4 @@
-# generator-cat [![NPM version][npm-image]][npm-url]
+# generator-cat [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 You can use this to build a website, a server or both of them.
 
@@ -49,3 +49,5 @@ MIT © [hsuting](hsuting.com)
 
 [npm-image]: https://badge.fury.io/js/generator-cat.svg
 [npm-url]: https://www.npmjs.com/package/generator-cat
+[travis-image]: https://travis-ci.org/HsuTing/generator-cat.svg?branch=master
+[travis-url]: https://travis-ci.org/HsuTing/generator-cat
