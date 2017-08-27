@@ -5,7 +5,7 @@
     "test": "nyc mocha ./test/*.js --recursive --reporter spec --timeout 50000"
   },
   "name": "generator-cat",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "generator cat",
   "homepage": "https://github.com/HsuTing/generator-cat",
   "author": {

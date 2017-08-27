@@ -6,7 +6,7 @@ export default () => {
   it('src/bin/db.js', () => {
     assert.jsonFileContent('package.json', {
       scripts: {
-        db: 'rm -rf ./lib/bin/db.js && babel src/bin/db.js --out-dir lib/bin/db.js && node ./lib/bin/db.js',
+        db: 'node ./lib/bin/db.js',
         'db-shell': 'db-shell'
       }
     });

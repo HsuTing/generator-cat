@@ -3,7 +3,7 @@
 import 'babel-polyfill';
 import process from 'process';
 
-import {users, create_user} from './users';
+import {users, create_users} from './users';
 
 export default async (db, type = 'sqlite') => {
   const tables = {
@@ -33,7 +33,7 @@ export default async (db, type = 'sqlite') => {
         if(choices.includes('users')) {
           const user_id = `'363a5f9b-7e93-4f8d-9f1a-a3941fc0905d'`;
 
-          if(await create_user(user_id)(db))
+          if(await create_users(user_id)(db))
             console.log(`test user id: ${user_id}`)
         }
         break;
