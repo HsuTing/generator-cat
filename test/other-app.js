@@ -10,13 +10,13 @@ import pkg from './files/pkg';
 describe('other app test', () => {
   describe('# use npm and test at the same time', () => {
     before(() => helpers
-    .run(path.resolve(__dirname, './../generators/app'))
-    .withPrompts({
-      ...defaultSetting,
-      website: false,
-      chooseType: 'none',
-      plugins: ['npm', 'test']
-    }));
+      .run(path.resolve(__dirname, './../generators/app'))
+      .withPrompts({
+        ...defaultSetting,
+        website: false,
+        chooseType: 'none',
+        plugins: ['npm', 'test']
+      }));
 
     npmignore({test: true});
   });
@@ -31,8 +31,8 @@ describe('other app test', () => {
     };
 
     before(() => helpers
-    .run(path.resolve(__dirname, './../generators/app'))
-    .withPrompts(config));
+      .run(path.resolve(__dirname, './../generators/app'))
+      .withPrompts(config));
 
     pkg(config);
   });

@@ -13,7 +13,7 @@ const writePkg = require('./utils/writePkg');
 module.exports = class extends Base {
   initializing() {
     this.log(yosay(
-      `Welcome to the cat\'s pajamas ${chalk.red('generator-cat')} generator!`
+      `Welcome to the cat\'s pajamas ${chalk.red('generator-cat')} generator!` // eslint-disable-line no-useless-escape
     ));
 
     this.state = {};

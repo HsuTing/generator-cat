@@ -72,10 +72,7 @@ describe('check list', () => {
     testFolders.forEach(folder => {
       const result = (/it\(.+\)/).test(
         fs.readFileSync(path.resolve(testFolderRoot, folder))
-      ) || [
-        'template/author.js',
-        'template/favicon.js'
-      ].includes(folder);
+      ) || ['template/author.js', 'template/favicon.js'].includes(folder);
 
       /* istanbul ignore if */
       if(!result)
