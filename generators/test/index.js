@@ -40,11 +40,6 @@ module.exports = class extends Base {
           name: 'data',
           type: 'graphql'
         });
-      else
-        this.composeWith(require.resolve('./../add'), {
-          item: 'test',
-          name: 'test'
-        });
     }
   }
 

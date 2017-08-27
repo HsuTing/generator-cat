@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-const sqlite = require('cat-utils/lib/sqlite').default;
+import sqlite from 'cat-utils/lib/sqlite';
 
-const fields = require('./fields');
+import tables from 'constants/tables';
+
 const db = new sqlite();
 
 db.sqlite.serialize(() => {
-  fields(db);
+  tables(db);
 });

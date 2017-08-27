@@ -40,14 +40,6 @@ module.exports = class extends NeedName {
           'test/pages.js': 'src/test/pages.js'
         });
         break;
-
-      default:
-        this.writeFiles({
-          'test/test.js': [`src/test/${name}.js`, {
-            name
-          }]
-        });
-        break;
     }
   }
 };

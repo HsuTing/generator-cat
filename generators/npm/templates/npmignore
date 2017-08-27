@@ -3,7 +3,11 @@ yarn.lock
 .babelrc
 .editorconfig
 .eslint*
-.travis.yml
 .yo-rc.json
+<% if(test) { -%>
+.travis.yml
 test
+.nycrc
 coverage
+.nyc_output
+<% } -%>

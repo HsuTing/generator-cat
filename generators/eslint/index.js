@@ -21,8 +21,8 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
-      lint: 'eslint --cache ./src ./bin --ext .js',
-      'lint:watch': 'esw --cache ./src ./bin --ext .js -w --color'
+      lint: 'eslint --cache ./src --ext .js',
+      'lint:watch': 'esw --cache ./src --ext .js -w --color'
     });
 
     this.writeFiles({

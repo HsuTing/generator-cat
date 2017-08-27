@@ -10,6 +10,8 @@ module.exports = class extends Base {
       'cat-utils',
       'sqlite3'
     ]);
+
+    this.addAlias({constants: 'constants'});
   }
 
   default() {
@@ -22,13 +24,13 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
-      db: 'node ./bin/db.js',
+      db: 'rm -rf ./lib/bin/db.js && babel src/bin/db.js --out-dir lib/bin/db.js && node ./lib/bin/db.js',
       'db-shell': 'db-shell'
     });
 
     this.writeFiles({
-      'fields.js': 'bin/fields/index.js',
-      'db.js': 'bin/db.js'
+      'tables.js': 'src/constants/tables/index.js',
+      'db.js': 'src/bin/db.js'
     });
   }
 

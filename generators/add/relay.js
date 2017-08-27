@@ -25,11 +25,12 @@ module.exports = class extends NeedName {
     const componentName = _.upperFirst(this.getName);
 
     this.writeFiles({
-      'relay/public.js': [`src/public/${_.lowerFirst(componentName)}.js`, {
+      'react/public.js': [`src/public/${_.lowerFirst(componentName)}.js`, {
         componentName
       }],
-      'relay/component.js': [`src/components/${componentName}.js`, {
-        componentName
+      'react/component.js': [`src/components/${componentName}.js`, {
+        componentName,
+        relay: true
       }],
       'relay/container.js': [`src/containers/${componentName}Container.js`, {
         componentName,

@@ -22,7 +22,6 @@ yo cat
 ## Subgenerators
 We does not recommend using those subgenerators because the most of those subgenerators use the `plugins` in `.yo-rc.json`. Use those subgenerators with `yo cat:subgenerators`.
 
-- `cat:postgresql-docker`: Add a bin file to use `docker` with `postgresql`.
 - `cat:add`: You can use to add some template file to your project.
   - `options`
     - `item`: Choose the template which will be added to project.

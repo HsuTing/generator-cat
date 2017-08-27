@@ -20,8 +20,8 @@ module.exports = (props, currentPkg) => {
       prod.push('cross-env NODE_ENV=production static static.config.js');
     }
 
-    prod.push('yarn webpack')
-    watch.push('"yarn webpack-server"')
+    prod.push('yarn webpack');
+    watch.push('"yarn webpack-server"');
   }
 
   if(props.plugins.includes('relay'))
@@ -31,7 +31,7 @@ module.exports = (props, currentPkg) => {
     build: build.join(' && '),
     prod: prod.join(' && '),
     watch: watch.join(' ')
-  }
+  };
 
   if(props.plugins.includes('heroku'))
     scripts['heroku-postbuild'] = 'yarn prod';

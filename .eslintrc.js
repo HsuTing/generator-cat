@@ -3,6 +3,7 @@ module.exports = {
     "google",
     "eslint:recommended"
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 7,
     "sourceType": "module",
@@ -12,7 +13,8 @@ module.exports = {
   },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],

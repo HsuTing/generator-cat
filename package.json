@@ -1,6 +1,11 @@
 {
+  "scripts": {
+    "lint": "eslint --cache ./generators ./test --ext .js",
+    "lint:watch": "esw --cache ./generators ./test --ext .js -w --color",
+    "test": "nyc mocha ./test/*.js --recursive --reporter spec --timeout 50000"
+  },
   "name": "generator-cat",
-  "version": "0.8.1",
+  "version": "0.8.4",
   "description": "generator cat",
   "homepage": "https://github.com/HsuTing/generator-cat",
   "author": {
@@ -22,18 +27,26 @@
     "yosay": "^1.2.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^3.13.0",
     "eslint-config-google": "^0.7.1",
     "eslint-watch": "^3.1.2",
-    "pre-commit": "^1.2.2"
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
+    "pre-commit": "^1.2.2",
+    "should": "^11.2.1",
+    "yeoman-assert": "^3.0.0",
+    "yeoman-test": "^1.7.0"
   },
   "pre-commit": [
     "lint"
   ],
-  "scripts": {
-    "lint": "eslint --cache ./generators --ext .js",
-    "lint:watch": "esw --cache ./generators --ext .js -w --color"
-  },
   "repository": "HsuTing/generator-cat",
   "license": "MIT"
 }

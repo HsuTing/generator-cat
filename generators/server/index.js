@@ -51,9 +51,9 @@ module.exports = class extends Base {
   prompting() {
     return this.prompt([{
       type: 'confirm',
-      name: 'server',
+      name: 'db',
       message: 'Use the db',
-      default: true,
+      default: false,
       store: true
     }]).then(function(state) {
       this.state = extend(this.state, state);
@@ -74,7 +74,7 @@ module.exports = class extends Base {
         });
     }
 
-    if(this.state.server)
+    if(this.state.db)
       this.composeWith(require.resolve('./../db'));
   }
 

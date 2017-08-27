@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-const packager = require('electron-packager');
-const rebuild = require('electron-rebuild').default;
+import packager from 'electron-packager';
+import rebuild from 'electron-rebuild';
 
 const ignore = [
   'src',
+  'src/bin',
   'server.log',
-  'bin',
   'graphql.json',
   'webpack.config.js',
   'yarn.lock'

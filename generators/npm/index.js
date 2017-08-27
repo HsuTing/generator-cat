@@ -10,7 +10,9 @@ module.exports = class extends Base {
     });
 
     this.writeFiles({
-      npmignore: '.npmignore'
+      npmignore: ['.npmignore', {
+        test: this.checkPlugins('test')
+      }]
     });
   }
 }

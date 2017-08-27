@@ -18,7 +18,8 @@ module.exports = class extends NeedName {
         componentName
       }],
       'react/component.js': [`src/components/${componentName}.js`, {
-        componentName
+        componentName,
+        relay: false
       }]
     });
   }

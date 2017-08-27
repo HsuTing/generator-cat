@@ -85,7 +85,7 @@ module.exports = class extends Base {
       message: 'Use graphql',
       default: true,
       store: true,
-      when: ({website, chooseType}) => website || chooseType === 'server'
+      when: ({website, chooseType}) => chooseType !== 'none'
     }, {
       type: 'checkbox',
       name: 'plugins',

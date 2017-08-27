@@ -14,7 +14,7 @@ module.exports = class extends NeedName {
     const name = _.lowerFirst(this.getName);
 
     this.writeFiles({
-      'db/field.js': [`bin/fields/${name}.js`, {
+      'db/table.js': [`src/constants/tables/${name}.js`, {
         name
       }]
     });

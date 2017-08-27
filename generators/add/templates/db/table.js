@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
   users: (db, type = 'sqlite') => (
     db.create('<%= name %>', {
       id: 'text PRIMARY KEY NOT NULL'

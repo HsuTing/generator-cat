@@ -2,3 +2,6 @@ node_modules
 .DS_Store
 *.swp
 .eslintcache
+.nycrc
+coverage
+.nyc_output

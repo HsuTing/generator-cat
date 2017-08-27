@@ -5,6 +5,9 @@ import radium from 'radium';
 import Wrapper from 'cat-components/lib/wrapper';
 
 import Normalize from 'componentsShare/Normalize';
+<% if(relay) { -%>
+import <%= componentName %>Container from 'containers/<%= componentName %>Container';
+<% } -%>
 
 @radium
 class <%= componentName %> extends React.Component {
@@ -14,6 +17,9 @@ class <%= componentName %> extends React.Component {
         <Normalize />
 
         This is <%= componentName %>!
+<% if(relay) { -%>
+        <<%= componentName %>Container />
+<% } -%>
       </div>
     );
   }

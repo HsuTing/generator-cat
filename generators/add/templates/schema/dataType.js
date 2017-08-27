@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString
 } from 'graphql';
@@ -15,7 +16,7 @@ export const dataFields = {
   description: 'This is the type of the <%= name %>.',
   fields: {
     data: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
       description: 'This is the data of the <%= name %>.'
     }
   }

@@ -11,7 +11,7 @@ module.exports = config => [{
   store: true,
   when: require('./when')('google', config)
 }, {
-  name: 'google_analytics-googe_id',
+  name: 'google_analytics-google_id',
   message: 'id of google analytics',
   store: true,
   when: require('./when')('google_analytics', config)

@@ -3,7 +3,7 @@
 import should from 'should'; // eslint-disable-line no-unused-vars
 import {graphql} from 'graphql';
 
-import schema from './../schemas/schema';
+import schema from 'schemas/schema';
 
 describe('<%= name %>', () => {
   it('# query <%= name %>', () => graphql(schema, `
@@ -12,8 +12,7 @@ describe('<%= name %>', () => {
         data
       }
     }
-  `).then(result => result)
-    .should.be.eventually.equal({
+  `).should.be.eventually.equal({
       data: {
         <%= name %>: {
           data: 'query Data'
@@ -31,8 +30,7 @@ describe('<%= name %>', () => {
         }
       }
     }
-  `).then(result => result)
-    .should.be.eventually.equal({
+  `).should.be.eventually.equal({
       data: {
         modify<%= dataName %>: {
           newData: {

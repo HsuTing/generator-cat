@@ -1,11 +1,11 @@
 'use strict';
 
-require('babel-polyfill');
-const process = require('process');
+import 'babel-polyfill';
+import process from 'process';
 
-const {users, create_user} = require('./users');
+import {users, create_user} from './users';
 
-module.exports = async (db, type = 'sqlite') => {
+export default async (db, type = 'sqlite') => {
   const tables = {
     users
   };

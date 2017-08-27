@@ -15,12 +15,12 @@ module.exports = class extends Base {
   writing() {
     this.writePkgScripts({
       electron: 'electron ./index.js',
-      package: 'yarn prod && node ./bin/build-app.js'
+      package: 'yarn prod && node ./lib/bin/build-app.js'
     });
 
     this.writeFiles({
       'electron.js': 'index.js',
-      'electron-build.js': ['bin/build-app.js', {
+      'electron-build.js': ['src/bin/build-app.js', {
         authorName: this.getAuthor.name,
         name: this.getPkg.name
       }]
