@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "lint": "eslint --cache ./generators ./test --ext .js",
-    "lint:watch": "esw --cache ./generators ./test --ext .js -w --color",
-    "test": "nyc mocha ./test/*.js --recursive --reporter spec --timeout 50000"
+    "lint": "eslint --cache ./generators ./test-generators --ext .js",
+    "lint:watch": "esw --cache ./generators ./test-generators --ext .js -w --color",
+    "test": "nyc mocha ./test-generators/*.js --recursive --reporter spec --timeout 50000"
   },
   "name": "generator-cat",
   "version": "0.8.5",
