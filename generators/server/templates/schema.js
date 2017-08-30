@@ -17,7 +17,7 @@ fs.readdirSync(__dirname)
       return;
 
     const name = file.replace('.js', '');
-    const schema = require(`./${name}`).default || require(`./${name}`);
+    const schema = require(`./${name}`).default || /* istanbul ignore next */ require(`./${name}`);
 
     query = {
       ...query,
