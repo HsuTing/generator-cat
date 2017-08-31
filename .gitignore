@@ -3,4 +3,3 @@ node_modules
 *.swp
 .eslintcache
 coverage
-.nyc_output

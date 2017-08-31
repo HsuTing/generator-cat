@@ -6,19 +6,18 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
-      'nyc',
-      'should',
-      'mocha'
+      'jest'
     ]);
   }
 
   writing() {
     this.writePkgScripts({
-      test: 'nyc mocha ./src/test/*.js --recursive --reporter spec'
+      test: 'jest --silent',
+      'test:watch': 'yarn test -- --watchAll',
     });
 
     this.writeFiles({
-      nycrc: '.nycrc',
+      'jest.config.js': 'jest.config.js',
       'travis.yml': ['.travis.yml', {
         relay: this.checkPlugins('relay')
       }]

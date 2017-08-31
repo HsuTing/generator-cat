@@ -6,8 +6,7 @@ yarn.lock
 .yo-rc.json
 <% if(test) { -%>
 .travis.yml
-test
-.nycrc
+__test__
+jest.config.js
 coverage
-.nyc_output
 <% } -%>

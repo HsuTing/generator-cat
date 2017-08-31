@@ -2,7 +2,8 @@
   "scripts": {
     "lint": "eslint --cache ./generators ./test-generators --ext .js",
     "lint:watch": "esw --cache ./generators ./test-generators --ext .js -w --color",
-    "test": "nyc mocha ./test-generators/*.js --recursive --reporter spec --timeout 50000"
+    "test": "jest --slince",
+    "test:watch": "yarn test -- --watchAll"
   },
   "name": "generator-cat",
   "version": "0.8.5",
@@ -35,8 +36,6 @@
     "eslint": "^4.5.0",
     "eslint-config-google": "^0.9.1",
     "eslint-watch": "^3.1.2",
-    "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
     "pre-commit": "^1.2.2",
     "should": "^11.2.1",
     "yeoman-assert": "^3.0.0",

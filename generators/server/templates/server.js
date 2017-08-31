@@ -28,6 +28,7 @@ const root = path.resolve(__dirname, './../');
 const ENV = process.env.NODE_ENV === 'production';
 
 // middleware
+/* istanbul ignore if */
 if(ENV)
   app.use(morgan('combined', {
     stream: fs.createWriteStream(
@@ -50,6 +51,7 @@ app.use(compress({
 app.use(mount('/public', serve(
   path.resolve(root, 'public')
 )));
+/* istanbul ignore if */
 if(ENV)
   app.use(minify({
     removeComments: true,
@@ -83,4 +85,4 @@ fs.readdirSync(path.resolve(__dirname, './routers'))
   });
 
 // setting
-export default app.listen(ENV ? process.env.PORT : 8000);
+export default app.listen(/* istanbul ignore next */ ENV ? process.env.PORT : 8000);

@@ -6,14 +6,14 @@ import {
 } from 'graphql-relay';
 
 export default nodeDefinitions(
-  (globalId, ctx) => {
+  /* istanbul ignore next */ (globalId, ctx) => {
     // get data from db with type and other information in ctx
     const {type} = fromGlobalId(globalId);
 
     switch(type) {
       default: return null;
     }
-  }, obj => {
+  }, /* istanbul ignore next */ obj => {
     // return the schema which is interfaced Node.
     return null;
   }

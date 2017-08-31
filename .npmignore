@@ -3,7 +3,6 @@ yarn.lock
 .editorconfig
 .eslint*
 .travis.yml
-.nycrc
+jest.config.js
 coverage
-.nycrc_output
 test-generators

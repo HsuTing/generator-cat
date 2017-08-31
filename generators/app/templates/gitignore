@@ -11,5 +11,4 @@ public
 <% } -%>
 <% if(test) { -%>
 coverage
-.nyc_output
 <% } -%>
