@@ -26,6 +26,6 @@ export default ({
     checkContent(website, '"pragma": "React",');
     checkContent(website, '"version": "15.3"');
 
-    checkContent(test, '"mocha": true,');
+    checkContent(test, '"jest": true,');
   });
 };
