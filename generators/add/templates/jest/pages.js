@@ -8,7 +8,7 @@ const pages = [{
 
 describe('pages', () => {
   let server = null;
-  before(() => {
+  beforeAll(() => {
     server = require('./../server').default;
   });
 
@@ -19,7 +19,7 @@ describe('pages', () => {
       ).resolves.toBe(200));
   });
 
-  after(() => {
+  afterAll(() => {
     server.close();
   });
 });
