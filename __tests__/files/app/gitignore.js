@@ -19,6 +19,5 @@ export default ({
     checkContent(server && website, 'public');
 
     checkContent(test, 'coverage');
-    checkContent(test, '.nyc_output');
   });
 };

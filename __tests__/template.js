@@ -62,7 +62,7 @@ const templates = [{
 describe('template subgenerator', () => {
   templates.forEach(({name, prompts}) => {
     describe(`# ${name}`, () => {
-      before(() => helpers
+      beforeAll(() => helpers
         .run(path.resolve(__dirname, './../generators/template'))
         .withPrompts({
           website: true,

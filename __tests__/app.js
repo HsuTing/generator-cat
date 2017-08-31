@@ -27,7 +27,7 @@ import webpack from './files/webpack/webpack';
 // template
 import template from './files/template/template';
 
-import testPlugins from './testPlugins';
+import testPlugins from './utils/testPlugins';
 
 const testGraphql = ({website, graphql, chooseType, ...config}) => {
   describe(`### ${graphql ? '' : 'no '}graphql`, () => {

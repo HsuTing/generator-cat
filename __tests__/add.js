@@ -10,7 +10,7 @@ import action from './files/add/reducer/action';
 
 describe('add subgenerator', () => {
   describe('# router', () => {
-    before(() => helpers
+    beforeAll(() => helpers
       .run(path.resolve(__dirname, './../generators/add'))
       .withPrompts({
         items: ['router'],
@@ -26,7 +26,7 @@ describe('add subgenerator', () => {
   });
 
   describe('# reducer', () => {
-    before(() => helpers
+    beforeAll(() => helpers
       .run(path.resolve(__dirname, './../generators/add'))
       .withPrompts({
         items: ['reducer'],

@@ -19,9 +19,8 @@ export default ({
     });
 
     checkContent(test, '.travis.yml');
-    checkContent(test, 'test');
-    checkContent(test, '.nycrc');
+    checkContent(test, '__tests__');
+    checkContent(test, 'jest.config.js');
     checkContent(test, 'coverage');
-    checkContent(test, '.nyc_output');
   });
 };

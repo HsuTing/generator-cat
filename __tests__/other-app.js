@@ -3,13 +3,13 @@
 import path from 'path';
 import helpers from 'yeoman-test';
 
-import defaultSetting from './defaultSetting';
+import defaultSetting from './utils/defaultSetting';
 import npmignore from './files/npm/npmignore';
 import pkg from './files/pkg';
 
 describe('other app test', () => {
   describe('# use npm and test at the same time', () => {
-    before(() => helpers
+    beforeAll(() => helpers
       .run(path.resolve(__dirname, './../generators/app'))
       .withPrompts({
         ...defaultSetting,
@@ -30,7 +30,7 @@ describe('other app test', () => {
       plugins: []
     };
 
-    before(() => helpers
+    beforeAll(() => helpers
       .run(path.resolve(__dirname, './../generators/app'))
       .withPrompts(config));
 

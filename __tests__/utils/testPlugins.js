@@ -4,29 +4,29 @@ import path from 'path';
 import helpers from 'yeoman-test';
 
 import defaultSetting from './defaultSetting';
-import pkg from './files/pkg';
+import pkg from './../files/pkg';
 // app
-import editorconfig from './files/app/editorconfig';
-import gitignore from './files/app/gitignore';
-import readme from './files/app/readme';
+import editorconfig from './../files/app/editorconfig';
+import gitignore from './../files/app/gitignore';
+import readme from './../files/app/readme';
 // babel
-import babelrc from './files/babel/babelrc';
+import babelrc from './../files/babel/babelrc';
 // eslint
-import eslintrc from './files/eslint/eslintrc';
+import eslintrc from './../files/eslint/eslintrc';
 // npm
-import npmignore from './files/npm/npmignore';
+import npmignore from './../files/npm/npmignore';
 // test
-import nycrc from './files/test/nycrc';
-import travis from './files/test/travis';
-import testGraphql from './files/add/test/graphql';
-import pages from './files/add/test/pages';
+import jest from './../files/test/jest';
+import travis from './../files/test/travis';
+import testGraphql from './../files/add/jest/graphql';
+import pages from './../files/add/jest/pages';
 // db
-import testDb from './files/db/db';
-import tables from './files/db/tables';
-import table from './files/add/db/table';
+import testDb from './../files/db/db';
+import tables from './../files/db/tables';
+import table from './../files/add/db/table';
 
 const setSetting = prompts => helpers
-  .run(path.resolve(__dirname, './../generators/app'))
+  .run(path.resolve(__dirname, './../../generators/app'))
   .withPrompts({
     ...defaultSetting,
     ...prompts
@@ -82,7 +82,7 @@ export default propsConfig => {
       plugins: []
     };
 
-    before(() => setSetting(config));
+    beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
   });
@@ -93,7 +93,7 @@ export default propsConfig => {
       plugins: ['npm']
     };
 
-    before(() => setSetting(config));
+    beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
     npmignore(checkPlugins(config.plugins));
@@ -105,7 +105,7 @@ export default propsConfig => {
       plugins: ['heroku']
     };
 
-    before(() => setSetting(config));
+    beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
   });
@@ -117,10 +117,10 @@ export default propsConfig => {
     };
     const {graphql, chooseType} = config;
 
-    before(() => setSetting(config));
+    beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
-    nycrc(config);
+    jest(config);
     travis(config);
 
     if(chooseType === 'server')
@@ -141,7 +141,7 @@ export default propsConfig => {
           plugins: []
         };
 
-        before(() => setSetting({
+        beforeAll(() => setSetting({
           ...config,
           db
         }));

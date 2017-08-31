@@ -2,7 +2,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import should from 'should'; // eslint-disable-line no-unused-vars
 import chalk from 'chalk';
 
 const getTemplateFolders = now_path => fs.readdirSync(now_path)
@@ -65,7 +64,7 @@ describe('check list', () => {
         console.log(chalk.red(folder));
     });
 
-    testFolders.should.containDeep(templateFolders);
+    expect(testFolders.sort()).toEqual(templateFolders.sort());
   });
 
   it('# it should be included in test files', () => {
@@ -78,7 +77,7 @@ describe('check list', () => {
       if(!result)
         console.log(chalk.red(folder));
 
-      result.should.be.true();
+      expect(result).toBe(true);
     });
   });
 });
