@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "lint": "eslint --cache ./generators ./test-generators --ext .js",
-    "lint:watch": "esw --cache ./generators ./test-generators --ext .js -w --color",
+    "lint": "eslint --cache ./generators ./__tests__ --ext .js",
+    "lint:watch": "esw --cache ./generators ./__tests__ --ext .js -w --color",
     "test": "jest --silent",
     "test:watch": "yarn test -- --watchAll"
   },

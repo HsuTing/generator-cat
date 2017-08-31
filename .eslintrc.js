@@ -12,9 +12,9 @@ module.exports = {
     }
   },
   "env": {
+    "jest": true,
     "browser": true,
-    "node": true,
-    "mocha": true
+    "node": true
   },
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
