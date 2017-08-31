@@ -6,7 +6,6 @@ const extend = _.merge;
 
 const Base = require('./../base');
 
-/* istanbul ignore next */
 module.exports = class extends Base {
   constructor(args, opts) {
     super(args, opts);
@@ -34,8 +33,8 @@ module.exports = class extends Base {
       message: 'Choose add items',
       when: this.state.items.length === 0,
       choices: fs.readdirSync(__dirname).filter(file => !(
-        file[0] === '.' || file === 'templates' ||
-        file === 'index.js' || file === 'needName.js'
+        file[0] === '.' ||
+        ['templates', 'index.js', 'needName.js'].includes(file)
       )).map(file => file.replace('.js', ''))
     }]).then(function(state) {
       this.state = extend(this.state, state);

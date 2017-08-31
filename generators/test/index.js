@@ -2,7 +2,6 @@
 
 const Base = require('./../base');
 
-/* istanbul ignore next */
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
@@ -28,14 +27,14 @@ module.exports = class extends Base {
     if(!this.config.get('cat')) {
       if(this.checkPlugins('server'))
         this.composeWith(require.resolve('./../add'), {
-          item: 'test',
+          item: 'jest',
           name: 'pages',
           type: 'server'
         });
 
       if(this.checkPlugins('graphql'))
         this.composeWith(require.resolve('./../add'), {
-          item: 'test',
+          item: 'jest',
           name: 'data',
           type: 'graphql'
         });

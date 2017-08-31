@@ -9,7 +9,6 @@ const extend = _.merge;
 const Base = require('./../base');
 const writePkg = require('./utils/writePkg');
 
-/* istanbul ignore next */
 module.exports = class extends Base {
   initializing() {
     this.log(yosay(

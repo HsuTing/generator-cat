@@ -2,7 +2,6 @@
 
 const Base = require('./../base');
 
-/* istanbul ignore next */
 module.exports = class extends Base {
   default() {
     if(this.checkPlugins('react')) {

@@ -4,7 +4,6 @@ const _ = require('lodash');
 
 const NeedName = require('./needName');
 
-/* istanbul ignore next */
 module.exports = class extends NeedName {
   constructor(args, opts) {
     super(args, opts);

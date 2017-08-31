@@ -2,7 +2,6 @@
 
 const Base = require('./../base');
 
-/* istanbul ignore next */
 module.exports = class extends Base {
   constructor(args, opts) {
     super(args, opts);

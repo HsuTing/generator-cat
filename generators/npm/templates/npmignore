@@ -6,7 +6,7 @@ yarn.lock
 .yo-rc.json
 <% if(test) { -%>
 .travis.yml
-__test__
+__tests__
 jest.config.js
 coverage
 <% } -%>

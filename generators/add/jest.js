@@ -4,7 +4,6 @@ const _ = require('lodash');
 
 const NeedName = require('./needName');
 
-/* istanbul ignore next */
 module.exports = class extends NeedName {
   constructor(args, opts) {
     super(args, opts);
@@ -28,7 +27,7 @@ module.exports = class extends NeedName {
     switch(this.options.type) {
       case 'graphql':
         this.writeFiles({
-          '__test__/graphql.test.js': [`src/test/${name}.js`, {
+          'jest/graphql.js': [`src/__tests__/${name}.js`, {
             name,
             dataName
           }]
@@ -37,7 +36,7 @@ module.exports = class extends NeedName {
 
       case 'server':
         this.writeFiles({
-          '__test__/pages.test.js': 'src/test/pages.js'
+          'jest/pages.js': 'src/__tests__/pages.js'
         });
         break;
     }
