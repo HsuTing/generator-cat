@@ -25,7 +25,7 @@ module.exports = class extends Base {
       message: 'Base url of this template',
       default: this.getPkg.homepage,
       when: !this.state.url,
-      validate: value => validator.isURL(value) ? true : 'Must be an url.'
+      validate: /* istanbul ignore next */ value => validator.isURL(value) ? true : 'Must be an url.'
     }, {
       type: 'checkbox',
       name: 'otherSettings',

@@ -6,11 +6,11 @@ export default () => {
   it('.nycrc', () => {
     assert.jsonFileContent('package.json', {
       scripts: {
-        test: 'jest -- silent',
-        'test:watch': 'yarn test -- --watch'
+        test: 'jest --silent',
+        'test:watch': 'yarn test -- --watchAll'
       }
     });
 
-    assert.file('.nycrc');
+    assert.file('jest.config.js');
   });
 };

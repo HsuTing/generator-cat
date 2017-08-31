@@ -1,8 +1,14 @@
 module.exports = {
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/files/',
+    '/utils/'
+  ],
   collectCoverage: true,
   collectCoverageFrom: [
     'generators/**/*.js',
-    '!**/templates/**'
+    '!**/templates/**',
+    '__test__'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [

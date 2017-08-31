@@ -24,6 +24,7 @@ module.exports = class extends Base {
   }
 
   default() {
+    /* istanbul ignore next */
     if(!this.config.get('cat')) {
       if(this.checkPlugins('server'))
         this.composeWith(require.resolve('./../add'), {

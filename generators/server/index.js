@@ -60,6 +60,7 @@ module.exports = class extends Base {
   }
 
   default() {
+    /* istanbul ignore next */
     if(!this.config.get('cat')) {
       this.composeWith(require.resolve('./../add'), {
         item: 'router',

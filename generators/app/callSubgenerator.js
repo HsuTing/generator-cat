@@ -25,6 +25,7 @@ module.exports = class extends Base {
       this.composeWith(require.resolve('./../desktop-app'));
 
     // normal subgenerator
+    /* istanbul ignore next */
     if(!this.getPkg.license)
       this.composeWith('generator-license/app', {
         name: this.getAuthor.name,

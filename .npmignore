@@ -5,4 +5,4 @@ yarn.lock
 .travis.yml
 jest.config.js
 coverage
-test-generators
+__tests__

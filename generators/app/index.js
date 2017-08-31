@@ -31,12 +31,12 @@ module.exports = class extends Base {
       message: 'Project name',
       default: path.basename(process.cwd()),
       filter: _.kebabCase,
-      validate: /* istanbul ignore next */str => str.length > 0 ? true : 'Can not empty.',
+      validate: /* istanbul ignore next */ str => str.length > 0 ? true : 'Can not empty.',
       when: !this.getPkg.name
     }, {
       name: 'description',
       message: 'Description',
-      validate: /* istanbul ignore next */str => str.length > 0 ? true : 'Can not empty.',
+      validate: /* istanbul ignore next */ str => str.length > 0 ? true : 'Can not empty.',
       when: !this.getPkg.description
     }, {
       name: 'authorName',
@@ -134,7 +134,8 @@ module.exports = class extends Base {
   }
 
   end() {
-    if(!this.options.skipInstall && this.state.chooseType.length !== 0)
+    /* istanbul ignore if */
+    if(!this.options.skipInstall && /* istanbul ignore next */ this.state.chooseType.length !== 0)
       this.spawnCommand('yarn', ['build']);
 
     this.config.set('cat', true);

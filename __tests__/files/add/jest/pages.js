@@ -3,7 +3,7 @@
 import assert from 'yeoman-assert';
 
 export default () => {
-  it('src/test/pages.js', () => {
-    assert.file('src/test/pages.js');
+  it('src/__tests__/pages.js', () => {
+    assert.file('src/__tests__/pages.js');
   });
 };

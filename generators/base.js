@@ -27,7 +27,7 @@ module.exports = class extends Generator {
       });
   }
 
-  addDependencies(dependencies = [], addFunc = () => {}) {
+  addDependencies(dependencies, addFunc = () => {}) {
     this.getPlugins.forEach(plugin => {
       (addFunc(plugin) || []).forEach(newDependencies => {
         dependencies.push(newDependencies);
@@ -36,7 +36,7 @@ module.exports = class extends Generator {
     this.props.dependencies = dependencies;
   }
 
-  addDevDependencies(devDependencies = [], addFunc = () => {}) {
+  addDevDependencies(devDependencies, addFunc = () => {}) {
     this.getPlugins.forEach(plugin => {
       (addFunc(plugin) || []).forEach(newDevDependencies => {
         devDependencies.push(newDevDependencies);
@@ -72,6 +72,7 @@ module.exports = class extends Generator {
   get getAuthor() {
     const pkg = this.getPkg;
 
+    /* istanbul ignore if */
     if(_.isString(pkg.author)) {
       const author = parseAuthor(pkg.author);
 

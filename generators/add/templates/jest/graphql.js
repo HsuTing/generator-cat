@@ -1,18 +1,17 @@
 'use strict';
 
-import should from 'should'; // eslint-disable-line no-unused-vars
 import {graphql} from 'graphql';
 
 import schema from 'schemas/schema';
 
 describe('<%= name %>', () => {
-  it('# query <%= name %>', () => graphql(schema, `
+  it('# query <%= name %>', () => expect(graphql(schema, `
     query {
       <%= name %>(input: "test") {
         data
       }
     }
-  `).should.be.eventually.equal({
+  `)).resolves.toMatchObject({
       data: {
         <%= name %>: {
           data: 'query Data'
@@ -20,7 +19,7 @@ describe('<%= name %>', () => {
       }
     }));
 
-  it('# mutation <%= name %>', () => graphql(schema, `
+  it('# mutation <%= name %>', () => expect(graphql(schema, `
     mutation {
       modify<%= dataName %>(input: {
         data: "test"
@@ -30,7 +29,7 @@ describe('<%= name %>', () => {
         }
       }
     }
-  `).should.be.eventually.equal({
+  `)).resolves.toMatchObject({
       data: {
         modify<%= dataName %>: {
           newData: {
