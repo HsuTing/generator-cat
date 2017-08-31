@@ -8,7 +8,6 @@ module.exports = {
   collectCoverageFrom: [
     'generators/**/*.js',
     '!**/templates/**',
-    '__test__'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [

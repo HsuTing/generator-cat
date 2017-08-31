@@ -46,6 +46,7 @@ const runDefaultTest = config => {
   gitignore({
     website,
     server,
+    graphql,
     ...checkPlugins(plugins)
   });
   babelrc({

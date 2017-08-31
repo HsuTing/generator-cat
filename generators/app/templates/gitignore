@@ -9,6 +9,10 @@ lib
 public
 <% } -%>
 <% } -%>
+<% if(relay) { -%>
+schema.graphql
+__generated__
+<% } -%>
 <% if(test) { -%>
 coverage
 <% } -%>

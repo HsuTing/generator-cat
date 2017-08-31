@@ -44,6 +44,7 @@ module.exports = class extends Base {
       gitignore: ['.gitignore', {
         server: this.checkPlugins('server'),
         react: this.checkPlugins('react'),
+        relay: this.checkPlugins('relay'),
         test: this.checkPlugins('test')
       }]
     });

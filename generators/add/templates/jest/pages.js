@@ -16,7 +16,7 @@ describe('pages', () => {
     it(path, () => expect(
       fetch(`http://localhost:8000${path}`)
         .then(res => res.status)
-      ).resolves.toBe(200);
+      ).resolves.toBe(200));
   });
 
   after(() => {

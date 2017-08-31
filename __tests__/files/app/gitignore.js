@@ -11,12 +11,16 @@ const checkContent = (status, content) => (
 export default ({
   website,
   server,
+  graphql,
   test
 }) => {
   it('.gitignore', () => {
     checkContent(server, '*.log');
 
     checkContent(server && website, 'public');
+
+    checkContent(website && graphql, 'schema.graphql');
+    checkContent(website && graphql, '__generated__');
 
     checkContent(test, 'coverage');
   });
