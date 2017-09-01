@@ -14,8 +14,6 @@ class <%= componentName %> extends React.Component {
   render() {
     return (
       <div>
-        <Normalize />
-
         This is <%= componentName %>!
 <% if(relay) { -%>
         <<%= componentName %>Container />
@@ -28,7 +26,11 @@ class <%= componentName %> extends React.Component {
 /* eslint-disable react/display-name, react/prop-types */
 export default ({radiumConfig, ...props}) => (
   <Wrapper radiumConfig={radiumConfig}>
-    <<%= componentName %> {...props} />
+    <div>
+      <Normalize />
+
+      <<%= componentName %> {...props} />
+    </div>
   </Wrapper>
 );
 /* eslint-enable react/display-name, react/prop-types */
