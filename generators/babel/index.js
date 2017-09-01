@@ -30,8 +30,8 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
-      babel: 'rm -rf ./lib && babel src --out-dir lib',
-      'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+      babel: 'rm -rf ./lib && babel src --out-dir lib --ignore __tests__',
+      'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib --ignore __tests__'
     });
 
     this.writeFiles({
