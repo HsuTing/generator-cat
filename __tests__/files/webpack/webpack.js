@@ -16,8 +16,8 @@ export default ({
   it('webpack.config.js', () => {
     assert.jsonFileContent('package.json', {
       scripts: {
-        babel: 'rm -rf ./lib && babel src --out-dir lib',
-        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib'
+        webpack: 'cross-env NODE_ENV=production webpack',
+        'webpack-server': 'webpack-dev-server --content-base src --hot --inline'
       }
     });
 
