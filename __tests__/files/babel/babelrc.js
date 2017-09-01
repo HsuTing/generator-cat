@@ -48,8 +48,8 @@ export default ({
 
     assert.jsonFileContent('package.json', {
       scripts: {
-        babel: 'rm -rf ./lib && babel src --out-dir lib  --ignore __tests__',
-        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib  --ignore __tests__'
+        babel: 'rm -rf ./lib && babel src --out-dir lib --ignore __tests__',
+        'babel:watch': 'rm -rf ./lib && babel -w src --out-dir lib --ignore __tests__'
       }
     });
 
