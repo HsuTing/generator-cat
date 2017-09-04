@@ -20,6 +20,7 @@ import jest from './../files/test/jest';
 import travis from './../files/test/travis';
 import testGraphql from './../files/add/jest/graphql';
 import pages from './../files/add/jest/pages';
+import component from './../files/add/jest/component';
 // db
 import testDb from './../files/db/db';
 import tables from './../files/db/tables';
@@ -116,13 +117,16 @@ export default propsConfig => {
       ...propsConfig,
       plugins: ['test']
     };
-    const {graphql, chooseType} = config;
+    const {graphql, chooseType, website} = config;
 
     beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
     jest(config);
     travis(config);
+
+    if(website)
+      component();
 
     if(chooseType === 'server')
       pages();

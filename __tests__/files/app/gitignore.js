@@ -23,5 +23,6 @@ export default ({
     checkContent(website && graphql, '__generated__');
 
     checkContent(test, 'coverage');
+    checkContent(test && website, '__snapshots__');
   });
 };

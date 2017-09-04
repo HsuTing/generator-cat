@@ -25,6 +25,14 @@ module.exports = class extends NeedName {
     const dataName = _.upperFirst(name);
 
     switch(this.options.type) {
+      case 'react':
+        this.writeFiles({
+          'jest/component.js': [`src/__tests__/${dataName}.js`, {
+            name: dataName
+          }]
+        });
+        break;
+
       case 'graphql':
         this.writeFiles({
           'jest/graphql.js': [`src/__tests__/${name}.js`, {

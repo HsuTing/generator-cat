@@ -4,9 +4,13 @@ const Base = require('./../base');
 
 module.exports = class extends Base {
   initializing() {
-    this.addDevDependencies([
-      'jest'
-    ]);
+    this.addDevDependencies(['jest'], plugin => {
+      switch(plugin) {
+        case 'react': return [
+          'react-test-renderer'
+        ];
+      }
+    });
   }
 
   writing() {
@@ -16,7 +20,9 @@ module.exports = class extends Base {
     });
 
     this.writeFiles({
-      'jest.config.js': 'jest.config.js',
+      'jest.config.js': ['jest.config.js', {
+        react: this.checkPlugins('react')
+      }],
       'travis.yml': ['.travis.yml', {
         relay: this.checkPlugins('relay')
       }]
@@ -26,6 +32,13 @@ module.exports = class extends Base {
   default() {
     /* istanbul ignore next */
     if(!this.config.get('cat')) {
+      if(this.checkPlugins('react'))
+        this.composeWith(require.resolve('./../add'), {
+          item: 'jest',
+          name: 'Index',
+          type: 'react'
+        });
+
       if(this.checkPlugins('server'))
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',

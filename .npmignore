@@ -3,6 +3,6 @@ yarn.lock
 .editorconfig
 .eslint*
 .travis.yml
-jest.config.js
 coverage
 __tests__
+test.config.js

@@ -2,8 +2,16 @@
 
 import assert from 'yeoman-assert';
 
-export default () => {
-  it('.nycrc', () => {
+const checkContent = (status, content) => (
+  status ?
+    assert.fileContent('jest.config.js', content) :
+    assert.noFileContent('jest.config.js', content)
+);
+
+export default ({
+  website
+}) => {
+  it('jest.config.js', () => {
     assert.jsonFileContent('package.json', {
       scripts: {
         test: 'jest --silent',
@@ -11,6 +19,6 @@ export default () => {
       }
     });
 
-    assert.file('jest.config.js');
+    checkContent(website, '\'!**/public/**\',');
   });
 };
