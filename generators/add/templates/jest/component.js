@@ -1,14 +1,13 @@
 'use strict';
 
 import React from 'react';
-import renderer from 'react-test-renderer';
+import {shallow} from 'enzyme';
 
 import <%= name %> from 'components/<%= name %>';
 
 it('<%= name %>', () => {
-  const component = renderer.create(
+  const wrapper = shallow(
     <<%= name %> />
   );
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(wrapper.html()).toBe('This is <%= componentName %>!');
 });

@@ -7,7 +7,7 @@ module.exports = class extends Base {
     this.addDevDependencies(['jest'], plugin => {
       switch(plugin) {
         case 'react': return [
-          'react-test-renderer'
+          'enzyme'
         ];
       }
     });
@@ -15,7 +15,7 @@ module.exports = class extends Base {
 
   writing() {
     this.writePkgScripts({
-      test: 'jest --silent -u',
+      test: 'jest --silent',
       'test:watch': 'yarn test -- --watchAll',
     });
 

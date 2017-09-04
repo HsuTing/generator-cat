@@ -16,5 +16,9 @@ export default () => {
       'src/__tests__/Index.js',
       '<Index />'
     );
+    assert.fileContent(
+      'src/__tests__/Index.js',
+      'expect(wrapper.html()).toBe(\'This is Index!\');'
+    );
   });
 };
