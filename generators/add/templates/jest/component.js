@@ -9,5 +9,5 @@ it('<%= name %>', () => {
   const wrapper = shallow(
     <<%= name %> />
   );
-  expect(wrapper.html()).toBe('This is <%= componentName %>!');
+  expect(wrapper.html()).toBe('This is <%= name %>!');
 });
