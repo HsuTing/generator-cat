@@ -7,6 +7,7 @@ module.exports = class extends Base {
     this.addDevDependencies(['jest'], plugin => {
       switch(plugin) {
         case 'react': return [
+          'react-test-renderer',
           'enzyme'
         ];
       }
