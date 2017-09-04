@@ -14,7 +14,7 @@ export default ({
   it('jest.config.js', () => {
     assert.jsonFileContent('package.json', {
       scripts: {
-        test: 'jest --silent',
+        test: 'jest --silent -u',
         'test:watch': 'yarn test -- --watchAll'
       }
     });
