@@ -15,7 +15,4 @@ __generated__
 <% } -%>
 <% if(test) { -%>
 coverage
-<% if(react) { -%>
-__snapshots__
-<% } -%>
 <% } -%>
