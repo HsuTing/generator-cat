@@ -1,4 +1,7 @@
 module.exports = {
+<% if(mobile_app) { -%>
+  preset: 'jest-expo',
+<% } -%>
   testPathIgnorePatterns: [
     '/node_modules/',
     '/lib/',
@@ -7,7 +10,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.js',
-<% if(react) { -%>
+<% if(react && !mobile_app) { -%>
     '!**/public/**',
 <% } -%>
     '!**/node_modules/**'

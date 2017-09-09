@@ -1,0 +1,24 @@
+{
+  "presets": [
+    "babel-preset-expo",
+    "env",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-object-assign",
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+<% Object.keys(alias).forEach((key, index) => { -%>
+        "<%= key %>": "<%= alias[key] %>"<% if(index !== Object.keys(alias).length - 1) { %>,<% } %>
+<% }) -%>
+      }
+    }]
+  ],
+  "env": {
+    "development": {
+      "plugins": ["transform-react-jsx-source"]
+    }
+  }
+}

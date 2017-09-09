@@ -45,7 +45,8 @@ module.exports = class extends Base {
         server: this.checkPlugins('server'),
         react: this.checkPlugins('react'),
         relay: this.checkPlugins('relay'),
-        test: this.checkPlugins('test')
+        test: this.checkPlugins('test'),
+        mobile_app: this.checkPlugins('mobile app')
       }]
     });
 

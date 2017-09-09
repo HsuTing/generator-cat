@@ -46,7 +46,7 @@ module.exports = (props, currentPkg) => {
       email: props.authorEmail,
       url: props.authorUrl
     },
-    scripts,
+    scripts: props.plugins.includes('mobile app') ? {} : scripts,
     main: props.plugins.includes('desktop app') ? './index.js' : './lib/index.js',
     keywords: props.keywords ? _.uniq(props.keywords.concat(props.keywords)) : [],
     'pre-commit': [

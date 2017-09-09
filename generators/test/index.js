@@ -22,10 +22,12 @@ module.exports = class extends Base {
 
     this.writeFiles({
       'jest.config.js': ['jest.config.js', {
-        react: this.checkPlugins('react')
+        react: this.checkPlugins('react'),
+        mobile_app: this.checkPlugins('mobile app')
       }],
       'travis.yml': ['.travis.yml', {
-        relay: this.checkPlugins('relay')
+        relay: this.checkPlugins('relay'),
+        mobile_app: this.checkPlugins('mobile app')
       }]
     });
   }
@@ -33,7 +35,7 @@ module.exports = class extends Base {
   default() {
     /* istanbul ignore next */
     if(!this.config.get('cat')) {
-      if(this.checkPlugins('react'))
+      if(this.checkPlugins('react') && !this.checkPlugins('mobile app'))
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
           name: 'Index',

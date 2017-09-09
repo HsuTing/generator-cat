@@ -2,7 +2,9 @@ node_modules
 .DS_Store
 *.swp
 .eslintcache
+<% if(!mobile_app) { -%>
 lib
+<% } -%>
 <% if(server) { -%>
 *.log
 <% if(react) { -%>
@@ -15,4 +17,7 @@ __generated__
 <% } -%>
 <% if(test) { -%>
 coverage
+<% } -%>
+<% if(mobile_app) { -%>
+.expo
 <% } -%>
