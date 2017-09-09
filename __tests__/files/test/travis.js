@@ -10,7 +10,8 @@ const checkContent = (status, content) => (
 
 export default ({
   website,
-  graphql
+  graphql,
+  mobile_app
 }) => {
   it('.travis.yml', () => {
     checkContent(website && graphql, 'before_install:');
@@ -24,5 +25,8 @@ export default ({
     checkContent(website && graphql, '- make');
     checkContent(website && graphql, '- sudo make install');
     checkContent(website && graphql, '- cd ./../');
+
+    checkContent(!mobile_app, '- yarn build');
+    checkContent(!mobile_app, '- yarn prod');
   });
 };

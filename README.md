@@ -33,7 +33,9 @@ We does not recommend using those subgenerators because the most of those subgen
     - relay
     - router
     - schema
-    - test
+    - jest
+
+- `cat:mobile-app`: Use after run `create-react-native-app`.
 
 ## Getting To Know Yeoman
 

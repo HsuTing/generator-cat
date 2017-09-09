@@ -9,7 +9,8 @@ const checkContent = (status, content) => (
 );
 
 export default ({
-  website
+  website,
+  mobile_app
 }) => {
   it('jest.config.js', () => {
     assert.jsonFileContent('package.json', {
@@ -19,6 +20,7 @@ export default ({
       }
     });
 
-    checkContent(website, '\'!**/public/**\',');
+    checkContent(mobile_app, 'preset: \'jest-expo\',');
+    checkContent(website && !mobile_app, '\'!**/public/**\',');
   });
 };

@@ -1,8 +1,6 @@
 {
   "presets": [
-    "babel-preset-expo",
-    "env",
-    "stage-0"
+    "babel-preset-expo"
   ],
   "plugins": [
     "transform-decorators-legacy",
@@ -10,9 +8,9 @@
     ["module-resolver", {
       "root": ["./src"],
       "alias": {
-<% Object.keys(alias).forEach((key, index) => { -%>
-        "<%= key %>": "<%= alias[key] %>"<% if(index !== Object.keys(alias).length - 1) { %>,<% } %>
-<% }) -%>
+        "utils": "utils",
+        "components": "components",
+        "componentsShare": "components/share"
       }
     }]
   ],

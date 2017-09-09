@@ -44,7 +44,7 @@ const getTestFolders = now_path => fs.readdirSync(now_path)
 
     if(stats.isDirectory())
       return result.concat(getTestFolders(childFilePath));
-    else
+    else if(!(/.swp/g).test(file))
       result.push(
         childFilePath.replace(testFolderRoot, '').slice(1)
       );

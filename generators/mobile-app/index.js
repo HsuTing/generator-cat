@@ -23,18 +23,11 @@ module.exports = class extends Base {
     this.state = {};
     this.addDevDependencies([
       'pre-commit',
+      'jest',
       'babel-plugin-transform-object-assign',
       'babel-plugin-module-resolver',
-      'babel-plugin-transform-decorators-legacy',
-      'babel-preset-env',
-      'babel-preset-stage-0'
+      'babel-plugin-transform-decorators-legacy'
     ]);
-
-    this.addAlias({
-      utils: 'utils',
-      components: 'components',
-      componentsShare: 'components/share'
-    });
   }
 
   prompting() {
@@ -89,7 +82,9 @@ module.exports = class extends Base {
       });
 
     this.composeWith(require.resolve('./../eslint'));
-    this.composeWith(require.resolve('./../test'));
+    this.composeWith(require.resolve('./../test'), {
+      skipInstall: true
+    });
   }
 
   writing() {
@@ -122,10 +117,8 @@ module.exports = class extends Base {
     this.writeFiles({
       'App.js': 'App.js',
       'Component.js': 'src/components/App.js',
-      babelrc: ['.babelrc', {
-        alias: this.getAlias
-      }],
-      'test.js': 'src/__tests__/App.js'
+      babelrc: '.babelrc',
+      'test-app.js': 'src/__tests__/App.js'
     });
   }
 
