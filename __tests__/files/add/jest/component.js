@@ -18,7 +18,7 @@ export default () => {
     );
     assert.fileContent(
       'src/__tests__/Index.js',
-      '<div>This is Index!</div>'
+      '<div>This is Index!</div> // eslint-disable-line react/jsx-key'
     );
   });
 };
