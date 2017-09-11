@@ -18,7 +18,7 @@ export default () => {
     );
     assert.fileContent(
       'src/__tests__/Index.js',
-      'expect(wrapper.html()).toBe(\'This is Index!\');'
+      '<div>This is Index!</div>'
     );
   });
 };
