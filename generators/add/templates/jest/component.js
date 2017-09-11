@@ -11,6 +11,6 @@ it('<%= name %>', () => {
   );
   
   expect(wrapper.containsAnyMatchingElements([
-    <div>This is <%= name %>!</div>
+    <div>This is <%= name %>!</div> // eslint-disable-line react/jsx-key
   ])).toBe(true);
 });
