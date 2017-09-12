@@ -5,7 +5,7 @@ import {
   Environment,
   Network,
   RecordSource,
-  Store,
+  Store
 } from 'relay-runtime';
 
 const source = new RecordSource();
@@ -22,8 +22,8 @@ const network = Network.create((
   },
   body: JSON.stringify({
     query: operation.text,
-    variables,
-  }),
+    variables
+  })
 }).then(response => response.json()));
 
 export default new Environment({

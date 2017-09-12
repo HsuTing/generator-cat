@@ -73,13 +73,14 @@ module.exports = class extends Base {
 
   default() {
     /* istanbul ignore next */
-    if(!this.getPkg.license)
+    if(!this.getPkg.license) {
       this.composeWith('generator-license/app', {
         name: this.getAuthor.name || this.state.authorName,
         email: this.getAuthor.email || this.state.authorEmail,
         website: this.getAuthor.url || this.state.authorUrl,
         defaultLicense: 'MIT'
       });
+    }
 
     this.composeWith(require.resolve('./../eslint'));
     this.composeWith(require.resolve('./../test'), {

@@ -20,7 +20,7 @@ describe('add subgenerator', () => {
     it('src/routers/test.js', () => {
       assert.fileContent(
         'src/routers/test.js',
-        'const router = Router({prefix: \'/test\'}).loadMethods();'
+        'const router = koaRouter({prefix: \'/test\'}).loadMethods();'
       );
     });
   });

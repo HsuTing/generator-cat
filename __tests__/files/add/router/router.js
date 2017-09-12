@@ -19,7 +19,7 @@ export default ({
 
     checkContent(website, 'const ENV = process.env.NODE_ENV === \'production\';');
 
-    checkContent(true, 'const router = Router().loadMethods();');
+    checkContent(true, 'const router = koaRouter().loadMethods();');
 
     if(website) {
       checkContent(website, 'router.get(\'/\', reactRender(<Index />, {');

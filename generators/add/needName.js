@@ -30,7 +30,7 @@ module.exports = class extends Base {
     }.bind(this));
   }
 
-  get getName () {
+  get getName() {
     return this.options.name || this.state.name;
   }
-}
+};

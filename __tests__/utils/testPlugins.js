@@ -21,10 +21,6 @@ import travis from './../files/test/travis';
 import testGraphql from './../files/add/jest/graphql';
 import pages from './../files/add/jest/pages';
 import component from './../files/add/jest/component';
-// db
-import testDb from './../files/db/db';
-import tables from './../files/db/tables';
-import table from './../files/add/db/table';
 
 const setSetting = prompts => helpers
   .run(path.resolve(__dirname, './../../generators/app'))
@@ -40,7 +36,7 @@ const checkPlugins = plugins => ({
 });
 
 const runDefaultTest = config => {
-  const {website, graphql, chooseType, plugins, db, otherTest} = config;
+  const {website, graphql, chooseType, plugins, otherTest} = config;
   const server = chooseType === 'server';
 
   editorconfig();
@@ -53,8 +49,7 @@ const runDefaultTest = config => {
   babelrc({
     website,
     graphql,
-    server,
-    db
+    server
   });
   eslintrc({
     website,
@@ -134,34 +129,4 @@ export default propsConfig => {
     if(graphql)
       testGraphql();
   });
-
-  const {chooseType} = propsConfig;
-
-  if(chooseType === 'server')
-    [true, false].forEach(db => {
-      describe(`#### ${db ? '' : 'no '}db`, () => {
-        const otherTest = [...propsConfig.otherTest];
-        const config = {
-          ...propsConfig,
-          plugins: []
-        };
-
-        beforeAll(() => setSetting({
-          ...config,
-          db
-        }));
-
-        if(db) {
-          otherTest.push(testDb);
-          otherTest.push(tables);
-          otherTest.push(table);
-        }
-
-        runDefaultTest({
-          ...config,
-          otherTest,
-          db
-        });
-      });
-    });
 };

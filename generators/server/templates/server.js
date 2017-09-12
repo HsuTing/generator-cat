@@ -29,7 +29,7 @@ const ENV = process.env.NODE_ENV === 'production';
 
 // middleware
 /* istanbul ignore if */
-if(ENV)
+if(ENV) {
   app.use(morgan('combined', {
     stream: fs.createWriteStream(
       path.resolve(root, 'server.log'), {
@@ -37,7 +37,7 @@ if(ENV)
       }
     )
   }));
-else
+} else
   app.use(morgan('dev'));
 app.use(helmet());
 app.use(etag());
@@ -52,7 +52,7 @@ app.use(mount('/public', serve(
   path.resolve(root, 'public')
 )));
 /* istanbul ignore if */
-if(ENV)
+if(ENV) {
   app.use(minify({
     removeComments: true,
     collapseWhitespace: true,
@@ -60,6 +60,7 @@ if(ENV)
     minifyURLs: true,
     minifyJS: true
   }));
+}
 <% } -%>
 <% if(graphql) { -%>
 

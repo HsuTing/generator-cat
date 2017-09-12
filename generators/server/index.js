@@ -1,8 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-const extend = _.merge;
-
 const Base = require('./../base');
 
 module.exports = class extends Base {
@@ -44,19 +41,7 @@ module.exports = class extends Base {
           'graphql-relay'
         ];
       }
-    })
-  }
-
-  prompting() {
-    return this.prompt([{
-      type: 'confirm',
-      name: 'db',
-      message: 'Use the db',
-      default: false,
-      store: true
-    }]).then(function(state) {
-      this.state = extend(this.state, state);
-    }.bind(this));
+    });
   }
 
   default() {
@@ -67,15 +52,13 @@ module.exports = class extends Base {
         name: 'index'
       });
 
-      if(this.checkPlugins('graphql'))
+      if(this.checkPlugins('graphql')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'schema',
           name: 'data'
         });
+      }
     }
-
-    if(this.state.db)
-      this.composeWith(require.resolve('./../db'));
   }
 
   writing() {
@@ -91,11 +74,12 @@ module.exports = class extends Base {
       }]
     });
 
-    if(this.checkPlugins('graphql'))
+    if(this.checkPlugins('graphql')) {
       this.writeFiles({
         'schema.js': 'src/schemas/schema.js',
         'fields.js': 'src/schemas/fields.js'
       });
+    }
   }
 
   install() {

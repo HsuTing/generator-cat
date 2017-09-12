@@ -1,4 +1,4 @@
-'use strit'
+'use strit';
 
 const Base = require('./../base');
 
@@ -26,13 +26,14 @@ module.exports = class extends Base {
 
     // normal subgenerator
     /* istanbul ignore next */
-    if(!this.getPkg.license)
+    if(!this.getPkg.license) {
       this.composeWith('generator-license/app', {
         name: this.getAuthor.name,
         email: this.getAuthor.email,
         website: this.getAuthor.url,
         defaultLicense: 'MIT'
       });
+    }
 
     this.composeWith(require.resolve('./../babel'));
     this.composeWith(require.resolve('./../eslint'));
@@ -50,13 +51,14 @@ module.exports = class extends Base {
       }]
     });
 
-    if(this.checkPlugins('docs') || this.checkPlugins('desktop app'))
+    if(this.checkPlugins('docs') || this.checkPlugins('desktop app')) {
       this.writeFiles({
         'static.config.js': 'static.config.js'
       });
+    }
   }
 
   end() {
     this.composeWith(require.resolve('./readme'));
   }
-}
+};

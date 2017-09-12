@@ -1,6 +1,6 @@
 'use strict';
 
-import {checkContent} from './template';
+import checkContent from './../../utils/checkTemplate';
 
 export default name => {
   it('google-analytics.html', () => {

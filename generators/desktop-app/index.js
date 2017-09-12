@@ -29,4 +29,4 @@ module.exports = class extends Base {
   install() {
     this.addInstall(true);
   }
-}
+};

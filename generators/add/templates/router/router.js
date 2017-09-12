@@ -3,7 +3,7 @@
 <% if(react) { -%>
 import process from 'process';
 <% } -%>
-import Router from 'koa-better-router';
+import koaRouter from 'koa-better-router';
 <% if(react) { -%>
 import React from 'react';
 import reactRender from 'cat-middleware/lib/koa-react-render';
@@ -15,9 +15,9 @@ import <%= componentName %> from 'components/<%= componentName %>';
 const ENV = process.env.NODE_ENV === 'production';
 <% } -%>
 <% if(name.toLowerCase() === 'index') { -%>
-const router = Router().loadMethods();
+const router = koaRouter().loadMethods();
 <% } else { -%>
-const router = Router({prefix: '/<%= name %>'}).loadMethods();
+const router = koaRouter({prefix: '/<%= name %>'}).loadMethods();
 <% } -%>
 
 <% if(react) { -%>

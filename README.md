@@ -27,7 +27,6 @@ We does not recommend using those subgenerators because the most of those subgen
     - `item`: Choose the template which will be added to project.
     - `name`: This is the name of the output file.
   - `list`
-    - db
     - react
     - reducer
     - relay

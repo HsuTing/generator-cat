@@ -1,15 +1,9 @@
 'use strict';
 
-import assert from 'yeoman-assert';
-
 import author from './author';
 import favicon from './favicon';
 
-export const checkContent = (status, content) => (
-  status ?
-    assert.fileContent('views/template.html', content) :
-    assert.noFileContent('views/template.html', content)
-);
+import checkContent from './../../utils/checkTemplate';
 
 export default ({
   chooseType

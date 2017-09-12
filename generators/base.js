@@ -12,7 +12,7 @@ module.exports = class extends Generator {
     this.props = {
       dependencies: [],
       devDependencies: []
-    }
+    };
   }
 
   addInstall(dev) {
@@ -21,10 +21,11 @@ module.exports = class extends Generator {
     if(dependencies.length !== 0)
       this.yarnInstall(dependencies);
 
-    if(devDependencies.length !== 0)
+    if(devDependencies.length !== 0) {
       this.yarnInstall(devDependencies, {
         dev: dev || !this.checkPlugins('heroku')
       });
+    }
   }
 
   addDependencies(dependencies, addFunc = () => {}) {
@@ -108,4 +109,4 @@ module.exports = class extends Generator {
       );
     });
   }
-}
+};

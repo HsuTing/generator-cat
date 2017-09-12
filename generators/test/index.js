@@ -17,7 +17,7 @@ module.exports = class extends Base {
   writing() {
     this.writePkgScripts({
       test: 'jest --silent',
-      'test:watch': 'yarn test -- --watchAll',
+      'test:watch': 'yarn test -- --watchAll'
     });
 
     this.writeFiles({
@@ -35,26 +35,29 @@ module.exports = class extends Base {
   default() {
     /* istanbul ignore next */
     if(!this.config.get('cat')) {
-      if(this.checkPlugins('react') && !this.checkPlugins('mobile app'))
+      if(this.checkPlugins('react') && !this.checkPlugins('mobile app')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
           name: 'Index',
           type: 'react'
         });
+      }
 
-      if(this.checkPlugins('server'))
+      if(this.checkPlugins('server')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
           name: 'pages',
           type: 'server'
         });
+      }
 
-      if(this.checkPlugins('graphql'))
+      if(this.checkPlugins('graphql')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
           name: 'data',
           type: 'graphql'
         });
+      }
     }
   }
 

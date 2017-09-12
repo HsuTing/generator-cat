@@ -13,10 +13,10 @@ export default ({
   server,
   graphql,
   test,
-  mobile_app
+  mobileApp
 }) => {
   it('.gitignore', () => {
-    checkContent(!mobile_app, 'lib');
+    checkContent(!mobileApp, 'lib');
 
     checkContent(server, '*.log');
 
@@ -27,6 +27,6 @@ export default ({
 
     checkContent(test, 'coverage');
 
-    checkContent(mobile_app, '.expo');
+    checkContent(mobileApp, '.expo');
   });
 };

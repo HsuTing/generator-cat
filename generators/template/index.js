@@ -9,9 +9,6 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.state = this.config.get('template') || {};
-    this.addDependencies([
-      'nunjucks'
-    ]);
   }
 
   prompting() {

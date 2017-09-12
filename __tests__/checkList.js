@@ -4,9 +4,9 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 
-const getTemplateFolders = now_path => fs.readdirSync(now_path)
+const getTemplateFolders = nowPath => fs.readdirSync(nowPath)
   .reduce((result, file) => {
-    const childFilePath = path.resolve(now_path, file);
+    const childFilePath = path.resolve(nowPath, file);
     const stats = fs.lstatSync(childFilePath);
 
     if(stats.isDirectory())
@@ -17,7 +17,7 @@ const getTemplateFolders = now_path => fs.readdirSync(now_path)
       pathArray.includes('generator-cat') &&
       pathArray.includes('templates') &&
       !(/.swp/g).test(file)
-    )
+    ) {
       result.push(`${
         pathArray
           .slice(pathArray.indexOf('templates') - 1, pathArray.length - 1)
@@ -28,6 +28,7 @@ const getTemplateFolders = now_path => fs.readdirSync(now_path)
           .split(/\./g)[0]
           .toLowerCase()
       }.js`);
+    }
 
     /* istanbul ignore if */
     if(result.includes(file))
@@ -37,20 +38,21 @@ const getTemplateFolders = now_path => fs.readdirSync(now_path)
   }, []);
 
 const testFolderRoot = path.resolve(__dirname, './files');
-const getTestFolders = now_path => fs.readdirSync(now_path)
+const getTestFolders = nowPath => fs.readdirSync(nowPath)
   .reduce((result, file) => {
-    const childFilePath = path.resolve(now_path, file);
+    const childFilePath = path.resolve(nowPath, file);
     const stats = fs.lstatSync(childFilePath);
 
     if(stats.isDirectory())
       return result.concat(getTestFolders(childFilePath));
-    else if(!(/.swp/g).test(file))
+    else if(!(/.swp/g).test(file)) {
       result.push(
         childFilePath.replace(testFolderRoot, '').slice(1)
       );
+    }
 
     return result;
-  }, [])
+  }, []);
 
 const testFolders = getTestFolders(testFolderRoot);
 const templateFolders = getTemplateFolders(path.resolve(__dirname, './../generators'))

@@ -28,11 +28,12 @@ module.exports = class extends Base {
     this.composeWith(require.resolve('./../webpack'));
 
     /* istanbul ignore next */
-    if(!this.config.get('cat'))
+    if(!this.config.get('cat')) {
       this.composeWith(require.resolve('./../add'), {
         item: 'react',
         name: 'index'
       });
+    }
   }
 
   writing() {

@@ -21,7 +21,7 @@ import eslintrc from './files/eslint/eslintrc';
 const config = {
   website: true,
   test: true,
-  mobile_app: true
+  mobileApp: true
 };
 
 describe('mobile-app subgenerator', () => {

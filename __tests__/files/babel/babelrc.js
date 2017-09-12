@@ -5,8 +5,7 @@ import assert from 'yeoman-assert';
 export default ({
   website,
   graphql,
-  server,
-  db
+  server
 }) => {
   it('.babelrc', () => {
     let presets = [
@@ -42,9 +41,6 @@ export default ({
       if(graphql)
         alias.schemas = 'schemas';
     }
-
-    if(db)
-      alias.constants = 'constants';
 
     assert.jsonFileContent('package.json', {
       scripts: {

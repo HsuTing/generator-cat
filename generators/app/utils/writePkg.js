@@ -5,9 +5,9 @@ const extend = _.merge;
 
 module.exports = (props, currentPkg) => {
   // scripts
-  const base_script = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
-  const build = base_script.concat(['yarn babel']);
-  const prod = ['cross-env-shell NODE_ENV=production'].concat(base_script).concat(['yarn babel']);
+  const baseScript = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
+  const build = baseScript.concat(['yarn babel']);
+  const prod = ['cross-env-shell NODE_ENV=production'].concat(baseScript).concat(['yarn babel']);
   const watch = [
     'concurrently -c green',
     '"yarn lint:watch"',

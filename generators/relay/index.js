@@ -23,12 +23,13 @@ module.exports = class extends Base {
 
   default() {
     /* istanbul ignore next */
-    if(!this.config.get('cat'))
+    if(!this.config.get('cat')) {
       this.composeWith(require.resolve('./../add'), {
         item: 'relay',
         name: 'index',
         queryName: 'data'
       });
+    }
   }
 
   writing() {
@@ -46,4 +47,4 @@ module.exports = class extends Base {
   install() {
     this.addInstall();
   }
-}
+};
