@@ -13,7 +13,7 @@ export default ({
     const relay = graphql && website;
     const baseScript = relay ? ['yarn graphql', 'yarn relay'] : [];
     const build = baseScript.concat(['yarn babel']);
-    const prod = ['cross-env-shell NODE_ENV=production'].concat(baseScript).concat(['yarn babel']);
+    const prod = baseScript.concat(['yarn babel']);
     const watch = [
       'concurrently -c green',
       '"yarn lint:watch"',
