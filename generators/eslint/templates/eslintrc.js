@@ -7,61 +7,47 @@ const {plugins} = JSON.parse(fs.readFileSync('./.babelrc'));
 const alias = plugins.slice(-1)[0][1].alias;
 
 module.exports = {
-  "globals": {
-    "Promise": true
+  globals: {
+    Promise: true
   },
-  "extends": [
-    "google",
+  extends: [
+    'eslint:recommended',
+    'google',
 <% if(react) { -%>
-    "plugin:react/recommended",
+    'plugin:react/recommended',
 <% } -%>
-    "eslint:recommended"
+    'cat'
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 7,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "objectLiteralDuplicateProperties": true
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 7,
+    sourceType: 'module',
+    ecmaFeatures: {
+      objectLiteralDuplicateProperties: true
     }
   },
-  "env": {
+  env: {
 <% if(test) { -%>
-    "jest": true,
+    jest: true,
 <% } -%>
-    "browser": true,
-    "node": true
+    browser: true,
+    node: true
   },
-  "plugins": [
+  plugins: [
 <% if(react) { -%>
-    "react",
+    'react',
 <% } -%>
-    "import"
+    'import'
   ],
-  "settings": {
+  settings: {
 <% if(react) { -%>
-    "react": {
-      "pragma": "React",
-      "version": "15.3"
+    react: {
+      pragma: 'React',
+      version: '15.3'
     },
 <% } -%>
-    "import/resolver": {
-      "babel-module": alias
+    'import/resolver': {
+      'babel-module': alias
     }
-  },
-  "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "max-len": 0,
-    "quote-props": ["error", "as-needed"],
-    "no-alert": "off",
-    "no-console": "off",
-    "object-curly-spacing": [1, "never"],
-    "keyword-spacing": [2, {"overrides": {
-      "if": {"after": false},
-      "for": {"after": false},
-      "while": {"after": false},
-      "switch": {"after": false},
-      "catch": {"after": false}
-    }}]
   }
-}
+};

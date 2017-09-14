@@ -5,6 +5,7 @@ const Base = require('./../base');
 module.exports = class extends Base {
   initializing() {
     this.addDevDependencies([
+      'https://github.com/HsuTing/eslint-config-cat.git',
       'eslint',
       'eslint-watch',
       'eslint-config-google',

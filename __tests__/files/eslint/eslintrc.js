@@ -20,12 +20,12 @@ export default ({
       }
     });
 
-    checkContent(website, '"plugin:react/recommended",');
-    checkContent(website, '"react"');
-    checkContent(website, '"react": {');
-    checkContent(website, '"pragma": "React",');
-    checkContent(website, '"version": "15.3"');
+    checkContent(website, '\'plugin:react/recommended\',');
+    checkContent(website, 'react');
+    checkContent(website, 'react: {');
+    checkContent(website, 'pragma: \'React\',');
+    checkContent(website, 'version: \'15.3\'');
 
-    checkContent(test, '"jest": true,');
+    checkContent(test, 'jest: true,');
   });
 };
