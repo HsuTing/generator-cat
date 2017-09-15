@@ -68,7 +68,7 @@ app.use(mount('/graphql', graphql({
   schema,
   graphiql: !ENV,
   pretty: !ENV,
-  formatError: error => {
+  formatError: /* istanbul ignore next */ error => {
     console.log(error);
     if(!ENV)
       return error;
@@ -81,7 +81,7 @@ fs.readdirSync(path.resolve(__dirname, './routers'))
   .forEach(router => {
     const routerPath = `./routers/${router.replace('.js', '')}`;
     app.use(
-      (require(routerPath).default || require(routerPath)).middleware()
+      (require(routerPath).default || /* istanbul ignore next */ require(routerPath)).middleware()
     );
   });
 
