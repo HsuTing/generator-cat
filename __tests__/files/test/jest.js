@@ -16,7 +16,7 @@ export default ({
     assert.jsonFileContent('package.json', {
       scripts: {
         test: 'jest --silent',
-        'test:watch': 'yarn test -- --watchAll'
+        'test:watch': 'yarn test --watchAll'
       }
     });
 
