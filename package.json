@@ -3,7 +3,7 @@
     "lint": "eslint --cache ./generators ./__tests__ --ext .js",
     "lint:watch": "esw --cache ./generators ./__tests__ --ext .js -w --color",
     "test": "jest --silent --config=./test.config.js",
-    "test:watch": "yarn test -- --watchAll"
+    "test:watch": "yarn test --watchAll"
   },
   "name": "generator-cat",
   "version": "0.10.4",
