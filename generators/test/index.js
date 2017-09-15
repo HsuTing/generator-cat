@@ -17,7 +17,7 @@ module.exports = class extends Base {
   writing() {
     this.writePkgScripts({
       test: 'jest --silent',
-      'test:watch': 'yarn test -- --watchAll'
+      'test:watch': 'yarn test --watchAll'
     });
 
     this.writeFiles({
