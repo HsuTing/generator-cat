@@ -26,12 +26,17 @@ import container from './files/add/relay/container';
 import webpack from './files/webpack/webpack';
 // template
 import template from './files/template/template';
+// db
+import buildDb from './files/db/build-db';
+import getTables from './files/db/gettables';
+import models from './files/db/models';
 
 import testPlugins from './utils/testPlugins';
 
 const testGraphql = ({website, graphql, chooseType, ...config}) => {
   describe(`### ${graphql ? '' : 'no '}graphql`, () => {
     const otherTest = [...config.otherTest];
+    const db = {db: false};
 
     if(graphql) {
       if(chooseType === 'server') {
@@ -41,6 +46,10 @@ const testGraphql = ({website, graphql, chooseType, ...config}) => {
         otherTest.push(datatype);
         otherTest.push(query);
         otherTest.push(mutation);
+        otherTest.push(buildDb);
+        otherTest.push(getTables);
+        otherTest.push(models);
+        db.db = true;
       }
 
       if(website) {
@@ -51,6 +60,7 @@ const testGraphql = ({website, graphql, chooseType, ...config}) => {
 
     testPlugins({
       ...config,
+      ...db,
       website,
       graphql,
       chooseType,
