@@ -1,26 +1,17 @@
 'use strict';
 
 import React from 'react';
-import {
-  QueryRenderer,
-  graphql
-} from 'react-relay';
+import QueryLookupRenderer from 'relay-query-lookup-renderer';
 
 import environment from 'utils/environment';
+import <%= queryName %>Query, {variables as <%= queryName %>Variables} from 'constants/query/<%= queryName %>Query';
 
 /* eslint-disable react/display-name */
 export default () => (
-  <QueryRenderer environment={environment}
-    query={graphql`
-      query <%= componentName %>ContainerQuery($input: String!) {
-        <%= queryName %>(input: $input) {
-          data
-        }
-      }
-    `}
-    variables={{
-      input: 'test'
-    }}
+  <QueryLookupRenderer lookup
+    environment={environment}
+    query={<%= queryName %>Query}
+    variables={<%= queryName %>Variables}
     render={({error, props}) => {
       if(error)
         return <div>{error.message}</div>;

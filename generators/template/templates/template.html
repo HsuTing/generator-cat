@@ -50,6 +50,9 @@
     {% if data -%}
     var data = {{ data | safe }};
     {% endif -%}
+<% if(relay) { -%>
+    var records = {{ records | safe }};
+<% } -%>
   </script>
 
 <% if(otherSettings.includes('firebase')) { -%>

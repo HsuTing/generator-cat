@@ -37,6 +37,11 @@ module.exports = class extends Base {
           'react-dom'
         ];
 
+        case 'relay': return [
+          'babel-polyfill',
+          'react-relay'
+        ];
+
         case 'graphql': return [
           'koa-mount',
           'koa-graphql',
@@ -71,7 +76,7 @@ module.exports = class extends Base {
       if(this.checkPlugins('graphql')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'schema',
-          name: 'data'
+          name: 'index'
         });
       }
     }

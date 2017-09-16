@@ -41,7 +41,7 @@ export default ({
     checkContent(graphql, 'schema,');
     checkContent(graphql, 'graphiql: !ENV,');
     checkContent(graphql, 'pretty: !ENV,');
-    checkContent(graphql, 'formatError: error => {');
+    checkContent(graphql, 'formatError: /* istanbul ignore next */ error => {');
     checkContent(graphql, 'console.log(error);');
     checkContent(graphql, 'return error;');
   });

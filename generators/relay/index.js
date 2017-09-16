@@ -12,11 +12,13 @@ module.exports = class extends Base {
     this.addDependencies([
       'cat-components',
       'cat-graphql',
+      'relay-query-lookup-renderer',
       'fetch-everywhere',
       'babel-polyfill'
     ]);
 
     this.addAlias({
+      constants: 'constants',
       containers: 'containers'
     });
   }
@@ -27,7 +29,7 @@ module.exports = class extends Base {
       this.composeWith(require.resolve('./../add'), {
         item: 'relay',
         name: 'index',
-        queryName: 'data'
+        queryName: 'index'
       });
     }
   }

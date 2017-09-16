@@ -41,11 +41,21 @@ module.exports = {
     ]
   },
   plugins: ENV ? [
+<% if(relay) { -%>
+    new webpack.DefinePlugin({'process.env': {
+      NODE_ENV: JSON.stringify('production'),
+      TYPE: JSON.stringify('client')
+    }}),
+<% } else { -%>
     new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify('production')}}),
+<% } -%>
     new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.min.js'}),
     new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
     new webpack.LoaderOptionsPlugin({minimize: true, debug: true})
   ] : [
+<% if(relay) { -%>
+    new webpack.DefinePlugin({'process.env': {TYPE: JSON.stringify('client')}}),
+<% } -%>
     new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.js'}),
     new webpack.HotModuleReplacementPlugin()
   ]

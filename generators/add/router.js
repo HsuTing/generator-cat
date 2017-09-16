@@ -16,7 +16,8 @@ module.exports = class extends NeedName {
       'router/router.js': [`src/routers/${name}.js`, {
         name,
         componentName: _.upperFirst(name),
-        react: this.checkPlugins('react')
+        react: this.checkPlugins('react'),
+        relay: this.checkPlugins('relay')
       }]
     });
   }

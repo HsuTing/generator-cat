@@ -3,26 +3,26 @@
 import assert from 'yeoman-assert';
 
 export default () => {
-  it('src/schemas/data/modifyData.js', () => {
+  it('src/schemas/index/modifyIndex.js', () => {
     assert.fileContent(
-      'src/schemas/data/modifyData.js',
-      'name: \'Data\','
+      'src/schemas/index/modifyIndex.js',
+      'name: \'Index\','
     );
     assert.fileContent(
-      'src/schemas/data/modifyData.js',
-      'description: \'Modify the data of the Data.\','
+      'src/schemas/index/modifyIndex.js',
+      'description: \'Modify the data of the Index.\','
     );
     assert.fileContent(
-      'src/schemas/data/modifyData.js',
-      'description: \'This is the args of the Data.\''
+      'src/schemas/index/modifyIndex.js',
+      'description: \'This is the args of the Index.\''
     );
     assert.fileContent(
-      'src/schemas/data/modifyData.js',
-      'description: \'This is output data of the Data after modifying the Data.\''
+      'src/schemas/index/modifyIndex.js',
+      'description: \'This is output data of the Index after modifying the Index.\''
     );
     assert.fileContent(
-      'src/schemas/data/modifyData.js',
-      'data: \'mutation Data\''
+      'src/schemas/index/modifyIndex.js',
+      'data: \'mutation Index\''
     );
   });
 };

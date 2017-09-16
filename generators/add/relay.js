@@ -34,6 +34,9 @@ module.exports = class extends NeedName {
       'relay/container.js': [`src/containers/${componentName}Container.js`, {
         componentName,
         queryName: _.lowerFirst(this.options.queryName)
+      }],
+      'relay/query.js': [`src/constants/query/${_.lowerFirst(this.options.queryName)}Query.js`, {
+        queryName: _.lowerFirst(this.options.queryName)
       }]
     });
   }

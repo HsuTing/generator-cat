@@ -77,7 +77,8 @@ module.exports = class extends Base {
         description: pkg.description,
         author: this.getAuthor,
         docs: this.checkPlugins('docs'),
-        desktop_app: this.checkPlugins('desktop app')
+        desktop_app: this.checkPlugins('desktop app'),
+        relay: this.checkPlugins('relay')
       })]
     });
   }

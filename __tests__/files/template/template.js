@@ -6,6 +6,7 @@ import favicon from './favicon';
 import checkContent from './../../utils/checkTemplate';
 
 export default ({
+  graphql,
   chooseType
 }) => {
   it('views/template.html', () => {
@@ -16,6 +17,8 @@ export default ({
     checkContent(true, '{% set description=\'desc\' -%}');
     checkContent(true, '{% set subject=\'subject\' -%}');
     checkContent(true, '{% set url=\'http://hsuting.com\' -%}');
+
+    checkContent(graphql, 'var records = {{ records | safe }};');
 
     switch(chooseType) {
       case 'docs':

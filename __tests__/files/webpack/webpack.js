@@ -22,6 +22,8 @@ export default ({
     });
 
     checkContent(website && graphql, 'react-relay');
+    checkContent(website && graphql, 'NODE_ENV: JSON.stringify(\'production\'),');
+    checkContent(website && graphql, 'TYPE: JSON.stringify(\'client\')');
 
     if(chooseType === 'docs')
       checkContent(true, 'publicPath: ENV ? \'/test/public/js/\' : \'/assets/\',');
