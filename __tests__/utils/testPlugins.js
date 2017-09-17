@@ -21,7 +21,8 @@ import travis from './../files/test/travis';
 import circleci from './../files/test/circleci';
 import testGraphql from './../files/add/jest/graphql';
 import testPages from './../files/add/jest/pages';
-import testComponent from './../files/add/jest/component';
+import testReact from './../files/add/jest/react';
+import testRelay from './../files/add/jest/relay';
 
 const setSetting = prompts => helpers
   .run(path.resolve(__dirname, './../../generators/app'))
@@ -76,14 +77,18 @@ const runDefaultTest = config => {
   else
     travis(config);
 
-  if(website)
-    testComponent();
+  if(website) {
+    if(graphql)
+      testRelay();
+    else
+      testReact();
+  }
 
   if(chooseType === 'server')
     testPages();
 
   if(graphql)
-    testGraphql();
+    testGraphql(config);
   /* test */
 
   otherTest.forEach(func => {
