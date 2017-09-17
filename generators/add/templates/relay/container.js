@@ -13,6 +13,7 @@ export default () => (
     query={<%= queryName %>Query}
     variables={<%= queryName %>Variables}
     render={({error, props}) => {
+      /* istanbul ignore if */
       if(error)
         return <div>{error.message}</div>;
       else if(props)

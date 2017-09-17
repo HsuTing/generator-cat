@@ -14,7 +14,7 @@ describe('<%= name %>', () => {
   `)).resolves.toMatchObject({
       data: {
         <%= name %>: {
-          data: 'query Data'
+          data: 'query <%= dataName %>'
         }
       }
     }));
@@ -33,7 +33,7 @@ describe('<%= name %>', () => {
       data: {
         modify<%= dataName %>: {
           newData: {
-            data: 'mutation Data'
+            data: 'mutation <%= dataName %>'
           }
         }
       }

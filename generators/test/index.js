@@ -47,11 +47,11 @@ module.exports = class extends Base {
   default() {
     /* istanbul ignore next */
     if(!this.config.get('cat')) {
-      if(this.checkPlugins('react') && !this.checkPlugins('mobile app')) {
+      if((this.checkPlugins('react') || this.checkPlugins('relay')) && !this.checkPlugins('mobile app')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
           name: 'Index',
-          type: 'react'
+          type: this.checkPlugins('relay') ? 'relay' : 'react'
         });
       }
 
@@ -66,7 +66,7 @@ module.exports = class extends Base {
       if(this.checkPlugins('graphql')) {
         this.composeWith(require.resolve('./../add'), {
           item: 'jest',
-          name: 'data',
+          name: this.checkPlugins('react') ? 'index': 'data',
           type: 'graphql'
         });
       }

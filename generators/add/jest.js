@@ -27,15 +27,24 @@ module.exports = class extends NeedName {
     switch(this.options.type) {
       case 'react':
         this.writeFiles({
-          'jest/component.js': [`src/__tests__/${dataName}.js`, {
+          'jest/react.js': [`src/__tests__/components/${dataName}.js`, {
             name: dataName
+          }]
+        });
+        break;
+
+      case 'relay':
+        this.writeFiles({
+          'jest/relay.js': [`src/__tests__/components/${dataName}.js`, {
+            name: dataName,
+            queryName: name
           }]
         });
         break;
 
       case 'graphql':
         this.writeFiles({
-          'jest/graphql.js': [`src/__tests__/${name}.js`, {
+          'jest/graphql.js': [`src/__tests__/graphql/${name}.js`, {
             name,
             dataName
           }]
