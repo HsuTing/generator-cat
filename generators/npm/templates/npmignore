@@ -4,9 +4,7 @@ yarn.lock
 .editorconfig
 .eslint*
 .yo-rc.json
-<% if(test) { -%>
 .travis.yml
 __tests__
 jest.config.js
 coverage
-<% } -%>

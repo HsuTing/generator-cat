@@ -18,9 +18,6 @@ module.exports = class extends Base {
     if(this.checkPlugins('npm'))
       this.composeWith(require.resolve('./../npm'));
 
-    if(this.checkPlugins('test'))
-      this.composeWith(require.resolve('./../test'));
-
     if(this.checkPlugins('desktop app'))
       this.composeWith(require.resolve('./../desktop-app'));
 
@@ -37,6 +34,7 @@ module.exports = class extends Base {
 
     this.composeWith(require.resolve('./../babel'));
     this.composeWith(require.resolve('./../eslint'));
+    this.composeWith(require.resolve('./../test'));
   }
 
   writing() {
@@ -46,7 +44,6 @@ module.exports = class extends Base {
         server: this.checkPlugins('server'),
         react: this.checkPlugins('react'),
         relay: this.checkPlugins('relay'),
-        test: this.checkPlugins('test'),
         mobile_app: this.checkPlugins('mobile app')
       }]
     });

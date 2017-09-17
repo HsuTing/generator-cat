@@ -27,9 +27,7 @@ module.exports = {
     }
   },
   env: {
-<% if(test) { -%>
     jest: true,
-<% } -%>
     browser: true,
     node: true
   },

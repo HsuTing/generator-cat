@@ -12,7 +12,6 @@ export default ({
   website,
   server,
   graphql,
-  test,
   mobileApp
 }) => {
   it('.gitignore', () => {
@@ -24,8 +23,6 @@ export default ({
 
     checkContent(website && graphql, 'schema.graphql');
     checkContent(website && graphql, '__generated__');
-
-    checkContent(test, 'coverage');
 
     checkContent(mobileApp, '.expo');
   });

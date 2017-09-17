@@ -19,8 +19,8 @@ import npmignore from './../files/npm/npmignore';
 import jest from './../files/test/jest';
 import travis from './../files/test/travis';
 import testGraphql from './../files/add/jest/graphql';
-import pages from './../files/add/jest/pages';
-import component from './../files/add/jest/component';
+import testPages from './../files/add/jest/pages';
+import testComponent from './../files/add/jest/component';
 
 const setSetting = prompts => helpers
   .run(path.resolve(__dirname, './../../generators/app'))
@@ -67,6 +67,20 @@ const runDefaultTest = config => {
     ...checkPlugins(plugins)
   });
 
+  /* test */
+  jest(config);
+  travis(config);
+
+  if(website)
+    testComponent();
+
+  if(chooseType === 'server')
+    testPages();
+
+  if(graphql)
+    testGraphql();
+  /* test */
+
   otherTest.forEach(func => {
     func(config);
   });
@@ -105,28 +119,5 @@ export default propsConfig => {
     beforeAll(() => setSetting(config));
 
     runDefaultTest(config);
-  });
-
-  describe('#### plugins: test', () => {
-    const config = {
-      ...propsConfig,
-      plugins: ['test']
-    };
-    const {graphql, chooseType, website} = config;
-
-    beforeAll(() => setSetting(config));
-
-    runDefaultTest(config);
-    jest(config);
-    travis(config);
-
-    if(website)
-      component();
-
-    if(chooseType === 'server')
-      pages();
-
-    if(graphql)
-      testGraphql();
   });
 };

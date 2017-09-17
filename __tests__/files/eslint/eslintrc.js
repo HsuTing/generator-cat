@@ -9,8 +9,7 @@ const checkContent = (status, content) => (
 );
 
 export default ({
-  website,
-  test
+  website
 }) => {
   it('.eslintrc.js', () => {
     assert.jsonFileContent('package.json', {
@@ -25,7 +24,5 @@ export default ({
     checkContent(website, 'react: {');
     checkContent(website, 'pragma: \'React\',');
     checkContent(website, 'version: \'15.3\'');
-
-    checkContent(test, 'jest: true,');
   });
 };

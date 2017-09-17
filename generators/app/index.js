@@ -92,8 +92,7 @@ module.exports = class extends Base {
       store: true,
       choices: ({chooseType, graphql}) => [
         'npm',
-        'heroku',
-        'test'
+        'heroku'
       ]
     }]).then(function(state) {
       const {website, chooseType, graphql, plugins} = state;
