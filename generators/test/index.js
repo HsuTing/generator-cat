@@ -24,12 +24,24 @@ module.exports = class extends Base {
       'jest.config.js': ['jest.config.js', {
         react: this.checkPlugins('react'),
         mobile_app: this.checkPlugins('mobile app')
-      }],
-      'travis.yml': ['.travis.yml', {
-        relay: this.checkPlugins('relay'),
-        mobile_app: this.checkPlugins('mobile app')
       }]
     });
+
+    if(this.checkPlugins('private')) {
+      this.writeFiles({
+        'circleci.yml': ['.circleci/config.yml', {
+          relay: this.checkPlugins('relay'),
+          mobile_app: this.checkPlugins('mobile app')
+        }]
+      });
+    } else {
+      this.writeFiles({
+        'travis.yml': ['.travis.yml', {
+          relay: this.checkPlugins('relay'),
+          mobile_app: this.checkPlugins('mobile app')
+        }]
+      });
+    }
   }
 
   default() {

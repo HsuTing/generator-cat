@@ -4,7 +4,4 @@ node_js:
 script:
   - yarn lint
   - yarn test
-branches:
-only:
-  - master
 yarn: true

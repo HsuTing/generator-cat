@@ -10,7 +10,8 @@ const checkContent = (status, content) => (
 
 export default ({
   npm,
-  server
+  server,
+  private: isPrivate
 }) => {
   it('README.md', () => {
     assert.file('README.md');
@@ -21,5 +22,13 @@ export default ({
 
     checkContent(server, '- `start`: Run the prodiction version server.');
     checkContent(server, '- `test-server`: Run the test server with `nodemon`.');
+
+    checkContent(isPrivate, '[![Build Status][circleci-image]][circleci-url]');
+    checkContent(!isPrivate, '[![Build Status][travis-image]][travis-url]');
+
+    checkContent(isPrivate, '[circleci-image]: https://circleci.com/gh/HsuTing/test.svg?style=svg&circle-token=token');
+    checkContent(isPrivate, '[circleci-url]: https://circleci.com/gh/HsuTing/test');
+    checkContent(!isPrivate, '[travis-image]: https://travis-ci.org/HsuTing/test.svg?branch=master');
+    checkContent(!isPrivate, '[travis-url]: https://travis-ci.org/HsuTing/test');
   });
 };

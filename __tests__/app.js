@@ -129,21 +129,27 @@ const testWebsite = ({website, ...config}) => {
 };
 
 describe('app', () => {
-  testWebsite({
-    website: false,
-    otherTest: []
-  });
-  testWebsite({
-    website: true,
-    subject: 'subject',
-    url: 'http://hsuting.com',
-    otherSettings: [],
-    otherTest: [
-      normalize,
-      component,
-      testPublic,
-      webpack,
-      template
-    ]
+  [true, false].forEach(isPrivate => {
+    describe(`private: ${isPrivate}`, () => {
+      testWebsite({
+        private: isPrivate,
+        website: false,
+        otherTest: []
+      });
+      testWebsite({
+        private: isPrivate,
+        website: true,
+        subject: 'subject',
+        url: 'http://hsuting.com',
+        otherSettings: [],
+        otherTest: [
+          normalize,
+          component,
+          testPublic,
+          webpack,
+          template
+        ]
+      });
+    });
   });
 });

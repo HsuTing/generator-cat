@@ -62,6 +62,12 @@ module.exports = class extends Base {
       filter: /* istanbul ignore next */ words => words.split(/\s*,\s*/g)
     }, {
       type: 'confirm',
+      name: 'private',
+      message: 'Is a private project',
+      default: false,
+      store: true
+    }, {
+      type: 'confirm',
       name: 'website',
       message: 'Make a website',
       default: true,
@@ -96,6 +102,9 @@ module.exports = class extends Base {
       ]
     }]).then(function(state) {
       const {website, chooseType, graphql, plugins} = state;
+
+      if(state.private)
+        plugins.push('private');
 
       if(chooseType !== 'none')
         plugins.push(chooseType);

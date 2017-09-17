@@ -11,7 +11,8 @@ module.exports = class extends Base {
         license: this.getPkg.license,
         author: this.getAuthor,
         npm: this.checkPlugins('npm'),
-        server: this.checkPlugins('server')
+        server: this.checkPlugins('server'),
+        private: this.checkPlugins('private')
       }]
     });
   }

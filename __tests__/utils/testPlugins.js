@@ -18,6 +18,7 @@ import npmignore from './../files/npm/npmignore';
 // test
 import jest from './../files/test/jest';
 import travis from './../files/test/travis';
+import circleci from './../files/test/circleci';
 import testGraphql from './../files/add/jest/graphql';
 import testPages from './../files/add/jest/pages';
 import testComponent from './../files/add/jest/component';
@@ -36,7 +37,7 @@ const checkPlugins = plugins => ({
 });
 
 const runDefaultTest = config => {
-  const {website, graphql, chooseType, plugins, otherTest} = config;
+  const {private: isPrivate, website, graphql, chooseType, plugins, otherTest} = config;
   const server = chooseType === 'server';
 
   editorconfig();
@@ -64,12 +65,16 @@ const runDefaultTest = config => {
   });
   readme({
     server,
+    private: isPrivate,
     ...checkPlugins(plugins)
   });
 
   /* test */
   jest(config);
-  travis(config);
+  if(isPrivate)
+    circleci(config);
+  else
+    travis(config);
 
   if(website)
     testComponent();

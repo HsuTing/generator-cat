@@ -1,4 +1,4 @@
-# <%= name[0].toUpperCase() + name.slice(1).toLowerCase() %><% if(npm) { %> [![NPM version][npm-image]][npm-url]<% } %>[![Build Status][travis-image]][travis-url]
+# <%= name[0].toUpperCase() + name.slice(1).toLowerCase() %><% if(npm) { %> [![NPM version][npm-image]][npm-url]<% } %><% if(private) { %> [![Build Status][circleci-image]][circleci-url]<% } else { %> [![Build Status][travis-image]][travis-url] <% } %>
 <%= description %>
 
 ## Getting Started
@@ -26,5 +26,10 @@ yarn install && yarn build
 [npm-image]: https://badge.fury.io/js/<%= name %>.svg
 [npm-url]: https://npmjs.org/package/<%= name %>
 <% } -%>
+<% if(private) { -%>
+[circleci-image]: https://circleci.com/gh/<%= author.name %>/<%= name %>.svg?style=svg&circle-token=token
+[circleci-url]: https://circleci.com/gh/<%= author.name %>/<%= name %>
+<% } else { -%>
 [travis-image]: https://travis-ci.org/<%= author.name %>/<%= name %>.svg?branch=master
 [travis-url]: https://travis-ci.org/<%= author.name %>/<%= name %>
+<% } -%>
