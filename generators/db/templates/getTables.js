@@ -14,6 +14,7 @@ export default (() => {
       ]
     );
   } catch(e) {
+    /* istanbul ignore next */
     return {};
   }
 })();
