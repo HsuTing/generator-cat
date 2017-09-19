@@ -2,12 +2,18 @@
 
 import {graphqlToTable, type} from 'cat-graphql/lib/backend';
 
-export default graphqlToTable(
-  './../../schema.graphql', [
-    type.sequelize()
-  ], [
-    'Query',
-    'Node',
-    'PageInfo'
-  ]
-);
+export default (() => {
+  try {
+    return graphqlToTable(
+      './../../schema.graphql', [
+        type.sequelize()
+      ], [
+        'Query',
+        'Node',
+        'PageInfo'
+      ]
+    );
+  } catch(e) {
+    return {};
+  }
+})();
