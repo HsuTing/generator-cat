@@ -50,8 +50,8 @@ const store = new Store(source);
 /* istanbul ignore next */
 export const link = (
   process.env.TYPE === 'client' ?
-    '/graphql' :
-    `http://localhost:${process.env.NODE_ENV === 'production' ? process.env.PORT : 8000}/graphql`
+    /* istanbul ignore next */ '/graphql' :
+    `http://localhost:${process.env.NODE_ENV === 'production' ? /* istanbul ignore next */ process.env.PORT : 8000}/graphql`
 );
 const network = Network.create(fetchStore.fetch);
 
