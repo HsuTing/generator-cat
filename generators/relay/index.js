@@ -12,7 +12,6 @@ module.exports = class extends Base {
     this.addDependencies([
       'cat-components',
       'cat-graphql',
-      'relay-query-lookup-renderer',
       'fetch-everywhere',
       'babel-polyfill'
     ]);

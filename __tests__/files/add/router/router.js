@@ -20,7 +20,7 @@ export default ({
     checkContent(website, 'import reactRender from \'cat-middleware/lib/koa-react-render\';');
     checkContent(
       website && graphql,
-      'import relayQueryLookupRender from \'cat-middleware/lib/koa-relay-query-lookup-render\';'
+      'import relayData from \'cat-middleware/lib/koa-relay-data\';'
     );
 
     checkContent(website, 'import Index from \'components/Index\';');
@@ -36,7 +36,7 @@ export default ({
 
     if(website && graphql) {
       checkContent(website && graphql, 'router.get(\'/\',');
-      checkContent(website && graphql, 'relayQueryLookupRender(environment, indexQuery, indexVariables),');
+      checkContent(website && graphql, 'relayData(environment, indexQuery, indexVariables),');
       checkContent(website && graphql, '((ctx, next) => reactRender(');
       checkContent(website && graphql, '<Index />, {');
       checkContent(website && graphql, 'js: \'index\',');

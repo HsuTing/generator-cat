@@ -49,6 +49,8 @@
   <script>
     {% if data -%}
     var data = {{ data | safe }};
+    {% else -%}
+    var data = null;
     {% endif -%}
 <% if(relay) { -%>
     var records = {{ records | safe }};

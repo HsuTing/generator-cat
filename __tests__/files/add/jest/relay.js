@@ -22,7 +22,7 @@ export default () => {
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',
-      'await relayQueryLookupRender(environment, indexQuery, indexVariables)({}, () => {});'
+      'await relayData(environment, indexQuery, indexVariables)({}, () => {});'
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',

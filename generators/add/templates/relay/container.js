@@ -1,15 +1,14 @@
 'use strict';
 
 import React from 'react';
-import QueryLookupRenderer from 'relay-query-lookup-renderer';
+import {QueryRenderer} from 'react-relay';
 
 import environment from 'utils/environment';
 import <%= queryName %>Query, {variables as <%= queryName %>Variables} from 'constants/query/<%= queryName %>Query';
 
 /* eslint-disable react/display-name */
 export default () => (
-  <QueryLookupRenderer lookup
-    environment={environment}
+  <QueryRenderer environment={environment}
     query={<%= queryName %>Query}
     variables={<%= queryName %>Variables}
     render={({error, props}) => {

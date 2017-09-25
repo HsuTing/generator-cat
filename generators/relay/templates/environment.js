@@ -8,32 +8,52 @@ import {
   Store
 } from 'relay-runtime';
 
-/* istanbul ignore next */
-const source = (
+class FetchStore {
+  constructor(data) {
+    this.data = data;
+
+    this.fetch = this.fetch.bind(this);
+  }
+
+  set add(data) {
+    this.data = data;
+  }
+
+  fetch(operation, variables, cacheConfig) {
+    if(this.data) {
+      const {...output} = this.data;
+      this.data = null;
+
+      return output;
+    }
+
+    return fetch(link, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: operation.text,
+        variables
+      })
+    }).then(response => response.json());
+  }
+}
+
+export const fetchStore = new FetchStore(
   process.env.TYPE === 'client' ?
-    new RecordSource(records) : // eslint-disable-line no-undef
-    new RecordSource()
+    data : // eslint-disable-line no-undef
+    null
 );
+const source = new RecordSource();
 const store = new Store(source);
 /* istanbul ignore next */
-const link = (
+export const link = (
   process.env.TYPE === 'client' ?
     '/graphql' :
     `http://localhost:${process.env.NODE_ENV === 'production' ? process.env.PORT : 8000}/graphql`
 );
-const network = Network.create((
-  operation,
-  variables
-) => fetch(link, {
-  method: 'POST',
-  headers: {
-    'content-type': 'application/json'
-  },
-  body: JSON.stringify({
-    query: operation.text,
-    variables
-  })
-}).then(response => response.json()));
+const network = Network.create(fetchStore.fetch);
 
 export default new Environment({
   network,
