@@ -22,7 +22,7 @@ export default () => {
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',
-      'await relayData(environment, indexQuery, indexVariables)({}, () => {});'
+      'await relayData(\'http://localhost:8000/graphql/\', indexQuery, indexVariables)({}, () => {});'
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',

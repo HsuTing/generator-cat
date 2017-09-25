@@ -5,7 +5,6 @@ import {mount} from 'enzyme';
 import relayData from 'cat-middleware/lib/koa-relay-data';
 
 import <%= name %> from 'components/<%= name %>';
-import environment from 'utils/environment';
 import <%= queryName %>Query, {variables as <%= queryName %>Variables} from 'constants/query/<%= queryName %>Query';
 
 const wrapper = mount(
@@ -16,7 +15,7 @@ let server = null;
 describe('<%= name %>', () => {
   beforeAll(async () => {
     server = require('./../../server').default;
-    await relayData(environment, <%= queryName %>Query, <%= queryName %>Variables)({}, () => {});
+    await relayData('http://localhost:8000/graphql/', <%= queryName %>Query, <%= queryName %>Variables)({}, () => {});
   });
 
   it('run', async () => {

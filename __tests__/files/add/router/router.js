@@ -24,7 +24,7 @@ export default ({
     );
 
     checkContent(website, 'import Index from \'components/Index\';');
-    checkContent(website && graphql, 'import environment from \'utils/environment\';');
+    checkContent(website && graphql, 'import {link, fetchStore} from \'utils/environment\';');
     checkContent(
       website && graphql,
       'import indexQuery, {variables as indexVariables} from \'constants/query/indexQuery\';'
@@ -35,23 +35,27 @@ export default ({
     checkContent(true, 'const router = koaRouter().loadMethods();');
 
     if(website && graphql) {
-      checkContent(website && graphql, 'router.get(\'/\',');
-      checkContent(website && graphql, 'relayData(environment, indexQuery, indexVariables),');
-      checkContent(website && graphql, '((ctx, next) => reactRender(');
-      checkContent(website && graphql, '<Index />, {');
-      checkContent(website && graphql, 'js: \'index\',');
-      checkContent(website && graphql, 'records: ctx.records,');
-      checkContent(website && graphql, 'ENV');
-      checkContent(website && graphql, '}');
-      checkContent(website && graphql, ')(ctx, next))');
-      checkContent(website && graphql, ');');
+      checkContent(true, 'router.get(\'/\',');
+      checkContent(true, 'relayData(link, indexQuery, indexVariables),');
+      checkContent(true, '(ctx, next) => {');
+      checkContent(true, 'fetchStore.add = ctx.graphql_data;');
+      checkContent(true, 'return next();');
+      checkContent(true, '},');
+      checkContent(true, '((ctx, next) => reactRender(');
+      checkContent(true, '<Index />, {');
+      checkContent(true, 'js: \'index\',');
+      checkContent(true, 'records: ctx.records,');
+      checkContent(true, 'ENV');
+      checkContent(true, '}');
+      checkContent(true, ')(ctx, next))');
+      checkContent(true, ');');
     } else if(website) {
-      checkContent(website, 'router.get(\'/\', reactRender(<Index />, {');
-      checkContent(website, 'js: \'index\',');
-      checkContent(website, 'ENV');
+      checkContent(true, 'router.get(\'/\', reactRender(<Index />, {');
+      checkContent(true, 'js: \'index\',');
+      checkContent(true, 'ENV');
     } else {
-      checkContent(!website, 'router.get(\'/\', ctx => {');
-      checkContent(!website, 'ctx.body = \'Hello World\';');
+      checkContent(true, 'router.get(\'/\', ctx => {');
+      checkContent(true, 'ctx.body = \'Hello World\';');
     }
   });
 };

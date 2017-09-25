@@ -32,7 +32,7 @@ const router = koaRouter({prefix: '/<%= name %>'}).loadMethods();
 
 <% if(relay) { -%>
 router.get('/',
-  relayData(environment, <%= name %>Query, <%= name %>Variables),
+  relayData(link, <%= name %>Query, <%= name %>Variables),
   (ctx, next) => {
     fetchStore.add = ctx.graphql_data;
     return next();
