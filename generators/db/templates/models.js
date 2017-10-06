@@ -17,7 +17,7 @@ export const sequelize = new Sequelize({
     idle: 10000
   },
   storage: path.resolve(process.cwd(), './db.sqlite3'),
-  logging: ENV
+  logging: ENV ? /* istanbul ignore next */ console.log : false
 });
 
 export const Data = sequelize.define('data', {

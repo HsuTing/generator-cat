@@ -20,6 +20,7 @@ class FetchStore {
   }
 
   fetch(operation, variables, cacheConfig) {
+    /* istanbul ignore else */
     if(this.data) {
       const {...output} = this.data;
       this.data = null;
@@ -27,6 +28,7 @@ class FetchStore {
       return output;
     }
 
+    /* istanbul ignore next */
     return fetch(link, {
       method: 'POST',
       headers: {
@@ -41,17 +43,19 @@ class FetchStore {
 }
 
 export const fetchStore = new FetchStore(
+  /* istanbul ignore next */
   process.env.TYPE === 'client' ?
     data : // eslint-disable-line no-undef
     null
 );
 const source = new RecordSource();
 const store = new Store(source);
-/* istanbul ignore next */
 export const link = (
   process.env.TYPE === 'client' ?
-    /* istanbul ignore next */ '/graphql' :
-    `http://localhost:${process.env.NODE_ENV === 'production' ? /* istanbul ignore next */ process.env.PORT : 8000}/graphql`
+    /* istanbul ignore next */ '/graphql/' :
+    `http://localhost:${
+      process.env.NODE_ENV === 'production' ? /* istanbul ignore next */ process.env.PORT : 8000
+    }/graphql/`
 );
 const network = Network.create(fetchStore.fetch);
 

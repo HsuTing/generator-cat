@@ -14,15 +14,15 @@ export default () => {
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',
-      '<Index />'
-    );
-    assert.fileContent(
-      'src/__tests__/components/Index.js',
       'describe(\'Index\', () => {'
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',
-      'await relayData(\'http://localhost:8000/graphql/\', indexQuery, indexVariables)({}, () => {});'
+      'await relayData(\'http://localhost:8000/graphql/\', indexQuery, indexVariables)(ctx, () => {});'
+    );
+    assert.fileContent(
+      'src/__tests__/components/Index.js',
+      'global.wrapper = mount(<Index />);'
     );
     assert.fileContent(
       'src/__tests__/components/Index.js',

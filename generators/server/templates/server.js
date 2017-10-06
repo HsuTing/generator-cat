@@ -37,7 +37,7 @@ if(ENV) {
       }
     )
   }));
-} else
+} else if(process.env.NODE_ENV !== 'test')
   app.use(morgan('dev'));
 app.use(helmet());
 app.use(etag());

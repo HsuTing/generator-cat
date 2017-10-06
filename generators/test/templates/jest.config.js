@@ -1,4 +1,5 @@
 module.exports = {
+  setupFiles: ['cat-jest'],
 <% if(mobile_app) { -%>
   preset: 'jest-expo',
 <% } -%>

@@ -8,7 +8,9 @@ module.exports = class extends Base {
       switch(plugin) {
         case 'react': return [
           'react-test-renderer',
-          'enzyme'
+          'https://github.com/HsuTing/cat-jest.git',
+          'enzyme',
+          'enzyme-adapter-react-16'
         ];
       }
     });

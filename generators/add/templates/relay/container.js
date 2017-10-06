@@ -12,11 +12,12 @@ export default () => (
     query={<%= queryName %>Query}
     variables={<%= queryName %>Variables}
     render={({error, props}) => {
-      /* istanbul ignore if */
+      /* istanbul ignore next */
       if(error)
         return <div>{error.message}</div>;
       else if(props)
         return <div>{JSON.stringify(props)}</div>;
+      /* istanbul ignore next */
       return <div>Loading</div>;
     }}
   />
