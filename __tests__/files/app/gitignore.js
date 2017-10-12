@@ -19,7 +19,7 @@ export default ({
 
     checkContent(server, '*.log');
 
-    checkContent(server && website, 'public');
+    checkContent(server && website, 'public/js');
 
     checkContent(website && graphql, 'schema.graphql');
     checkContent(website && graphql, '__generated__');
