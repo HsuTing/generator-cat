@@ -28,7 +28,7 @@ const root = path.resolve(__dirname, './../');
 const ENV = process.env.NODE_ENV === 'production';
 
 // middleware
-/* istanbul ignore if */
+/* istanbul ignore next */
 if(ENV) {
   app.use(morgan('combined', {
     stream: fs.createWriteStream(

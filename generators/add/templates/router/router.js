@@ -41,7 +41,6 @@ router.get('/',
     <<%= componentName %> />, {
       ...(ctx.graphql_data ? {data: JSON.stringify(ctx.graphql_data)} : {}),
       js: 'index',
-      records: ctx.records,
       ENV
     }
   )(ctx, next))

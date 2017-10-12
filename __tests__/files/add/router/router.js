@@ -44,7 +44,6 @@ export default ({
       checkContent(true, '((ctx, next) => reactRender(');
       checkContent(true, '<Index />, {');
       checkContent(true, 'js: \'index\',');
-      checkContent(true, 'records: ctx.records,');
       checkContent(true, 'ENV');
       checkContent(true, '}');
       checkContent(true, ')(ctx, next))');
