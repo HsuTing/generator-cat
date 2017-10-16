@@ -12,21 +12,18 @@ import fields from 'schemas/fields';
 const {nodeInterface} = fields;
 
 export const dataFields = {
-  name: '<%= name %>',
-  description: 'This is the type of the <%= name %>.',
-  fields: {
-    data: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'This is the data of the <%= name %>.'
-    }
+  data: {
+    type: new GraphQLNonNull(GraphQLString),
+    description: 'This is the data of the <%= name %>.'
   }
 };
 
 export default new GraphQLObjectType({
-  ...dataFields,
+  name: '<%= name %>',
+  description: 'This is the type of the <%= name %>.',
   interfaces: [nodeInterface],
   fields: {
-    ...dataFields.fields,
+    ...dataFields,
     id: globalIdField('<%= name %>')
   }
 });
