@@ -6,6 +6,7 @@ import testStatic from './files/app/static';
 import server from './files/server/server';
 import router from './files/add/router/router';
 import fields from './files/server/fields';
+import graphqlRouter from './files/server/graphql';
 // schema
 import schema from './files/server/schema';
 import index from './files/add/schema/index';
@@ -42,6 +43,7 @@ const testGraphql = ({website, graphql, chooseType, ...config}) => {
       if(chooseType === 'server') {
         otherTest.push(schema);
         otherTest.push(fields);
+        otherTest.push(graphqlRouter);
         otherTest.push(index);
         otherTest.push(datatype);
         otherTest.push(query);

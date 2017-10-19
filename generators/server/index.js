@@ -93,13 +93,13 @@ module.exports = class extends Base {
 
     this.writeFiles({
       'server.js': ['src/server.js', {
-        react: this.checkPlugins('react'),
-        graphql: this.checkPlugins('graphql')
+        react: this.checkPlugins('react')
       }]
     });
 
     if(this.checkPlugins('graphql')) {
       this.writeFiles({
+        'graphql.js': 'src/routers/graphql.js',
         'schema.js': 'src/schemas/schema.js',
         'fields.js': 'src/schemas/fields.js'
       });

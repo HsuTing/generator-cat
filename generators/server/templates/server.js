@@ -10,17 +10,12 @@ import helmet from 'koa-helmet';
 import compress from 'koa-compress';
 import etag from 'koa-etag';
 import body from 'koa-body';
-<% if(react || graphql) { -%>
+<% if(react) { -%>
 import mount from 'koa-mount';
 <% } -%>
 <% if(react) { -%>
 import serve from 'koa-static';
 import minify from 'koa-html-minifier';
-<% } -%>
-<% if(graphql) { -%>
-import graphql from 'koa-graphql';
-
-import schema from 'schemas/schema';
 <% } -%>
 
 const app = new Koa();
@@ -61,19 +56,6 @@ if(ENV) {
     minifyJS: true
   }));
 }
-<% } -%>
-<% if(graphql) { -%>
-
-app.use(mount('/graphql', graphql({
-  schema,
-  graphiql: !ENV,
-  pretty: !ENV,
-  formatError: /* istanbul ignore next */ error => {
-    console.log(error);
-    if(!ENV)
-      return error;
-  }
-})));
 <% } -%>
 
 // add router

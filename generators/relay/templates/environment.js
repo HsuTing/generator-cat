@@ -30,6 +30,7 @@ class FetchStore {
 
     /* istanbul ignore next */
     return fetch(link, {
+      credentials: 'same-origin',
       method: 'POST',
       headers: {
         'content-type': 'application/json'

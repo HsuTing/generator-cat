@@ -9,8 +9,7 @@ const checkContent = (status, content) => (
 );
 
 export default ({
-  website,
-  graphql
+  website
 }) => {
   it('src/server.js', () => {
     assert.jsonFileContent('package.json', {
@@ -20,7 +19,7 @@ export default ({
       }
     });
 
-    checkContent(website || graphql, 'import mount from \'koa-mount\';');
+    checkContent(website, 'import mount from \'koa-mount\';');
 
     checkContent(website, 'import serve from \'koa-static\';');
     checkContent(website, 'import minify from \'koa-html-minifier\';');
@@ -33,16 +32,5 @@ export default ({
     checkContent(website, 'minifyCSS: true,');
     checkContent(website, 'minifyURLs: true,');
     checkContent(website, 'minifyJS: true');
-
-    checkContent(graphql, 'import graphql from \'koa-graphql\';');
-    checkContent(graphql, 'import schema from \'schemas/schema\';');
-
-    checkContent(graphql, 'app.use(mount(\'/graphql\', graphql({');
-    checkContent(graphql, 'schema,');
-    checkContent(graphql, 'graphiql: !ENV,');
-    checkContent(graphql, 'pretty: !ENV,');
-    checkContent(graphql, 'formatError: /* istanbul ignore next */ error => {');
-    checkContent(graphql, 'console.log(error);');
-    checkContent(graphql, 'return error;');
   });
 };
