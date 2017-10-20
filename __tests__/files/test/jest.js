@@ -20,6 +20,7 @@ export default ({
       }
     });
 
+    checkContent(website, '\'raf/polyfill\',');
     checkContent(mobileApp, 'preset: \'jest-expo\',');
     checkContent(website && !mobileApp, '\'!**/public/**\',');
   });

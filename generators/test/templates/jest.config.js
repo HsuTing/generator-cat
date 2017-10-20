@@ -1,5 +1,10 @@
 module.exports = {
-  setupFiles: ['cat-jest'],
+  setupFiles: [
+<% if(react) { -%>
+    'raf/polyfill',
+<% } -%>
+    'cat-jest'
+  ],
 <% if(mobile_app) { -%>
   preset: 'jest-expo',
 <% } -%>
