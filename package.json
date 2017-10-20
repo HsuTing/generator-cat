@@ -6,7 +6,7 @@
     "test:watch": "yarn test --watchAll"
   },
   "name": "generator-cat",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "description": "generator cat",
   "homepage": "https://github.com/HsuTing/generator-cat",
   "author": {
