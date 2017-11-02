@@ -22,7 +22,7 @@ export default ({
 
     checkContent(website, 'setupFiles: [');
     checkContent(website, '\'raf/polyfill\',');
-    checkContent(website, '\'cat-jest\',');
+    checkContent(website, '\'cat-jest\'');
     checkContent(mobileApp, 'preset: \'jest-expo\',');
     checkContent(website && !mobileApp, '\'!**/public/**\',');
   });
