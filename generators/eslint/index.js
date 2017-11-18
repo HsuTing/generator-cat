@@ -30,6 +30,12 @@ module.exports = class extends Base {
         react: this.checkPlugins('react')
       }]
     });
+
+    if(this.checkPlugins('relay')) {
+      this.writeFiles({
+        eslintignore: '.eslintignore'
+      });
+    }
   }
 
   install() {
