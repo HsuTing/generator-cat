@@ -23,14 +23,23 @@ export default ({
     };
 
     if(website) {
-      presets = ['react'].concat(presets);
-      plugins = ['transform-decorators-legacy'].concat(plugins);
+      presets = [
+        'react',
+        ...presets
+      ];
+      plugins = [
+        'transform-decorators-legacy',
+        ...plugins
+      ];
       alias.public = 'public';
       alias.components = 'components';
       alias.componentsShare = 'components/share';
 
       if(graphql) {
-        plugins = ['relay'].concat(plugins);
+        plugins = [
+          'relay',
+          ...plugins
+        ];
         alias.containers = 'containers';
       }
     }

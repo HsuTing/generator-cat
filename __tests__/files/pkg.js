@@ -12,8 +12,14 @@ export default ({
   it('package.json', () => {
     const relay = graphql && website;
     const baseScript = relay ? ['yarn graphql', 'yarn relay'] : [];
-    const build = baseScript.concat(['yarn babel']);
-    const prod = baseScript.concat(['yarn babel']);
+    const build = [
+      ...baseScript,
+      'yarn babel'
+    ];
+    const prod = [
+      ...baseScript,
+      'yarn babel'
+    ];
     const watch = [
       'concurrently -c green',
       '"yarn lint:watch"',

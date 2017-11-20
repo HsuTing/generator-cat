@@ -37,13 +37,13 @@ module.exports = class extends Base {
         'firebase'
       ],
       store: true
-    }].concat(
-      require('./utils/geo')(this.state),
-      require('./utils/facebook')(this.state),
-      require('./utils/google')(this.state),
-      require('./utils/twitter')(this.state),
-      require('./utils/firebase')(this.state)
-    )).then(function(state) {
+    },
+      ...(require('./utils/geo')(this.state)),
+      ...(require('./utils/facebook')(this.state)),
+      ...(require('./utils/google')(this.state)),
+      ...(require('./utils/twitter')(this.state)),
+      ...(require('./utils/firebase')(this.state))
+    ]).then(function(state) {
       const otherSettings = {};
 
       state.otherSettings.forEach(setting => {

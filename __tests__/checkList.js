@@ -9,8 +9,12 @@ const getTemplateFolders = nowPath => fs.readdirSync(nowPath)
     const childFilePath = path.resolve(nowPath, file);
     const stats = fs.lstatSync(childFilePath);
 
-    if(stats.isDirectory())
-      return result.concat(getTemplateFolders(childFilePath));
+    if(stats.isDirectory()) {
+      return [
+        ...result,
+        ...(getTemplateFolders(childFilePath))
+      ];
+    }
 
     const pathArray = childFilePath.split(/\//g);
     if(stats.isFile() &&
@@ -43,9 +47,12 @@ const getTestFolders = nowPath => fs.readdirSync(nowPath)
     const childFilePath = path.resolve(nowPath, file);
     const stats = fs.lstatSync(childFilePath);
 
-    if(stats.isDirectory())
-      return result.concat(getTestFolders(childFilePath));
-    else if(!(/.swp/g).test(file)) {
+    if(stats.isDirectory()) {
+      return [
+        ...result,
+        ...(getTestFolders(childFilePath))
+      ];
+    } else if(!(/.swp/g).test(file)) {
       result.push(
         childFilePath.replace(testFolderRoot, '').slice(1)
       );
@@ -55,8 +62,10 @@ const getTestFolders = nowPath => fs.readdirSync(nowPath)
   }, []);
 
 const testFolders = getTestFolders(testFolderRoot);
-const templateFolders = getTemplateFolders(path.resolve(__dirname, './../generators'))
-  .concat(['pkg.js']);
+const templateFolders = [
+  ...(getTemplateFolders(path.resolve(__dirname, './../generators'))),
+  'pkg.js'
+];
 
 describe('check list', () => {
   it('# should test all template', () => {

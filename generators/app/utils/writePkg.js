@@ -6,8 +6,14 @@ const extend = _.merge;
 module.exports = (props, currentPkg) => {
   // scripts
   const baseScript = props.plugins.includes('relay') ? ['yarn graphql', 'yarn relay'] : [];
-  const build = baseScript.concat(['yarn babel']);
-  const prod = baseScript.concat(['yarn babel']);
+  const build = [
+    ...baseScript,
+    'yarn babel'
+  ];
+  const prod = [
+    ...baseScript,
+    'yarn babel'
+  ];
   const watch = [
     'concurrently -c green',
     '"yarn lint:watch"',
@@ -48,7 +54,7 @@ module.exports = (props, currentPkg) => {
     },
     scripts: props.plugins.includes('mobile app') ? {} : scripts,
     main: props.plugins.includes('desktop app') ? './index.js' : './lib/index.js',
-    keywords: props.keywords ? _.uniq(props.keywords.concat(props.keywords)) : [],
+    keywords: props.keywords ? _.uniq(props.keywords) : [],
     'pre-commit': [
       'lint'
     ],
