@@ -15,7 +15,7 @@ export default ({
     const build = baseScript.concat(['yarn babel']);
     const prod = baseScript.concat(['yarn babel']);
     const watch = [
-      'concurrently -c green --allow-restart',
+      'concurrently -c green',
       '"yarn lint:watch"',
       '"yarn babel:watch"'
     ];
