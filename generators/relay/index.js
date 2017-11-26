@@ -12,6 +12,7 @@ module.exports = class extends Base {
     this.addDependencies([
       'cat-components',
       'cat-graphql',
+      'cat-utils',
       'fetch-everywhere',
       'babel-polyfill'
     ]);
