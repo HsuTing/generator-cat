@@ -5,7 +5,7 @@ import {
   fromGlobalId
 } from 'graphql-relay';
 
-export default nodeDefinitions(
+export const {nodeInterface} = nodeDefinitions(
   /* istanbul ignore next */ (globalId, ctx) => {
     // get data from db with type and other information in ctx
     const {type} = fromGlobalId(globalId);

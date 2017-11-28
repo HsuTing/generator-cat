@@ -7,9 +7,7 @@ import {
 } from 'graphql';
 import {globalIdField} from 'graphql-relay';
 
-import fields from 'schemas/fields';
-
-const {nodeInterface} = fields;
+import {nodeInterface} from 'schemas/fields';
 
 export const dataFields = {
   data: {
