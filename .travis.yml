@@ -3,5 +3,8 @@ node_js:
   - "node"
 script:
   - yarn lint
+  - yarn flow
+  - yarn build
+  - yarn prod
   - yarn test
 yarn: true

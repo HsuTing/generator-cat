@@ -1,9 +1,14 @@
 {
   "presets": [
     "env",
-    "stage-0"
+    "stage-0",
+    "flow"
   ],
   "plugins": [
-    "transform-object-assign"
+    ["module-resolver", {
+      "root": ["./src"]
+    }],
+    "transform-object-assign",
+    "transform-class-properties"
   ]
 }

@@ -1,8 +1,10 @@
+src
 yarn.lock
 .babelrc
 .editorconfig
 .eslint*
 .travis.yml
-coverage
+.flowconfig
 __tests__
-test.config.js
+jest.config.js
+coverage
