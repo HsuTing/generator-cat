@@ -19,7 +19,7 @@
     "email": "hsuting0106@gmail.com",
     "url": "http://hsuting.com"
   },
-  "main": "./lib/index.js",
+  "main": "./lib/app",
   "keywords": [
     "generator-cat"
   ],
@@ -37,8 +37,8 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "generator-license": "^5.1.0",
-    "validator": "^8.2.0",
-    "yeoman-generator": "^1.1.1"
+    "validator": "^9.2.0",
+    "yeoman-generator": "^2.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
