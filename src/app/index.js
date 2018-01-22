@@ -1,19 +1,11 @@
+// @flow
 'use strict';
 
-import Generator from 'yeoman-generator';
+import Base from 'utils/Base';
+import meow from 'utils/meow';
 
-module.exports = class App extends Generator {
+module.exports = class App extends Base {
   initializing() {
-    this.log(`
-    /\\__/\\
-   /'    '\\
- === 0  0 ===
-   \\  --  /
-  /        \\
- /          \\
-|            |
- \\  ||  ||  /
-  \\_oo__oo_/#######o
-    `);
+    this.log(meow`Start to build {red cat} project.`);
   }
 };
