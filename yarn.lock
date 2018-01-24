@@ -1550,8 +1550,8 @@ escodegen@^1.9.0:
     source-map "~0.5.6"
 
 eslint-config-cat@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-cat/-/eslint-config-cat-0.1.0.tgz#5a429908b968a736ebf247c29bd3e8376c0d8cbf"
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-cat/-/eslint-config-cat-0.1.1.tgz#19c4f2eb1f7b0ffa4ab94ab7e0636151888a8fef"
 
 eslint-config-google@^0.9.1:
   version "0.9.1"

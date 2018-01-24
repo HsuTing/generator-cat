@@ -1,12 +1,12 @@
 {
   "scripts": {
-    "test": "jest --silent --config=./test.config.js",
+    "test": "jest --silent",
     "test:watch": "yarn test --watchAll",
-    "lint": "eslint --cache ./generators ./__tests__ --ext .js",
-    "lint:watch": "esw --cache ./generators ./__tests__ --ext .js -w --color",
+    "lint": "eslint --cache ./src --ext .js",
+    "lint:watch": "esw --cache ./src --ext .js -w --color",
     "babel": "rm -rf ./lib && babel src --out-dir lib --ignore __tests__",
     "babel:watch": "rm -rf ./lib && babel -w src --out-dir lib --ignore __tests__",
-    "prepublish": "yarn babel",
+    "prepublishOnly": "yarn babel",
     "build": "yarn babel",
     "prod": "yarn babel",
     "watch": "concurrently -c green \"yarn lint:watch\" \"yarn babel:watch\""

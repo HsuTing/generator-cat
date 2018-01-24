@@ -6,7 +6,7 @@ import chalk from 'chalk';
 const showInfo = (
   info: string,
   labelArray: Array<string>
-):string => {
+): string => {
   if(labelArray.length !== 3)
     throw new Error('labelArray must be three elements.');
 
