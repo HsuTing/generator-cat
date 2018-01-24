@@ -1550,8 +1550,8 @@ escodegen@^1.9.0:
     source-map "~0.5.6"
 
 eslint-config-cat@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-cat/-/eslint-config-cat-0.1.1.tgz#19c4f2eb1f7b0ffa4ab94ab7e0636151888a8fef"
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-cat/-/eslint-config-cat-0.1.2.tgz#8ce26d7f1fc057319fad6d85a42203ceb4ba8ca4"
 
 eslint-config-google@^0.9.1:
   version "0.9.1"
@@ -1579,8 +1579,8 @@ eslint-module-utils@^2.1.1:
     pkg-dir "^1.0.0"
 
 eslint-plugin-flowtype@^2.41.0:
-  version "2.41.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.41.0.tgz#fd5221c60ba917c059d7ef69686a99cca09fd871"
+  version "2.41.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.41.1.tgz#0996e1ea1d501dfc945802453a304ae9e8098b78"
   dependencies:
     lodash "^4.15.0"
 

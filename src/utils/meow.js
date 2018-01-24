@@ -3,8 +3,15 @@
 
 import chalk from 'chalk';
 
-const showInfo = (
-  info: string,
+/**
+ * Count the length of string
+ *
+ * @param {string} message - Messagermation
+ * @param {Array} labelArray - The array of labels
+ * @return {string} - Output string
+*/
+const showMessage = (
+  message: string,
   labelArray: Array<string>
 ): string => {
   if(labelArray.length !== 3)
@@ -15,30 +22,36 @@ const showInfo = (
   rawText.raw = [text];
 
   return chalk`{white ${startLabel}${
-    text === info ?
+    text === message ?
       chalk(rawText) :
       [].constructor
-        .apply({}, new Array(info.replace(/(\{[a-zA-Z]* )|(\})/g, '').length))
+        .apply({}, new Array(message.replace(/(\{[a-zA-Z]* )|(\})/g, '').length))
         .map(() => text)
         .join('')
   }${endLabel}}`;
 };
 
+/**
+ * String template
+ *
+ * @param {Array} messageArray - Array of String template
+ * @return {string} - Output string
+*/
 export default (
-  infoArray: Array<string> = ['Meoooooooooooooooooow!'],
-  ...otherInfo: Array<string>
+  messageArray: Array<string> = ['Meoooooooooooooooooow!'],
+  ...otherMessage: Array<string>
 ): string => {
-  const info: string = ` ${infoArray.map((
-    info: string,
+  const message: string = ` ${messageArray.map((
+    message: string,
     index: number
-  ) => `${info}${otherInfo[index] || ''}`).join('')} `;
+  ) => `${message}${otherMessage[index] || ''}`).join('')} `;
 
   return chalk`{yellowBright
-    /\\__/\\     ${showInfo(info, ['╭', '─', '╮'])}
-   /'    '\\    ${showInfo(info, ['│', ' ', '│'])}
- === 0  0 ===  ${showInfo(info, ['│', info, '│'])}
-   \\  --  /    ${showInfo(info, ['│', ' ', '│'])}
-  /        \\   ${showInfo(info, ['╰', '─', '╯'])}
+    /\\__/\\     ${showMessage(message, ['╭', '─', '╮'])}
+   /'    '\\    ${showMessage(message, ['│', ' ', '│'])}
+ === 0  0 ===  ${showMessage(message, ['│', message, '│'])}
+   \\  --  /    ${showMessage(message, ['│', ' ', '│'])}
+  /        \\   ${showMessage(message, ['╰', '─', '╯'])}
  /          \\
 |            |
  \\  ||  ||  /
