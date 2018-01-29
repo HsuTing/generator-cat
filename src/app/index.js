@@ -219,9 +219,10 @@ module.exports = class App extends Base {
   }
 
   /**
-   * call other subgenerator
+   * Call other subgenerator
   */
   default() {
+    this.composeWith(require.resolve('./Babel'));
   }
 
   /**
@@ -252,7 +253,7 @@ module.exports = class App extends Base {
   }
 
   /**
-   * write files
+   * Write files
   */
   writing() {
     // write default pkg
@@ -281,19 +282,19 @@ module.exports = class App extends Base {
 
     // copy files
     this.copyFiles({
-      gitignore: '.gitignore'
+      '.gitignore': '.gitignore'
     });
   }
 
   /**
-   * Install packages.
+   * Install packages
   */
   install() {
     this.installPackages();
   }
 
   /**
-   * The end of Generator.
+   * The end of Generator
   */
   end() {
     this.meow`Goodbye {green ${this.user.git.name()}}! Thank for using {red cat} project.`;

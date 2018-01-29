@@ -14,10 +14,6 @@ describe('none', () => {
       .withPrompts(prompts)
     );
 
-    it('## package.json exist', () => {
-      assert.file('package.json');
-    });
-
     it('## ask default info', () => {
       assert.jsonFileContent('package.json', {
         name: 'test',
