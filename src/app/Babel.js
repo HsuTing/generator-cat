@@ -19,11 +19,11 @@ module.exports = class Babel extends Base {
   */
   initializing() {
     this.dependencies.push(
-      'babel-cli',
-      'babel-core',
-      'babel-preset-env',
-      'babel-preset-stage-0',
-      'babel-preset-flow',
+      '@babel/core',
+      '@babel/cli',
+      '@babel/preset-env',
+      '@babel/preset-stage-0',
+      '@babel/preset-flow',
       'babel-plugin-module-resolver'
     );
   }
@@ -33,13 +33,13 @@ module.exports = class Babel extends Base {
   */
   writing() {
     this.addScriptsToPkg({
-      'babel:render': 'babel src --out-dir lib --ignore __tests__',
+      'babel:render': 'babel src --out-dir lib',
       babel: 'rm -rf ./lib && yarn babel:render',
       'babel:watch': 'rm -rf ./lib && yarn babel:render -w'
     });
 
     this.copyFiles({
-      '.babelrc': '.babelrc'
+      '.babelrc.js': '.babelrc.js'
     });
 
     /* istanbul ignore else */

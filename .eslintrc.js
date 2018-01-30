@@ -1,10 +1,6 @@
 'use strict';
 
-const fs = require('fs');
-
-// set alias
-const {plugins} = JSON.parse(fs.readFileSync('./.babelrc'));
-const alias = plugins[0][1].alias;
+const {alias} = require('./.babelrc');
 
 module.exports = {
   globals: {
@@ -38,7 +34,7 @@ module.exports = {
       'babel-module': alias
     },
     flowtype: {
-      'onlyFilesWithFlowAnnotation': true
+      onlyFilesWithFlowAnnotation: true
     }
   }
 };
