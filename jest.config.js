@@ -1,13 +1,14 @@
 module.exports = {
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest'
+  },
   testPathIgnorePatterns: [
-    '/node_modules/',
     '/lib/',
     '/utils/'
   ],
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js',
-    '!**/node_modules/**'
+    'src/**/*.js'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [

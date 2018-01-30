@@ -20,6 +20,8 @@ module.exports = {
     }]
   ],
   ignore: [
-    '**/__tests__/**'
+    ...(process.env.NODE_ENV === 'test' ? [] : [
+      '**/__tests__/**'
+    ])
   ]
 };

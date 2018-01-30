@@ -18,6 +18,9 @@ module.exports = class Babel extends Base {
    * add dependencies and devDependencies
   */
   initializing() {
+    /* TODO
+     * note: @babel is beta
+    */
     this.dependencies.push(
       '@babel/core',
       '@babel/cli',
