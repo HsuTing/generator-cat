@@ -6,6 +6,7 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import Babel from 'app/Babel';
+import render from 'utils/render';
 
 let dir = null;
 
@@ -25,20 +26,7 @@ describe('babel', () => {
   });
 
   it('# check .babelrc', () => {
-    /* TODO
-    assert.jsonFileContent('.babelrc.js', {
-      presets: [
-        'env',
-        'stage-0',
-        'flow'
-      ],
-      plugins: [
-        ['module-resolver', {
-          root: ['./src']
-        }]
-      ]
-    });
-    */
+    assert.fileContent('.babelrc.js', render('.babelrc.js'));
   });
 
   it('# src exist', () => {

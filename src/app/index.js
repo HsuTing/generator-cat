@@ -222,7 +222,7 @@ module.exports = class App extends Base {
    * Call other subgenerator
   */
   default() {
-    this.composeWith(require.resolve('./Babel'));
+    this.composeWith(path.resolve(__dirname, './Babel'));
   }
 
   /**

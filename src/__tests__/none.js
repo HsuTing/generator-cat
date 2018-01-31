@@ -4,6 +4,7 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import App from 'app';
+import render from 'utils/render';
 
 import {prompts} from './utils/constants';
 
@@ -58,7 +59,7 @@ describe('none', () => {
     });
 
     it('## default files', () => {
-      assert.file('.gitignore');
+      assert.fileContent('.gitignore', render('.gitignore'));
     });
   });
 

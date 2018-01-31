@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "ejs": "^2.5.7",
     "generator-license": "^5.1.0",
     "lodash": "^4.17.4",
     "parse-author": "^2.0.0",
