@@ -16,6 +16,7 @@ module.exports = {
   plugins: [
     ['module-resolver', {
       root: ['./src'],
+      cwd: __dirname,
       alias
     }]
   ],
