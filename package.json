@@ -13,7 +13,7 @@
     "watch": "concurrently -c green \"yarn lint:watch\" \"yarn babel:watch\""
   },
   "name": "generator-cat",
-  "version": "0.1.0",
+  "version": "0.11.11",
   "description": "Use to generate project",
   "author": {
     "name": "HsuTing",
