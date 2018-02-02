@@ -58,7 +58,7 @@ describe('none', () => {
       });
     });
 
-    it('## default files', () => {
+    it('## check .gitignore', () => {
       assert.fileContent('.gitignore', render('.gitignore'));
     });
   });

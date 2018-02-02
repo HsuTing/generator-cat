@@ -1,9 +1,6 @@
 // @flow
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
-
 import Base from 'utils/Base';
 
 /**
@@ -44,10 +41,6 @@ module.exports = class Babel extends Base {
     this.copyFiles({
       '.babelrc.js': '.babelrc.js'
     });
-
-    /* istanbul ignore else */
-    if(!fs.existsSync(this.sourceRoot('./src')))
-      fs.mkdirSync(path.resolve(this.sourceRoot('./src')));
   }
 
   /**

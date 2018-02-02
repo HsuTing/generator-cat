@@ -4,6 +4,7 @@
     "test:watch": "yarn test --watchAll",
     "lint": "eslint ./ --cache --ext .js",
     "lint:watch": "esw ./ --cache --ext .js -w --color",
+    "flow": "flow",
     "babel:render": "babel src --out-dir lib",
     "babel": "rm -rf ./lib && yarn babel:render",
     "babel:watch": "rm -rf ./lib && yarn babel:render -w",
@@ -25,6 +26,7 @@
     "generator-cat"
   ],
   "pre-commit": [
+    "flow",
     "lint"
   ],
   "homepage": "https://github.com/HsuTing/generator-cat/",
