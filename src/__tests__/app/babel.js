@@ -4,11 +4,16 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import Babel from 'app/Babel';
+import checkFile from 'utils/checkFile';
 
 import render from './../utils/render';
 
-describe('babel', () => {
-  beforeAll(() => helpers.run(Babel));
+describe('Babel', () => {
+  let dir = null;
+
+  beforeAll(async () => {
+    dir = await helpers.run(Babel);
+  });
 
   it('# scripts', () => {
     assert.jsonFileContent('package.json', {
@@ -20,7 +25,12 @@ describe('babel', () => {
     });
   });
 
-  it('# check .babelrc', () => {
-    assert.fileContent('.babelrc.js', render('.babelrc.js'));
+  it('# check default .babelrc', () => {
+    expect(
+      checkFile(
+        render(dir, '.babelrc.js'),
+        '.babelrc.js'
+      ).length
+    ).toBe(1);
   });
 });

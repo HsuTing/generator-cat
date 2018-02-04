@@ -4,16 +4,28 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import App from 'app';
+import checkFile from 'utils/checkFile';
 
-import {prompts} from './utils/constants';
-import render from './utils/render';
+import render from './../utils/render';
 
-describe('none', () => {
+describe('App', () => {
   describe('# default package.json', () => {
-    beforeAll(() => helpers
-      .run(App)
-      .withPrompts(prompts)
-    );
+    let dir = null;
+
+    beforeAll(async () => {
+      dir = await helpers
+        .run(App)
+        .withPrompts({
+          name: 'test',
+          description: 'description',
+          keywords: ['keyword'],
+          author_name: 'HsuTing',
+          author_email: 'hsuting0106@gmail.com',
+          author_url: 'http://hsuting.com',
+          type: 'none',
+          addons: []
+        });
+    });
 
     it('## ask default info', () => {
       assert.jsonFileContent('package.json', {
@@ -59,7 +71,12 @@ describe('none', () => {
     });
 
     it('## check .gitignore', () => {
-      assert.fileContent('.gitignore', render('.gitignore'));
+      expect(
+        checkFile(
+          render(dir, '.gitignore'),
+          '.gitignore'
+        ).length
+      ).toBe(1);
     });
   });
 
@@ -67,7 +84,6 @@ describe('none', () => {
     await helpers
       .run(App)
       .withPrompts({
-        ...prompts,
         heroku: true
       });
 
