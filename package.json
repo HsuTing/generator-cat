@@ -38,6 +38,7 @@
     "url": "https://github.com/HsuTing/generator-cat/issues/"
   },
   "dependencies": {
+    "cat-bin": "^0.2.5",
     "chalk": "^2.1.0",
     "diff": "^3.4.0",
     "ejs": "^2.5.7",

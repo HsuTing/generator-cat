@@ -16,7 +16,7 @@ export default (
   const template: string = fs.readFileSync(
     path.resolve(
       __dirname,
-      './../../templates',
+      './../../../templates',
       filename
     ), {
       encoding: 'utf-8'

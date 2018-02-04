@@ -4,7 +4,7 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import App from 'app';
-import checkFile from 'utils/checkFile';
+import checkFile from 'bin/core/checkFile';
 
 import render from './../utils/render';
 
