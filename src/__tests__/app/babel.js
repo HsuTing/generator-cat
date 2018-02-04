@@ -4,7 +4,8 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import Babel from 'app/Babel';
-import render from 'utils/render';
+
+import render from './../utils/render';
 
 describe('babel', () => {
   beforeAll(() => helpers.run(Babel));

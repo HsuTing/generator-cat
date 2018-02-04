@@ -1,6 +1,8 @@
 // @flow
 'use strict';
 
+// TODO not test
+
 import path from 'path';
 import Generator from 'yeoman-generator';
 import _ from 'lodash';

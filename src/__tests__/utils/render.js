@@ -1,6 +1,8 @@
 // @flow
 'use strict';
 
+// TODO not test
+
 import fs from 'fs';
 import path from 'path';
 import ejs from 'ejs';
@@ -12,7 +14,7 @@ export default (
   const content: string = fs.readFileSync(
     path.resolve(
       __dirname,
-      './../../templates',
+      './../../../templates',
       name
     ), {
       encoding: 'utf-8'

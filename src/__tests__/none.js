@@ -4,9 +4,9 @@ import helpers from 'yeoman-test';
 import assert from 'yeoman-assert';
 
 import App from 'app';
-import render from 'utils/render';
 
 import {prompts} from './utils/constants';
+import render from './utils/render';
 
 describe('none', () => {
   describe('# default package.json', () => {

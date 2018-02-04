@@ -1,6 +1,8 @@
 // @flow
 'use strict';
 
+// TODO not test
+
 import chalk from 'chalk';
 
 /**
