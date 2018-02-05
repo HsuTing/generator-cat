@@ -107,9 +107,7 @@ export default class Base extends Generator {
   addScriptsToPkg = (
     scripts: {}
   ) => {
-    const {
-      ...pkg
-    }: pkgType = this.pkg;
+    const pkg: pkgType = {...this.pkg};
     pkg.scripts = {
       ...pkg.scripts,
       ...scripts
