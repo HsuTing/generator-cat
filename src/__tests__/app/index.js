@@ -5,6 +5,8 @@ import assert from 'yeoman-assert';
 
 import App from 'app';
 
+import checkContent from './../utils/checkContent';
+
 describe('App', () => {
   describe('# default package.json', () => {
     beforeAll(() => {
@@ -65,7 +67,7 @@ describe('App', () => {
     });
 
     it('## check .gitignore', () => {
-      // TODO
+      checkContent('.gitignore');
     });
   });
 

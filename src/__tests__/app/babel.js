@@ -5,6 +5,8 @@ import assert from 'yeoman-assert';
 
 import Babel from 'app/Babel';
 
+import checkContent from './../utils/checkContent';
+
 describe('Babel', () => {
   beforeAll(() => helpers.run(Babel));
 
@@ -18,7 +20,7 @@ describe('Babel', () => {
     });
   });
 
-  it('# check default .babelrc', () => {
-    // TODO
+  it('# check default .babelrc.js', () => {
+    checkContent('.babelrc.js');
   });
 });
