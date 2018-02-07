@@ -45,13 +45,10 @@ describe('App', () => {
       assert.jsonFileContent('package.json', {
         version: '0.1.0',
         main: './lib/index.js',
-        homepage: `https://github.com/HsuTing/test/`,
-        repository: {
-          type: 'git',
-          url: `get+https://github.com/HsuTing/test.git`
-        },
+        homepage: 'https://github.com/HsuTing/test/',
+        repository: 'https://github.com/HsuTing/test.git',
         bugs: {
-          url: `https://github.com/HsuTing/test/issues/`
+          url: 'https://github.com/HsuTing/test/issues/'
         }
       });
     });

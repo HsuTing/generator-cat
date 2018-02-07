@@ -223,6 +223,7 @@ module.exports = class App extends Base {
   */
   default() {
     this.composeWith(path.resolve(__dirname, './Babel'));
+    this.composeWith(path.resolve(__dirname, './Eslint'));
   }
 
   /**
@@ -232,7 +233,7 @@ module.exports = class App extends Base {
   writePkg = () => {
     const authorName: string = (this.pkg.author || {}).name || 'author name';
     const projectName: string = this.pkg.name || 'project name';
-    const repoName: string = `${authorName}/${projectName}`;
+    const repoName: string = `https://github.com/${authorName}/${projectName}`;
 
     this.fs.writeJSON(
       this.destinationPath('package.json'), {
@@ -240,10 +241,10 @@ module.exports = class App extends Base {
         version: '0.1.0',
         main: './lib/index.js',
         scripts: {},
-        homepage: `https://github.com/${repoName}/`,
-        repository: `https://github.com/${repoName}.git`,
+        homepage: `${repoName}/`,
+        repository: `${repoName}.git`,
         bugs: {
-          url: `https://github.com/${repoName}/issues/`
+          url: `${repoName}/issues/`
         }
       }
     );

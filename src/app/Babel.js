@@ -4,8 +4,8 @@
 import Base from 'utils/Base';
 
 /**
- * The root of generator-cat.
- * Use to set default setting.
+ * The Babel of generator-cat.
+ * Use to add babel to the project.
  *
  * @param {String | Array} args
  * @param {Object} options
@@ -18,7 +18,7 @@ module.exports = class Babel extends Base {
     /* TODO
      * note: @babel is beta
     */
-    this.dependencies.push(
+    this.devDependencies.push(
       '@babel/core',
       '@babel/cli',
       '@babel/preset-env',
