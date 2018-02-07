@@ -19,10 +19,5 @@ module.exports = {
       cwd: __dirname,
       alias
     }]
-  ],
-  ignore: [
-    ...(process.env.NODE_ENV === 'test' ? [] : [
-      '**/__tests__/**'
-    ])
   ]
 };
