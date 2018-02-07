@@ -3,8 +3,7 @@ module.exports = {
     '^.+\\.jsx?$': 'babel-jest'
   },
   testPathIgnorePatterns: [
-    '/lib/',
-    '/utils/'
+    '/test-utils/'
   ],
   collectCoverage: true,
   collectCoverageFrom: [

@@ -5,7 +5,7 @@ import assert from 'yeoman-assert';
 
 import App from 'app';
 
-import checkContent from './../utils/checkContent';
+import checkContent from './../test-utils/checkContent';
 
 describe('App', () => {
   describe('# default package.json', () => {

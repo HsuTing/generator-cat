@@ -5,7 +5,7 @@ import assert from 'yeoman-assert';
 
 import Babel from 'app/Babel';
 
-import checkContent from './../utils/checkContent';
+import checkContent from './../test-utils/checkContent';
 
 describe('Babel', () => {
   beforeAll(() => helpers.run(Babel));
