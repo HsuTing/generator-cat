@@ -241,10 +241,7 @@ module.exports = class App extends Base {
         main: './lib/index.js',
         scripts: {},
         homepage: `https://github.com/${repoName}/`,
-        repository: {
-          type: 'git',
-          url: `get+https://github.com/${repoName}.git`
-        },
+        repository: `https://github.com/${repoName}.git`,
         bugs: {
           url: `https://github.com/${repoName}/issues/`
         }
