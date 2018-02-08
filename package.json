@@ -2,7 +2,7 @@
   "scripts": {
     "test": "jest --silent",
     "test:watch": "yarn test --watchAll",
-    "lint": "esw ./ --cache --ext .js",
+    "lint": "esw ./ --cache --ext .js -c ./.eslintrc.js",
     "lint:watch": "yarn lint -w",
     "flow": "flow",
     "babel:render": "babel src --out-dir lib",
@@ -54,7 +54,7 @@
     "cross-env": "^5.1.3",
     "ejs": "^2.5.7",
     "eslint": "^4.16.0",
-    "eslint-config-cat": "^0.2.0",
+    "eslint-config-cat": "^0.2.1",
     "eslint-watch": "^3.1.3",
     "flow-bin": "^0.64.0",
     "jest": "^22.1.4",
