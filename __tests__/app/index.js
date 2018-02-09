@@ -9,19 +9,17 @@ import checkContent from './../test-utils/checkContent';
 
 describe('App', () => {
   describe('# default package.json', () => {
-    beforeAll(() => {
-      return helpers.run(App)
+    beforeAll(() => (
+      helpers.run(App)
         .withPrompts({
           name: 'test',
           description: 'description',
           keywords: ['keyword'],
           author_name: 'HsuTing',
           author_email: 'hsuting0106@gmail.com',
-          author_url: 'http://hsuting.com',
-          type: 'none',
-          addons: []
-        });
-    });
+          author_url: 'http://hsuting.com'
+        })
+    ));
 
     it('## ask default info', () => {
       assert.jsonFileContent('package.json', {
